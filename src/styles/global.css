@@ -6,6 +6,7 @@
   --color-brand-navy-light: #1a3668;
   --color-brand-navy-mid: #25407a;
   --color-brand-gold: #c9952a;
+  --color-brand-gold-dark: #7a5c10;
   --color-brand-gold-light: #e0b04d;
   --color-brand-gold-pale: #f5e6c8;
   --color-brand-cream: #f7f3ee;
@@ -29,6 +30,35 @@ body {
   font-family: var(--font-sans);
   color: var(--color-brand-text);
   background-color: var(--color-brand-warm);
+}
+
+/* ── Skip Navigation Link (WCAG 2.4.1) ── */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  z-index: 10000;
+  padding: 8px 16px;
+  background: var(--color-brand-navy);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 0 0 4px 0;
+  transition: top 0.1s ease;
+}
+
+.skip-link:focus {
+  top: 0;
+  outline: 3px solid var(--color-brand-gold);
+  outline-offset: 0;
+}
+
+/* ── Visible Focus Indicators (WCAG 2.4.7 / 2.4.13) ── */
+:focus-visible {
+  outline: 3px solid var(--color-brand-gold);
+  outline-offset: 2px;
+  border-radius: 2px;
 }
 
 /* ── Utility Classes ── */

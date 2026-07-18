@@ -22,6 +22,8 @@ const { title, description } = Astro.props;
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   </head>
   <body class="min-h-screen flex flex-col">
+    <!-- Skip Navigation Link (WCAG 2.4.1) -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <!-- Top Utility Bar -->
     <div class="bg-brand-navy text-white text-xs">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-9">
@@ -72,7 +74,7 @@ const { title, description } = Astro.props;
     </header>
 
     <!-- Main Content -->
-    <main class="flex-1">
+    <main id="main-content" class="flex-1">
       <slot />
     </main>
 
@@ -82,7 +84,7 @@ const { title, description } = Astro.props;
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
           <!-- Column 1: Business -->
           <div>
-            <h4 class="text-brand-gold font-semibold text-sm uppercase tracking-wider mb-4">Business</h4>
+            <h3 class="text-brand-gold-dark font-semibold text-sm uppercase tracking-wider mb-4">Business</h3>
             <ul class="space-y-2.5">
               <li><a href="#" class="text-gray-300 hover:text-white text-sm transition-colors">Business Checking</a></li>
               <li><a href="#" class="text-gray-300 hover:text-white text-sm transition-colors">Business Loans</a></li>
@@ -93,7 +95,7 @@ const { title, description } = Astro.props;
           </div>
           <!-- Column 2: Personal -->
           <div>
-            <h4 class="text-brand-gold font-semibold text-sm uppercase tracking-wider mb-4">Personal</h4>
+            <h3 class="text-brand-gold-dark font-semibold text-sm uppercase tracking-wider mb-4">Personal</h3>
             <ul class="space-y-2.5">
               <li><a href="#" class="text-gray-300 hover:text-white text-sm transition-colors">Personal Checking</a></li>
               <li><a href="#" class="text-gray-300 hover:text-white text-sm transition-colors">Savings & CDs</a></li>
@@ -104,13 +106,13 @@ const { title, description } = Astro.props;
           </div>
           <!-- Column 3: Wealth & About -->
           <div>
-            <h4 class="text-brand-gold font-semibold text-sm uppercase tracking-wider mb-4">Wealth</h4>
+            <h3 class="text-brand-gold-dark font-semibold text-sm uppercase tracking-wider mb-4">Wealth</h3>
             <ul class="space-y-2.5 mb-8">
               <li><a href="#" class="text-gray-300 hover:text-white text-sm transition-colors">Wealth Management</a></li>
               <li><a href="#" class="text-gray-300 hover:text-white text-sm transition-colors">Special Needs Trusts</a></li>
               <li><a href="#" class="text-gray-300 hover:text-white text-sm transition-colors">Financial Planning</a></li>
             </ul>
-            <h4 class="text-brand-gold font-semibold text-sm uppercase tracking-wider mb-4">About</h4>
+            <h3 class="text-brand-gold-dark font-semibold text-sm uppercase tracking-wider mb-4">About</h3>
             <ul class="space-y-2.5">
               <li><a href="#" class="text-gray-300 hover:text-white text-sm transition-colors">Our Story</a></li>
               <li><a href="#" class="text-gray-300 hover:text-white text-sm transition-colors">Leadership</a></li>
@@ -120,7 +122,7 @@ const { title, description } = Astro.props;
           </div>
           <!-- Column 4: Support + Social -->
           <div>
-            <h4 class="text-brand-gold font-semibold text-sm uppercase tracking-wider mb-4">Support</h4>
+            <h3 class="text-brand-gold-dark font-semibold text-sm uppercase tracking-wider mb-4">Support</h3>
             <ul class="space-y-2.5 mb-8">
               <li><a href="#" class="text-gray-300 hover:text-white text-sm transition-colors">FAQ</a></li>
               <li><a href="#" class="text-gray-300 hover:text-white text-sm transition-colors">Locations</a></li>

@@ -45,7 +45,7 @@ const { title, date, image, category } = Astro.props;
           </div>
           <nav class="hidden lg:flex items-center gap-1">
             <a href="https://tgbtest2.pages.dev/" class="px-4 py-2 text-sm font-medium text-brand-text hover:text-brand-navy-light rounded-lg hover:bg-gray-50 transition-colors">Home</a>
-            <a href="https://tgbtest2.pages.dev/blog/" class="px-4 py-2 text-sm font-medium text-brand-gold bg-brand-gold-pale/30 rounded-lg transition-colors">Blog</a>
+            <a href="https://tgbtest2.pages.dev/blog/" class="px-4 py-2 text-sm font-medium text-brand-gold-dark bg-brand-gold-pale/30 rounded-lg transition-colors">Blog</a>
           </nav>
         </div>
       </div>
@@ -59,7 +59,7 @@ const { title, date, image, category } = Astro.props;
           </div>
         )}
         <div class="flex items-center gap-3 text-sm text-brand-muted mb-4">
-          {category && <span class="bg-brand-gold-pale text-brand-gold font-semibold px-2.5 py-1 rounded-full text-xs">{category}</span>}
+          {category && <span class="bg-brand-gold-pale text-brand-gold-dark font-semibold px-2.5 py-1 rounded-full text-xs">{category}</span>}
           <time datetime={date}>{date}</time>
         </div>
         <h1 class="text-3xl sm:text-4xl font-bold text-brand-text leading-tight mb-8 font-sans">{title}</h1>
