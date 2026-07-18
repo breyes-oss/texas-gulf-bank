@@ -24,19 +24,24 @@ export async function onRequest(context) {
 
     if (result.error) {
       return new Response(
-        "<html><body><script>window.close()</script><p>Auth error</p></body></html>",
+        "<html><body>Auth error</body></html>",
         { headers: { "content-type": "text/html;charset=UTF-8" }, status: 401 }
       );
     }
 
     const token = result.access_token;
+
     const html =
       "<!DOCTYPE html><html><body><script>" +
-      'window.opener.postMessage("authorization:github:' +
-      token +
-      '", "*");' +
+      // Signal to the parent that we're ready
       'window.opener.postMessage("authorizing:github", "*");' +
+      // Wait for parent to acknowledge, then send the token
+      "var handler = function(event) {" +
+      'window.opener.postMessage("authorization:github:' + token + '", event.origin);' +
+      "window.removeEventListener('message', handler, false);" +
       "window.close();" +
+      "};" +
+      "window.addEventListener('message', handler, false);" +
       "</script></body></html>";
 
     return new Response(html, {
