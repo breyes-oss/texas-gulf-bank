@@ -20,9 +20,11 @@ const { title, date, image, category } = Astro.props;
     <meta name="description" content={title} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet" />
   </head>
   <body class="min-h-screen flex flex-col bg-brand-warm">
+    <!-- Skip Navigation Link (WCAG 2.4.1) -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <!-- Top Utility Bar -->
     <div class="bg-brand-navy text-white text-xs">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-end h-9">
@@ -51,7 +53,7 @@ const { title, date, image, category } = Astro.props;
       </div>
     </header>
 
-    <main class="flex-1">
+    <main id="main-content" class="flex-1">
       <article class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-14">
         {image && (
           <div class="mb-6 rounded-xl overflow-hidden bg-brand-cream">
@@ -83,3 +85,29 @@ const { title, date, image, category } = Astro.props;
     </footer>
   </body>
 </html>
+
+<script>
+  // Scroll-triggered animation observer
+  if (typeof IntersectionObserver !== 'undefined') {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.animate-fade-in, .animate-fade-in-left, .animate-fade-in-right, .animate-scale-in').forEach(el => {
+        observer.observe(el);
+      });
+    });
+  } else {
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.animate-fade-in, .animate-fade-in-left, .animate-fade-in-right, .animate-scale-in').forEach(el => {
+        el.classList.add('visible');
+      });
+    });
+  }
+</script>
