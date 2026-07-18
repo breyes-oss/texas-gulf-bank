@@ -43,13 +43,7 @@ const { title, description } = Astro.props;
         <div class="flex items-center justify-between h-16 lg:h-20">
           <!-- Logo -->
           <a href="/" class="flex items-center gap-3 group">
-            <div class="w-10 h-10 bg-brand-navy rounded-lg flex items-center justify-center text-white font-bold text-lg group-hover:bg-brand-navy-light transition-colors">
-              TGB
-            </div>
-            <div class="leading-tight">
-              <span class="text-brand-navy font-bold text-lg lg:text-xl tracking-tight block">Texas Gulf Bank</span>
-              <span class="text-brand-muted text-[11px] hidden sm:block">Est. 1920 · Member FDIC</span>
-            </div>
+            <img src="/logo-navy.svg" alt="Texas Gulf Bank" class="h-8 lg:h-10 w-auto" />
             <FdicDigitalSign />
           </a>
 
