@@ -23,38 +23,36 @@ export async function onRequest(context) {
     const result = await response.json();
 
     if (result.error) {
-      const errJson = JSON.stringify({ message: result.error_description || result.error });
-      const html =
+      const errMsg = btoa(result.error_description || result.error);
+      return new Response(
         "<!DOCTYPE html><html><body><script>" +
-        'window.opener.postMessage("authorizing:github", "*");' +
-        "var h=function(e){" +
-        'window.opener.postMessage("authorization:github:error:' + errJson + '", e.origin);' +
+        "var e=atob('" + errMsg + "');" +
+        "var p=window.opener;" +
+        "p.postMessage('authorizing:github','*');" +
+        "var h=function(f){" +
+        "p.postMessage('authorization:github:error:{\"message\":\"'+e+'\"}',f.origin);" +
         "window.removeEventListener('message',h,false);window.close()};" +
         "window.addEventListener('message',h,false);" +
-        "</script></body></html>";
-
-      return new Response(html, {
-        headers: { "content-type": "text/html;charset=UTF-8" },
-        status: 401,
-      });
+        "</script></body></html>",
+        { headers: { "content-type": "text/html;charset=UTF-8" }, status: 401 }
+      );
     }
 
-    const data = JSON.stringify({ token: result.access_token, provider: "github" });
-    const html =
+    const tokenB64 = btoa(result.access_token);
+
+    return new Response(
       "<!DOCTYPE html><html><body><script>" +
-      // Signal readiness to the parent window
-      'window.opener.postMessage("authorizing:github", "*");' +
-      // Wait for parent to respond, then send token as JSON
+      "var t=atob('" + tokenB64 + "');" +
+      "var p=window.opener;" +
+      "var d=JSON.stringify({token:t,provider:'github'});" +
+      "p.postMessage('authorizing:github','*');" +
       "var h=function(e){" +
-      'window.opener.postMessage("authorization:github:success:' + data + '", e.origin);' +
+      "p.postMessage('authorization:github:success:'+d,e.origin);" +
       "window.removeEventListener('message',h,false);window.close()};" +
       "window.addEventListener('message',h,false);" +
-      "</script></body></html>";
-
-    return new Response(html, {
-      headers: { "content-type": "text/html;charset=UTF-8" },
-      status: 200,
-    });
+      "</script></body></html>",
+      { headers: { "content-type": "text/html;charset=UTF-8" }, status: 200 }
+    );
   } catch (error) {
     console.error(error);
     return new Response("Error: " + error.message, {
