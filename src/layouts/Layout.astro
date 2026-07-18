@@ -4,6 +4,7 @@ export interface Props {
   description: string;
 }
 import '../styles/global.css';
+import FdicDigitalSign from '../components/FdicDigitalSign.astro';
 
 const { title, description } = Astro.props;
 ---
@@ -49,6 +50,7 @@ const { title, description } = Astro.props;
               <span class="text-brand-navy font-bold text-lg lg:text-xl tracking-tight block">Texas Gulf Bank</span>
               <span class="text-brand-muted text-[11px] hidden sm:block">Est. 1920 · Member FDIC</span>
             </div>
+            <FdicDigitalSign />
           </a>
 
           <!-- Desktop Nav -->

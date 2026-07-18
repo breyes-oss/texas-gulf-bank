@@ -1,0 +1,163 @@
+---
+// FDIC Official Digital Sign
+// Per 12 CFR § 328.5 — as updated by the 2026 Final Rule
+// Compliance date: April 1, 2027
+// Must be displayed clearly, continuously, and conspicuously
+// on the homepage, login page, and deposit account opening page.
+// Placed near the top of the page, adjacent to the IDI's name.
+---
+
+<dfn class="fdic-digital-sign" aria-label="FDIC-Insured - Backed by the full faith and credit of the U.S. Government">
+  <img
+    src="/fdic-digital-sign.png"
+    alt="FDIC-Insured - Backed by the full faith and credit of the U.S. Government"
+    width="550"
+    height="44"
+    class="fdic-sign-img"
+    loading="eager"
+  />
+  <details class="fdic-details">
+    <summary class="fdic-summary" aria-label="Learn more about FDIC insurance">
+      <span class="fdic-chevron"></span>
+    </summary>
+    <div class="fdic-info">
+      <p><strong>What is FDIC insurance?</strong></p>
+      <p>FDIC insurance protects depositors against the loss of their insured deposits if an FDIC-insured bank or savings association fails. FDIC insurance is backed by the full faith and credit of the United States government.</p>
+      <p><strong>Standard insurance amount:</strong> $250,000 per depositor, per insured bank, for each account ownership category.</p>
+      <p>
+        <a href="https://edie.fdic.gov/" target="_blank" rel="noopener noreferrer">
+          Calculate Your Insurance Coverage &rarr;
+        </a>
+      </p>
+    </div>
+  </details>
+</dfn>
+
+<style>
+  .fdic-digital-sign {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+    font-size: 0;
+    line-height: 0;
+    white-space: nowrap;
+  }
+
+  .fdic-sign-img {
+    display: block;
+    height: 24px;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+  }
+
+  .fdic-details {
+    display: inline-block;
+    position: relative;
+    font-size: 12px;
+    line-height: 1.4;
+    white-space: normal;
+    vertical-align: middle;
+  }
+
+  .fdic-summary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    cursor: pointer;
+    list-style: none;
+    transition: background 0.15s ease;
+  }
+
+  .fdic-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .fdic-summary:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+  .fdic-chevron {
+    display: block;
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 5px solid rgba(255, 255, 255, 0.8);
+    transition: transform 0.2s ease;
+  }
+
+  .fdic-details[open] .fdic-chevron {
+    transform: rotate(180deg);
+  }
+
+  .fdic-info {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 8px;
+    min-width: 280px;
+    max-width: 360px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 14px 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    z-index: 100;
+    color: #1a1a2e;
+    white-space: normal;
+  }
+
+  .fdic-info p {
+    margin: 0 0 8px;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #374151;
+  }
+
+  .fdic-info p:last-child {
+    margin-bottom: 0;
+  }
+
+  .fdic-info a {
+    color: #1a3668;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .fdic-info a:hover {
+    color: #c9952a;
+  }
+
+  /* Dark variant — when the header has a dark background */
+  :global(.fdic-dark) .fdic-digital-sign .fdic-info {
+    border-color: #334155;
+  }
+
+  /* Mobile: wrapped/stacked layout */
+  @media (max-width: 640px) {
+    .fdic-digital-sign {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+    }
+
+    .fdic-sign-img {
+      height: 20px;
+    }
+
+    .fdic-info {
+      left: 0;
+      transform: none;
+      min-width: 240px;
+      max-width: 300px;
+    }
+  }
+</style>
