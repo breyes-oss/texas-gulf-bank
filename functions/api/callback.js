@@ -23,25 +23,32 @@ export async function onRequest(context) {
     const result = await response.json();
 
     if (result.error) {
-      return new Response(
-        "<html><body>Auth error</body></html>",
-        { headers: { "content-type": "text/html;charset=UTF-8" }, status: 401 }
-      );
+      const errJson = JSON.stringify({ message: result.error_description || result.error });
+      const html =
+        "<!DOCTYPE html><html><body><script>" +
+        'window.opener.postMessage("authorizing:github", "*");' +
+        "var h=function(e){" +
+        'window.opener.postMessage("authorization:github:error:' + errJson + '", e.origin);' +
+        "window.removeEventListener('message',h,false);window.close()};" +
+        "window.addEventListener('message',h,false);" +
+        "</script></body></html>";
+
+      return new Response(html, {
+        headers: { "content-type": "text/html;charset=UTF-8" },
+        status: 401,
+      });
     }
 
-    const token = result.access_token;
-
+    const data = JSON.stringify({ token: result.access_token, provider: "github" });
     const html =
       "<!DOCTYPE html><html><body><script>" +
-      // Signal to the parent that we're ready
+      // Signal readiness to the parent window
       'window.opener.postMessage("authorizing:github", "*");' +
-      // Wait for parent to acknowledge, then send the token
-      "var handler = function(event) {" +
-      'window.opener.postMessage("authorization:github:' + token + '", event.origin);' +
-      "window.removeEventListener('message', handler, false);" +
-      "window.close();" +
-      "};" +
-      "window.addEventListener('message', handler, false);" +
+      // Wait for parent to respond, then send token as JSON
+      "var h=function(e){" +
+      'window.opener.postMessage("authorization:github:success:' + data + '", e.origin);' +
+      "window.removeEventListener('message',h,false);window.close()};" +
+      "window.addEventListener('message',h,false);" +
       "</script></body></html>";
 
     return new Response(html, {
