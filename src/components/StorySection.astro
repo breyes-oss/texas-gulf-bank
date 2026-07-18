@@ -1,5 +1,6 @@
 ---
 // StorySection.astro — Brand story with stats
+const { home } = Astro.props;
 ---
 
 <section class="bg-white py-20 lg:py-28">
@@ -12,33 +13,29 @@
           Our Story
         </div>
         <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-brand-text leading-[1.15] tracking-tight">
-          Over a Century of<br />
-          <span class="text-brand-navy-light">Texas Banking</span>
+          {home.story_headline || "Over a Century of"}<br />
+          <span class="text-brand-navy-light">{home.story_headline_accent || "Texas Banking"}</span>
         </h2>
         <p class="mt-6 text-brand-muted text-base sm:text-lg leading-relaxed">
-          Texas Gulf Bank is an independently owned and operated community bank with locations 
-          in Harris, Galveston, and Brazoria counties. For over 100 years, we've been a strong 
-          and financially secure member of the Texas Gulf Coast community.
+          {home.story_body_1 || "Texas Gulf Bank is an independently owned and operated community bank with locations in Harris, Galveston, and Brazoria counties. For over 100 years, we've been a strong and financially secure member of the Texas Gulf Coast community."}
         </p>
         <p class="mt-4 text-brand-muted text-base sm:text-lg leading-relaxed">
-          We pride ourselves on personal relationships — you'll always speak face-to-face with 
-          a local decision-maker. Our team members live and work in the same communities where 
-          our branches are located.
+          {home.story_body_2 || "We pride ourselves on personal relationships — you'll always speak face-to-face with a local decision-maker. Our team members live and work in the same communities where our branches are located."}
         </p>
 
         <!-- Stats -->
         <div class="mt-10 grid grid-cols-3 gap-6 sm:gap-10">
           <div>
-            <p class="text-3xl sm:text-4xl font-bold text-brand-navy-light">100+</p>
-            <p class="text-sm text-brand-muted mt-1">Years Serving Texas</p>
+            <p class="text-3xl sm:text-4xl font-bold text-brand-navy-light">{home.story_stat_1_number || "100+"}</p>
+            <p class="text-sm text-brand-muted mt-1">{home.story_stat_1_label || "Years Serving Texas"}</p>
           </div>
           <div>
-            <p class="text-3xl sm:text-4xl font-bold text-brand-navy-light">12</p>
-            <p class="text-sm text-brand-muted mt-1">Community Branches</p>
+            <p class="text-3xl sm:text-4xl font-bold text-brand-navy-light">{home.story_stat_2_number || "12"}</p>
+            <p class="text-sm text-brand-muted mt-1">{home.story_stat_2_label || "Community Branches"}</p>
           </div>
           <div>
-            <p class="text-3xl sm:text-4xl font-bold text-brand-navy-light">3</p>
-            <p class="text-sm text-brand-muted mt-1">Coastal Counties</p>
+            <p class="text-3xl sm:text-4xl font-bold text-brand-navy-light">{home.story_stat_3_number || "3"}</p>
+            <p class="text-sm text-brand-muted mt-1">{home.story_stat_3_label || "Coastal Counties"}</p>
           </div>
         </div>
 

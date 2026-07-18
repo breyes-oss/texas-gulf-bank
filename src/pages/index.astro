@@ -1,16 +1,20 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import HeroSection from '../components/HeroSection.astro';
-import FeatureCards from '../components/FeatureCards.astro';
-import StorySection from '../components/StorySection.astro';
-import RatesAndBlog from '../components/RatesAndBlog.astro';
-import CtaSection from '../components/CtaSection.astro';
+import { getCollection } from "astro:content";
+import Layout from "../layouts/Layout.astro";
+import HeroSection from "../components/HeroSection.astro";
+import FeatureCards from "../components/FeatureCards.astro";
+import StorySection from "../components/StorySection.astro";
+import RatesAndBlog from "../components/RatesAndBlog.astro";
+import CtaSection from "../components/CtaSection.astro";
+
+const pages = await getCollection("pages");
+const home = pages.find((p) => p.id === "home")?.data || {};
 ---
 
 <Layout title="Texas Gulf Bank N.A. — Your Local Community Bank" description="Texas Gulf Bank is an independently owned community bank serving Harris, Galveston, and Brazoria counties for over 100 years.">
-  <HeroSection />
+  <HeroSection home={home} />
   <FeatureCards />
-  <StorySection />
+  <StorySection home={home} />
   <RatesAndBlog />
-  <CtaSection />
+  <CtaSection home={home} />
 </Layout>

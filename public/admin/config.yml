@@ -38,6 +38,27 @@ collections:
     format: yaml
     fields:
       - { label: "Title", name: "title", widget: "string" }
+      # Hero
+      - { label: "Hero Tagline", name: "hero_tagline", widget: "string", required: false }
       - { label: "Hero Headline", name: "hero_headline", widget: "string", required: false }
+      - { label: "Hero Headline Accent", name: "hero_headline_accent", widget: "string", required: false }
       - { label: "Hero Subtext", name: "hero_subtext", widget: "text", required: false }
-      - { label: "Feature Cards Headline", name: "features_headline", widget: "string", required: false }
+      - { label: "Hero Primary Button", name: "hero_primary_cta", widget: "string", required: false }
+      - { label: "Hero Secondary Button", name: "hero_secondary_cta", widget: "string", required: false }
+      # Story
+      - { label: "Story Headline", name: "story_headline", widget: "string", required: false }
+      - { label: "Story Headline Accent", name: "story_headline_accent", widget: "string", required: false }
+      - { label: "Story Body 1", name: "story_body_1", widget: "text", required: false }
+      - { label: "Story Body 2", name: "story_body_2", widget: "text", required: false }
+      - { label: "Stat 1 Number", name: "story_stat_1_number", widget: "string", required: false }
+      - { label: "Stat 1 Label", name: "story_stat_1_label", widget: "string", required: false }
+      - { label: "Stat 2 Number", name: "story_stat_2_number", widget: "string", required: false }
+      - { label: "Stat 2 Label", name: "story_stat_2_label", widget: "string", required: false }
+      - { label: "Stat 3 Number", name: "story_stat_3_number", widget: "string", required: false }
+      - { label: "Stat 3 Label", name: "story_stat_3_label", widget: "string", required: false }
+      # CTA
+      - { label: "CTA Headline", name: "cta_headline", widget: "string", required: false }
+      - { label: "CTA Headline Accent", name: "cta_headline_accent", widget: "string", required: false }
+      - { label: "CTA Subtext", name: "cta_subtext", widget: "text", required: false }
+      - { label: "CTA Primary Button", name: "cta_primary_button", widget: "string", required: false }
+      - { label: "CTA Phone", name: "cta_phone", widget: "string", required: false }
