@@ -19,7 +19,7 @@ const { title, description } = Astro.props;
     <meta name="description" content={description} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet" />
   </head>
   <body class="min-h-screen flex flex-col">
     <!-- Skip Navigation Link (WCAG 2.4.1) -->
@@ -163,3 +163,30 @@ const { title, description } = Astro.props;
     </footer>
   </body>
 </html>
+
+<script>
+  // Scroll-triggered animation observer
+  if (typeof IntersectionObserver !== 'undefined') {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.animate-fade-in, .animate-fade-in-left, .animate-fade-in-right, .animate-scale-in').forEach(el => {
+        observer.observe(el);
+      });
+    });
+  } else {
+    // Fallback: show everything immediately if no IntersectionObserver
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.animate-fade-in, .animate-fade-in-left, .animate-fade-in-right, .animate-scale-in').forEach(el => {
+        el.classList.add('visible');
+      });
+    });
+  }
+</script>
