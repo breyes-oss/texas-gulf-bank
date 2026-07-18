@@ -1,0 +1,48 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import '../../styles/global.css';
+
+const posts = [
+  { slug: "jessica-cash-chief-credit-officer", title: "Texas Gulf Bank Promotes Jessica Cash to Chief Credit Officer", date: "June 18, 2026", image: "/blog/jessica-cash.jpg", excerpt: "When Texas Gulf Bank set out to fill its Chief Credit Officer role, the search reached banks across the country. After a thorough process, the answer turned out to be just down the hall.", category: "Community" },
+  { slug: "bank-impersonation-scams", title: "How To Spot Bank Impersonation Scams Targeting Texas Gulf Bank Customers", date: "June 17, 2026", image: "/blog/scams.jpg", excerpt: "You're in the middle of your day when a text pops up: \"Texas Gulf Bank fraud alert — did you authorize a $2,400 transfer?\" It isn't us. Here's how to stay safe.", category: "Security" },
+  { slug: "commercial-lending-real-estate", title: "Commercial Lending for Real Estate Projects: What to Expect When Applying", date: "April 29, 2026", image: "/blog/commercial-lending.jpg", excerpt: "Deciding to purchase, expand, or build a commercial property is a significant step. Here's what to expect from the commercial lending process.", category: "Business" },
+  { slug: "construction-equipment-financing", title: "Our Financing for Construction Equipment Makes Upgrades More Manageable", date: "April 23, 2026", image: "/blog/construction-equipment.jpg", excerpt: "When your construction equipment starts slowing down the job, you feel it immediately. Financing for construction equipment may help you upgrade without straining cash flow.", category: "Business" },
+  { slug: "working-capital-loans", title: "Business Working Capital Loans to Help You Navigate Seasonal Revenue Cycles", date: "April 15, 2026", image: "/blog/working-capital.jpg", excerpt: "Seasonal revenue cycles are a reality for many businesses. Working capital loans help bridge the gap so you can operate consistently year-round.", category: "Business" },
+  { slug: "construction-loans-texas", title: "Commercial Real Estate Construction Loans Explained for Texas Companies", date: "April 8, 2026", image: "/blog/construction-loans.jpg", excerpt: "Growing companies often need more space. Commercial real estate construction loans are designed to support businesses during critical growth stages.", category: "Business" },
+];
+---
+
+<Layout title="Blog — Texas Gulf Bank" description="Latest news, insights, and updates from Texas Gulf Bank">
+  <section class="bg-brand-navy py-16 sm:py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">Texas Gulf Bank Blog</h1>
+      <p class="mt-4 text-gray-300 text-lg max-w-2xl mx-auto">Latest news, insights, and updates from our team</p>
+    </div>
+  </section>
+
+  <section class="bg-brand-warm py-12 lg:py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        {posts.map((post) => (
+          <a href={`/blog/${post.slug}`} class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg border border-gray-100 hover:border-brand-gold/30 transition-all duration-300">
+            <div class="aspect-[16/9] bg-brand-cream overflow-hidden">
+              <img src={post.image} alt={post.title} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+            </div>
+            <div class="p-5 lg:p-6">
+              <div class="flex items-center gap-2 text-xs text-brand-muted mb-3">
+                <span class="bg-brand-gold-pale text-brand-gold font-semibold px-2.5 py-1 rounded-full">{post.category}</span>
+                <span>{post.date}</span>
+              </div>
+              <h3 class="font-bold text-brand-text group-hover:text-brand-navy-light transition-colors">{post.title}</h3>
+              <p class="text-sm text-brand-muted mt-2 leading-relaxed">{post.excerpt}</p>
+              <span class="inline-flex items-center gap-1 mt-3 text-brand-navy-light text-sm font-semibold group-hover:text-brand-gold transition-colors">
+                Read More
+                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+              </span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>
