@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+/* ── Texas Gulf Bank Brand Theme ── */
+@theme {
+  --color-brand-navy: #0a1628;
+  --color-brand-navy-light: #1a3668;
+  --color-brand-navy-mid: #25407a;
+  --color-brand-gold: #c9952a;
+  --color-brand-gold-light: #e0b04d;
+  --color-brand-gold-pale: #f5e6c8;
+  --color-brand-cream: #f7f3ee;
+  --color-brand-warm: #fdfcfb;
+  --color-brand-text: #1a1a2e;
+  --color-brand-muted: #6b7280;
+  --color-brand-rate: #15803d;
+
+  --font-serif: "Georgia", "Times New Roman", serif;
+  --font-sans: "Inter", "Segoe UI", system-ui, sans-serif;
+}
+
+/* ── Base Styles ── */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  width: 100%;
+  font-family: var(--font-sans);
+  color: var(--color-brand-text);
+  background-color: var(--color-brand-warm);
+}
+
+/* ── Utility Classes ── */
+.text-balance {
+  text-wrap: balance;
+}

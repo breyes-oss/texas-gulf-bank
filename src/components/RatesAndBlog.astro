@@ -1,0 +1,152 @@
+---
+// RatesAndBlog.astro — Rate cards + latest news
+---
+
+<section class="bg-brand-cream py-20 lg:py-28">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid lg:grid-cols-5 gap-10 lg:gap-12">
+      <!-- Left: Rates (3 cols) -->
+      <div class="lg:col-span-3">
+        <div class="inline-flex items-center gap-2 text-brand-gold text-xs font-semibold uppercase tracking-widest mb-4">
+          <span class="w-8 h-px bg-brand-gold"></span>
+          Current Rates
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-bold text-brand-text leading-tight">
+          Competitive Rates,<br />
+          <span class="text-brand-navy-light">Real Returns</span>
+        </h2>
+        <p class="mt-3 text-brand-muted text-base">Rates as of today. See a banker for current terms.</p>
+
+        <div class="mt-8 space-y-3">
+          <!-- Rate row -->
+          <div class="bg-white rounded-xl px-6 py-5 flex items-center justify-between hover:shadow-sm transition-shadow border border-gray-100">
+            <div>
+              <p class="font-semibold text-brand-text">Personal Checking</p>
+              <p class="text-sm text-brand-muted">Minimum balance $100</p>
+            </div>
+            <div class="text-right">
+              <p class="text-2xl font-bold text-brand-rate">3.25%</p>
+              <p class="text-xs text-brand-muted">APY</p>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-xl px-6 py-5 flex items-center justify-between hover:shadow-sm transition-shadow border border-gray-100">
+            <div>
+              <p class="font-semibold text-brand-text">High-Yield Savings</p>
+              <p class="text-sm text-brand-muted">No monthly fee</p>
+            </div>
+            <div class="text-right">
+              <p class="text-2xl font-bold text-brand-rate">4.50%</p>
+              <p class="text-xs text-brand-muted">APY</p>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-xl px-6 py-5 flex items-center justify-between hover:shadow-sm transition-shadow border border-gray-100">
+            <div>
+              <p class="font-semibold text-brand-text">12-Month CD</p>
+              <p class="text-sm text-brand-muted">Fixed term, guaranteed rate</p>
+            </div>
+            <div class="text-right">
+              <p class="text-2xl font-bold text-brand-rate">4.75%</p>
+              <p class="text-xs text-brand-muted">APY</p>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-xl px-6 py-5 flex items-center justify-between hover:shadow-sm transition-shadow border border-gray-100">
+            <div>
+              <p class="font-semibold text-brand-text">Money Market</p>
+              <p class="text-sm text-brand-muted">Tiered rates, check access</p>
+            </div>
+            <div class="text-right">
+              <p class="text-2xl font-bold text-brand-rate">4.10%</p>
+              <p class="text-xs text-brand-muted">APY</p>
+            </div>
+          </div>
+        </div>
+
+        <a href="#" class="inline-flex items-center gap-2 mt-6 text-brand-navy-light font-semibold hover:text-brand-gold transition-colors text-sm">
+          View All Rates
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+        </a>
+      </div>
+
+      <!-- Right: Blog/News (2 cols) -->
+      <div class="lg:col-span-2">
+        <div class="inline-flex items-center gap-2 text-brand-gold text-xs font-semibold uppercase tracking-widest mb-4">
+          <span class="w-8 h-px bg-brand-gold"></span>
+          From the Bank
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-bold text-brand-text leading-tight">
+          Latest <span class="text-brand-navy-light">News</span>
+        </h2>
+
+        <div class="mt-8 space-y-6">
+          <!-- Blog post 1 -->
+          <a href="#" class="block group">
+            <div class="bg-white rounded-xl p-6 border border-gray-100 hover:shadow-md transition-all duration-300">
+              <div class="flex items-center gap-2 text-xs text-brand-muted mb-3">
+                <span class="bg-brand-gold-pale text-brand-gold font-semibold px-2.5 py-1 rounded-full">Community</span>
+                <span>March 15, 2025</span>
+              </div>
+              <h3 class="font-bold text-brand-text group-hover:text-brand-navy-light transition-colors">
+                TGB Sponsors Annual Galveston Food Drive
+              </h3>
+              <p class="text-sm text-brand-muted mt-2 leading-relaxed">
+                Join us in supporting the Gulf Coast Food Bank — every dollar donated stays local.
+              </p>
+              <span class="inline-flex items-center gap-1 mt-3 text-brand-navy-light text-sm font-semibold group-hover:text-brand-gold transition-colors">
+                Read More
+                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+              </span>
+            </div>
+          </a>
+
+          <!-- Blog post 2 -->
+          <a href="#" class="block group">
+            <div class="bg-white rounded-xl p-6 border border-gray-100 hover:shadow-md transition-all duration-300">
+              <div class="flex items-center gap-2 text-xs text-brand-muted mb-3">
+                <span class="bg-brand-gold-pale text-brand-gold font-semibold px-2.5 py-1 rounded-full">Financial Tips</span>
+                <span>February 28, 2025</span>
+              </div>
+              <h3 class="font-bold text-brand-text group-hover:text-brand-navy-light transition-colors">
+                Spring Cleaning Your Finances: A Checklist
+              </h3>
+              <p class="text-sm text-brand-muted mt-2 leading-relaxed">
+                5 steps to review your budget, check your credit, and maximize savings this season.
+              </p>
+              <span class="inline-flex items-center gap-1 mt-3 text-brand-navy-light text-sm font-semibold group-hover:text-brand-gold transition-colors">
+                Read More
+                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+              </span>
+            </div>
+          </a>
+
+          <!-- Blog post 3 -->
+          <a href="#" class="block group">
+            <div class="bg-white rounded-xl p-6 border border-gray-100 hover:shadow-md transition-all duration-300">
+              <div class="flex items-center gap-2 text-xs text-brand-muted mb-3">
+                <span class="bg-brand-gold-pale text-brand-gold font-semibold px-2.5 py-1 rounded-full">Business</span>
+                <span>February 10, 2025</span>
+              </div>
+              <h3 class="font-bold text-brand-text group-hover:text-brand-navy-light transition-colors">
+                New Small Business Loan Programs Announced
+              </h3>
+              <p class="text-sm text-brand-muted mt-2 leading-relaxed">
+                Expanded lending options for Texas Gulf Coast entrepreneurs and startups.
+              </p>
+              <span class="inline-flex items-center gap-1 mt-3 text-brand-navy-light text-sm font-semibold group-hover:text-brand-gold transition-colors">
+                Read More
+                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+              </span>
+            </div>
+          </a>
+        </div>
+
+        <a href="#" class="inline-flex items-center gap-2 mt-6 text-brand-navy-light font-semibold hover:text-brand-gold transition-colors text-sm">
+          View All Posts
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
