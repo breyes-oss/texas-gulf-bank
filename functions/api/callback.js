@@ -1,18 +1,3 @@
-function renderBody(status, content) {
-  const provider = content.provider;
-  const token = content.token;
-  const html =
-    "<html><body><script>" +
-    'const receiveMessage = (message) => {' +
-    "window.opener.postMessage('authorization:" + provider + ":" + token + "', message.origin);" +
-    'window.removeEventListener("message", receiveMessage, false);' +
-    "};" +
-    'window.addEventListener("message", receiveMessage, false);' +
-    'window.opener.postMessage("authorizing:' + provider + '", "*");' +
-    "</script></body></html>";
-  return new Blob([html], { type: "text/html" });
-}
-
 export async function onRequest(context) {
   const { request, env } = context;
   const client_id = env.GITHUB_CLIENT_ID;
@@ -38,22 +23,30 @@ export async function onRequest(context) {
     const result = await response.json();
 
     if (result.error) {
-      return new Response(renderBody("error", result), {
-        headers: { "content-type": "text/html;charset=UTF-8" },
-        status: 401,
-      });
+      return new Response(
+        "<html><body><script>window.close()</script><p>Auth error</p></body></html>",
+        { headers: { "content-type": "text/html;charset=UTF-8" }, status: 401 }
+      );
     }
 
-    const provider = "github";
+    const token = result.access_token;
+    const html =
+      "<!DOCTYPE html><html><body><script>" +
+      'window.opener.postMessage("authorization:github:' +
+      token +
+      '", "*");' +
+      'window.opener.postMessage("authorizing:github", "*");' +
+      "window.close();" +
+      "</script></body></html>";
 
-    return new Response(renderBody("success", { token: result.access_token, provider }), {
+    return new Response(html, {
       headers: { "content-type": "text/html;charset=UTF-8" },
       status: 200,
     });
   } catch (error) {
     console.error(error);
-    return new Response(error.message, {
-      headers: { "content-type": "text/html;charset=UTF-8" },
+    return new Response("Error: " + error.message, {
+      headers: { "content-type": "text/plain" },
       status: 500,
     });
   }
