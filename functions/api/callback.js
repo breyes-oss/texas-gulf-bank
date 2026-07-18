@@ -1,21 +1,15 @@
 function renderBody(status, content) {
-  const html = `
-    <html>
-    <body>
-    <script>
-      const receiveMessage = (message) => {
-        window.opener.postMessage(
-          'authorization:${content.provider}:${content.token}',
-          message.origin
-        );
-        window.removeEventListener("message", receiveMessage, false);
-      }
-      window.addEventListener("message", receiveMessage, false);
-      window.opener.postMessage("authorizing:${content.provider}", "*");
-    </script>
-    </body>
-    </html>
-  `;
+  const provider = content.provider;
+  const token = content.token;
+  const html =
+    "<html><body><script>" +
+    'const receiveMessage = (message) => {' +
+    "window.opener.postMessage('authorization:" + provider + ":" + token + "', message.origin);" +
+    'window.removeEventListener("message", receiveMessage, false);' +
+    "};" +
+    'window.addEventListener("message", receiveMessage, false);' +
+    'window.opener.postMessage("authorizing:' + provider + '", "*");' +
+    "</script></body></html>";
   return new Blob([html], { type: "text/html" });
 }
 
@@ -50,10 +44,9 @@ export async function onRequest(context) {
       });
     }
 
-    const token = result.access_token;
     const provider = "github";
 
-    return new Response(renderBody("success", { token, provider }), {
+    return new Response(renderBody("success", { token: result.access_token, provider }), {
       headers: { "content-type": "text/html;charset=UTF-8" },
       status: 200,
     });
