@@ -28,6 +28,7 @@ html {
 body {
   margin: 0;
   width: 100%;
+  overflow-x: hidden;
   font-family: var(--font-sans);
   color: var(--color-brand-text);
   background-color: var(--color-brand-warm);
@@ -115,6 +116,24 @@ body {
 .animate-scale-in.visible {
   opacity: 1;
   transform: scale(1);
+}
+
+/* Respect user motion preferences and keep core content visible */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+  .animate-fade-in,
+  .animate-fade-in-left,
+  .animate-fade-in-right,
+  .animate-scale-in {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 /* Staggered delays for children */

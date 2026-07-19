@@ -1,101 +1,57 @@
 ---
-// HeroSection.astro — Modern hero with gradient imagery
+// HeroSection.astro — Authentic Gulf Coast community hero
 const { home } = Astro.props;
+const openAccountUrl = "https://app.loanspq.com/apply.aspx?enc=Kw21Wblm1yxpjJabdoZaD_1XCeB6DUzWcPY_g38Z9Jqr0clsjQUYVmTraoEngafVkCgQedLZhb-S5_xgQhN9fA";
 ---
 
-<section class="relative overflow-hidden bg-brand-warm">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center min-h-[85vh] py-16 lg:py-24">
+<section class="relative overflow-hidden bg-brand-cream">
+  <div class="max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-8 py-5 lg:py-7">
+    <div class="relative min-h-[650px] lg:min-h-[720px] rounded-[1.5rem] lg:rounded-[2rem] overflow-hidden bg-brand-navy shadow-[0_24px_70px_rgba(10,22,40,0.18)]">
+      <img
+        src="/hero-community.png"
+        alt="Local business owners outside their Gulf Coast storefront"
+        class="absolute inset-0 h-full w-full object-cover object-[42%_center]"
+        width="1536"
+        height="864"
+        fetchpriority="high"
+      />
+      <div class="absolute inset-0 bg-gradient-to-r from-brand-navy/95 via-brand-navy/78 to-brand-navy/10"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-brand-navy/35 via-transparent to-transparent"></div>
 
-      <!-- Left: Layered Texas imagery -->
-      <div class="relative h-[420px] lg:h-[520px] animate-fade-in">
-        <!-- Base card: warm gradient with subtle Texas flag accent -->
-        <div class="absolute inset-0 rounded-3xl overflow-hidden shadow-2xl">
-          <div class="absolute inset-0 bg-gradient-to-br from-[#1a3668] via-[#0a1628] to-[#0f2345]"></div>
-          <!-- Decorative pattern -->
-          <div class="absolute inset-0 opacity-[0.08]">
-            <svg class="w-full h-full" viewBox="0 0 600 500" preserveAspectRatio="xMidYMid slice">
-              <circle cx="450" cy="120" r="80" fill="#c9952a" opacity="0.6"/>
-              <circle cx="480" cy="100" r="50" fill="#c9952a" opacity="0.4"/>
-              <path d="M0 380 Q150 280 300 360 T600 300 L600 500 L0 500 Z" fill="#c9952a" opacity="0.15"/>
-              <path d="M0 420 Q200 380 400 410 T600 380 L600 500 L0 500 Z" fill="#ffffff" opacity="0.05"/>
-            </svg>
+      <div class="relative z-10 max-w-7xl mx-auto min-h-[650px] lg:min-h-[720px] px-6 sm:px-10 lg:px-16 py-16 lg:py-24 flex items-center">
+        <div class="max-w-2xl animate-fade-in">
+          <div class="inline-flex items-center gap-3 text-brand-gold-light text-xs font-semibold uppercase tracking-[0.2em] mb-7">
+            <span class="w-10 h-px bg-brand-gold"></span>
+            {home.hero_tagline || "Over 100 Years of Texas Banking"}
           </div>
-          <!-- Floating accent shapes -->
-          <div class="absolute top-8 left-8 w-20 h-20 bg-brand-gold/20 rounded-2xl rotate-12 backdrop-blur-sm"></div>
-          <div class="absolute bottom-12 right-12 w-16 h-16 bg-white/10 rounded-xl -rotate-6 backdrop-blur-sm"></div>
-        </div>
 
-        <!-- Overlapping card: stats / rates preview -->
-        <div class="absolute bottom-6 right-6 lg:right-auto lg:-right-4 w-[60%] max-w-[280px] bg-white rounded-2xl shadow-xl p-5 lg:p-6 rotate-[2deg] animate-fade-in-right delay-2">
-          <div class="flex items-center gap-2 text-xs text-brand-gold-dark font-semibold uppercase tracking-wider mb-3">
-            <span class="w-1.5 h-1.5 bg-brand-gold-dark rounded-full"></span>
-            Today's Rates
-          </div>
-          <div class="space-y-2.5">
-            <div class="flex items-center justify-between">
-              <span class="text-sm text-brand-muted">High-Yield Savings</span>
-              <span class="text-lg font-bold text-brand-rate">4.50%</span>
-            </div>
-            <div class="flex items-center justify-between">
-              <span class="text-sm text-brand-muted">12-Month CD</span>
-              <span class="text-lg font-bold text-brand-rate">4.75%</span>
-            </div>
-            <div class="flex items-center justify-between">
-              <span class="text-sm text-brand-muted">Money Market</span>
-              <span class="text-lg font-bold text-brand-rate">4.10%</span>
-            </div>
-          </div>
-        </div>
+          <h1 class="font-display text-5xl sm:text-6xl lg:text-7xl xl:text-[5.25rem] font-semibold text-white leading-[0.98] tracking-[-0.035em] text-balance">
+            {home.hero_headline || "A Community Bank"}
+            <span class="block mt-2 text-brand-gold-light">{home.hero_headline_accent || "Rooted In Texas"}</span>
+          </h1>
 
-        <!-- Small accent card: branch count -->
-        <div class="absolute top-6 right-6 bg-white rounded-xl shadow-lg px-4 py-3 rotate-[-3deg] animate-fade-in-right delay-3">
-          <p class="text-2xl font-bold text-brand-navy-light">12</p>
-          <p class="text-xs text-brand-muted">Branches</p>
+          <p class="mt-7 text-lg sm:text-xl text-white/82 leading-relaxed max-w-xl text-balance">
+            {home.hero_subtext || "From the Gulf Coast to your neighborhood — local decisions and real relationships have helped Texas families and businesses grow for generations."}
+          </p>
+
+          <div class="mt-10 flex flex-col sm:flex-row gap-3">
+            <a href={openAccountUrl} class="inline-flex items-center justify-center gap-2 bg-brand-gold text-brand-navy px-7 py-3.5 rounded-lg text-base font-bold hover:bg-brand-gold-light transition-all shadow-lg shadow-black/10 active:scale-[0.98]">
+              {home.hero_primary_cta || "Open an Account"}
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </a>
+            <a href="https://www.texasgulfbank.com/locations/" class="inline-flex items-center justify-center gap-2 bg-white/10 border border-white/35 text-white px-7 py-3.5 rounded-lg text-base font-semibold hover:bg-white hover:text-brand-navy transition-all backdrop-blur-sm">
+              {home.hero_secondary_cta || "Find a Branch"}
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            </a>
+          </div>
+
+          <p class="mt-6 text-xs text-white/65">Personal relationships. Local decision-makers. Texas Gulf Coast expertise.</p>
         </div>
       </div>
 
-      <!-- Right: Content -->
-      <div class="relative z-10 animate-fade-in-right">
-        <div class="inline-flex items-center gap-2 bg-brand-gold/10 text-brand-gold-dark text-xs font-semibold uppercase tracking-widest px-4 py-2 rounded-full mb-6 border border-brand-gold/20">
-          <span class="w-1.5 h-1.5 bg-brand-gold-dark rounded-full"></span>
-          {home.hero_tagline || "Over 100 Years of Texas Banking"}
-        </div>
-
-        <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-brand-text leading-[1.08] tracking-tight text-balance">
-          {home.hero_headline || "A Community Bank"}
-          <span class="block text-brand-gold">{home.hero_headline_accent || "Rooted In Texas"}</span>
-        </h1>
-
-        <p class="mt-6 text-lg sm:text-xl text-brand-muted leading-relaxed max-w-xl text-balance">
-          {home.hero_subtext || "From the Gulf Coast to your neighborhood — we've been helping Texas families and businesses grow for over a century. Local decisions, real relationships."}
-        </p>
-
-        <div class="mt-10 flex flex-col sm:flex-row gap-4">
-          <a href="#" class="inline-flex items-center justify-center gap-2 bg-brand-gold text-white px-8 py-3.5 rounded-xl text-base font-semibold hover:bg-brand-gold-light transition-all shadow-lg shadow-brand-gold/25 hover:shadow-brand-gold/40 active:scale-[0.98]">
-            {home.hero_primary_cta || "Open an Account"}
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-          </a>
-          <a href="#" class="inline-flex items-center justify-center gap-2 border-2 border-brand-gold/30 text-brand-gold-dark px-8 py-3.5 rounded-xl text-base font-medium hover:bg-brand-gold/5 hover:border-brand-gold/50 transition-all">
-            {home.hero_secondary_cta || "Find a Branch"}
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-          </a>
-        </div>
-
-        <div class="mt-12 flex flex-wrap items-center gap-6 text-xs text-brand-muted">
-          <span class="flex items-center gap-1.5">
-            <svg class="w-4 h-4 text-brand-gold-dark" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-            Member FDIC
-          </span>
-          <span class="flex items-center gap-1.5">
-            <svg class="w-4 h-4 text-brand-gold-dark" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/></svg>
-            Equal Housing Lender
-          </span>
-          <span class="flex items-center gap-1.5">
-            <svg class="w-4 h-4 text-brand-gold-dark" fill="currentColor" viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
-            Secure Online Banking
-          </span>
-        </div>
+      <div class="absolute bottom-5 right-5 hidden md:flex items-center gap-3 rounded-full border border-white/20 bg-brand-navy/55 px-4 py-2 text-xs font-medium text-white/85 backdrop-blur-md">
+        <span class="w-2 h-2 rounded-full bg-brand-gold"></span>
+        Harris · Galveston · Brazoria
       </div>
     </div>
   </div>
