@@ -3,7 +3,7 @@ import { getCollection, render } from "astro:content";
 import BlogLayout from "../../layouts/BlogLayout.astro";
 import BlogCta from "../../components/BlogCta.astro";
 import RateTable from "../../components/RateTable.astro";
-import { renderBlogHtml, splitOnRatesToken } from "../../lib/blog-embeds";
+import { renderBlogSegments } from "../../lib/blog-embeds";
 
 export async function getStaticPaths() {
   const blogPosts = await getCollection("blog");
@@ -17,41 +17,69 @@ const { post } = Astro.props;
 const body = post.body ?? "";
 const usesShortcodes = /\{\{\s*(rates|cta)\b/.test(body);
 
-let parts: string[] = [];
-let hasRatesEmbed = false;
 let Content: any = null;
+let segments: Awaited<ReturnType<typeof renderBlogSegments>>["segments"] = [];
+let hasInlineCta = false;
 
 if (usesShortcodes) {
-  const rendered = await renderBlogHtml(body, { cta: post.data.cta });
-  hasRatesEmbed = rendered.hasRatesEmbed;
-  parts = splitOnRatesToken(rendered.html);
+  const rendered = await renderBlogSegments(body, { cta: post.data.cta });
+  segments = rendered.segments;
+  hasInlineCta = rendered.hasInlineCta;
 } else {
   ({ Content } = await render(post));
 }
 
 const showEndCta = post.data.showCta !== false;
 const cta = post.data.cta ?? {};
+const hasCustomEndCta = Boolean(
+  cta.title || cta.body || cta.primaryLabel || cta.primaryHref || cta.secondaryLabel || cta.secondaryHref
+);
+const renderEndCta = showEndCta && (!hasInlineCta || hasCustomEndCta);
+
+const proseClass =
+  "article-prose text-brand-text text-base sm:text-lg leading-relaxed space-y-5 " +
+  "[&_h2]:font-display [&_h2]:text-xl [&_h2]:sm:text-2xl [&_h2]:font-semibold [&_h2]:text-brand-text [&_h2]:mt-10 [&_h2]:mb-4 " +
+  "[&_h3]:text-lg [&_h3]:sm:text-xl [&_h3]:font-bold [&_h3]:text-brand-text [&_h3]:mt-8 [&_h3]:mb-3 " +
+  "[&_h4]:font-bold [&_h4]:text-brand-text [&_h4]:mt-6 [&_h4]:mb-2 " +
+  "[&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_li]:text-brand-text " +
+  "[&_a]:text-brand-navy-light [&_a]:underline hover:[&_a]:text-brand-gold " +
+  "[&_p]:text-brand-text [&_strong]:font-semibold";
 ---
 
 <BlogLayout title={post.data.title} date={post.data.date} image={post.data.image} category={post.data.category}>
   {usesShortcodes ? (
-    <>
-      {parts.map((part, index) => (
-        <>
-          {part && <div set:html={part} />}
-          {hasRatesEmbed && index < parts.length - 1 && (
-            <div class="not-prose my-10 rounded-2xl border border-brand-navy/10 bg-brand-cream/70 p-5 sm:p-7">
-              <RateTable compact />
-            </div>
-          )}
-        </>
-      ))}
-    </>
+    segments.map((segment) => {
+      if (segment.type === "rates") {
+        return (
+          <div class="blog-embed not-prose my-10 rounded-2xl border border-brand-navy/10 bg-brand-cream p-5 sm:p-7">
+            <RateTable compact />
+          </div>
+        );
+      }
+      if (segment.type === "cta") {
+        return (
+          <BlogCta
+            eyebrow={segment.cta.eyebrow}
+            title={segment.cta.title}
+            body={segment.cta.body}
+            primaryLabel={segment.cta.primaryLabel}
+            primaryHref={segment.cta.primaryHref}
+            secondaryLabel={segment.cta.secondaryLabel}
+            secondaryHref={segment.cta.secondaryHref}
+          />
+        );
+      }
+      return <div class={proseClass} set:html={segment.html} />;
+    })
   ) : (
-    Content && <Content />
+    Content && (
+      <div class={proseClass}>
+        <Content />
+      </div>
+    )
   )}
 
-  {showEndCta && (
+  {renderEndCta && (
     <BlogCta
       eyebrow={cta.eyebrow}
       title={cta.title}

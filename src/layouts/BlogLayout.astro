@@ -23,31 +23,28 @@ const { title, date, image, category } = Astro.props;
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet" />
   </head>
   <body class="min-h-screen flex flex-col bg-brand-warm">
-    <!-- Skip Navigation Link (WCAG 2.4.1) -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
-    <!-- Top Utility Bar -->
     <div class="bg-brand-navy text-white text-xs">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-end h-9">
         <div class="flex items-center gap-5">
-          <a href="https://tgbtest2.pages.dev/" class="hover:text-brand-gold transition-colors">Home</a>
-          <a href="https://tgbtest2.pages.dev/blog/" class="hover:text-brand-gold transition-colors">Blog</a>
+          <a href="/" class="hover:text-brand-gold transition-colors">Home</a>
+          <a href="/blog/" class="hover:text-brand-gold transition-colors">Blog</a>
         </div>
       </div>
     </div>
 
-    <!-- Main Header -->
     <header class="bg-white border-b border-gray-100 sticky top-0 z-50">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16 lg:h-20">
           <div class="flex flex-col items-start gap-0">
-            <a href="https://tgbtest2.pages.dev/" class="flex items-center group">
+            <a href="/" class="flex items-center group">
               <img src="/logo-navy.svg" alt="Texas Gulf Bank" class="h-8 lg:h-10 w-auto" />
             </a>
             <FdicDigitalSign />
           </div>
           <nav class="hidden lg:flex items-center gap-1">
-            <a href="https://tgbtest2.pages.dev/" class="px-4 py-2 text-sm font-medium text-brand-text hover:text-brand-navy-light rounded-lg hover:bg-gray-50 transition-colors">Home</a>
-            <a href="https://tgbtest2.pages.dev/blog/" class="px-4 py-2 text-sm font-medium text-brand-gold-dark bg-brand-gold-pale/30 rounded-lg transition-colors">Blog</a>
+            <a href="/" class="px-4 py-2 text-sm font-medium text-brand-text hover:text-brand-navy-light rounded-lg hover:bg-gray-50 transition-colors">Home</a>
+            <a href="/blog/" class="px-4 py-2 text-sm font-medium text-brand-gold-dark bg-brand-gold-pale/30 rounded-lg transition-colors">Blog</a>
           </nav>
         </div>
       </div>
@@ -64,50 +61,26 @@ const { title, date, image, category } = Astro.props;
           {category && <span class="bg-brand-gold-pale text-brand-gold-dark font-semibold px-2.5 py-1 rounded-full text-xs">{category}</span>}
           <time datetime={date}>{date}</time>
         </div>
-        <h1 class="text-3xl sm:text-4xl font-bold text-brand-text leading-tight mb-8 font-sans">{title}</h1>
-        <div class="text-brand-text text-base sm:text-lg leading-relaxed space-y-5 [&_h2]:text-xl [&_h2]:sm:text-2xl [&_h2]:font-bold [&_h2]:text-brand-text [&_h2]:mt-10 [&_h2]:mb-4 [&_h3]:text-lg [&_h3]:sm:text-xl [&_h3]:font-bold [&_h3]:text-brand-text [&_h3]:mt-8 [&_h3]:mb-3 [&_h4]:font-bold [&_h4]:text-brand-text [&_h4]:mt-6 [&_h4]:mb-2 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_li]:text-brand-text [&_a]:text-brand-navy-light [&_a]:underline [&_a:hover]:text-brand-gold [&_p]:text-brand-text [&_strong]:font-semibold">
-          <slot />
-        </div>
+        <h1 class="font-display text-3xl sm:text-4xl font-semibold text-brand-text leading-tight mb-8">{title}</h1>
+
+        <!--
+          Page content supplies its own .article-prose wrappers around markdown,
+          and places promo embeds outside those wrappers so CTA/rate colors win.
+        -->
+        <slot />
       </article>
     </main>
 
-    <!-- Footer -->
     <footer class="bg-brand-navy text-white mt-auto">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p class="text-sm text-gray-400">© 2025 Texas Gulf Bank N.A.</p>
+          <p class="text-sm text-gray-400">© 2026 Texas Gulf Bank N.A.</p>
           <div class="flex items-center gap-6 text-sm">
-            <a href="https://tgbtest2.pages.dev/" class="text-gray-300 hover:text-white transition-colors">Home</a>
-            <a href="https://tgbtest2.pages.dev/blog/" class="text-gray-300 hover:text-white transition-colors">All Posts</a>
+            <a href="/" class="text-gray-300 hover:text-white transition-colors">Home</a>
+            <a href="/blog/" class="text-gray-300 hover:text-white transition-colors">All Posts</a>
           </div>
         </div>
       </div>
     </footer>
   </body>
 </html>
-
-<script>
-  // Scroll-triggered animation observer
-  if (typeof IntersectionObserver !== 'undefined') {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
-
-    document.addEventListener('DOMContentLoaded', () => {
-      document.querySelectorAll('.animate-fade-in, .animate-fade-in-left, .animate-fade-in-right, .animate-scale-in').forEach(el => {
-        observer.observe(el);
-      });
-    });
-  } else {
-    document.addEventListener('DOMContentLoaded', () => {
-      document.querySelectorAll('.animate-fade-in, .animate-fade-in-left, .animate-fade-in-right, .animate-scale-in').forEach(el => {
-        el.classList.add('visible');
-      });
-    });
-  }
-</script>

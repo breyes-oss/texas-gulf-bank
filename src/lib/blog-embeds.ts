@@ -10,6 +10,11 @@ export type BlogCtaData = {
   secondaryHref?: string;
 };
 
+export type BlogSegment =
+  | { type: "html"; html: string }
+  | { type: "rates" }
+  | { type: "cta"; cta: BlogCtaData };
+
 function escapeHtml(value: string): string {
   return value
     .replaceAll("&", "&" + "amp;")
@@ -29,86 +34,56 @@ function parseAttrs(raw: string): Record<string, string> {
   return attrs;
 }
 
-function renderCtaHtml(attrs: Record<string, string>, fallback?: BlogCtaData): string {
-  const eyebrow = attrs.eyebrow ?? fallback?.eyebrow ?? "Next step";
-  const title = attrs.title ?? fallback?.title ?? "Talk with a local Texas Gulf Banker";
-  const body =
-    attrs.body ??
-    fallback?.body ??
-    "Whether you need a branch visit or help choosing the right account, our local bankers are ready.";
-  const primaryLabel = attrs.primaryLabel ?? fallback?.primaryLabel ?? "Find a Branch";
-  const primaryHref =
-    attrs.primaryHref ?? fallback?.primaryHref ?? "https://www.texasgulfbank.com/locations/";
-  const secondaryLabel = attrs.secondaryLabel ?? fallback?.secondaryLabel ?? "Call 800.467.7216";
-  const secondaryHref = attrs.secondaryHref ?? fallback?.secondaryHref ?? "tel:8004677216";
-
-  return [
-    '<aside class="not-prose my-10 rounded-2xl border border-brand-gold/25 bg-brand-navy text-white p-6 sm:p-8 shadow-[0_16px_40px_rgba(10,22,40,0.12)]">',
-    eyebrow
-      ? '<p class="text-xs font-semibold uppercase tracking-[0.18em] text-brand-gold-light mb-3">' +
-        escapeHtml(eyebrow) +
-        "</p>"
-      : "",
-    title
-      ? '<h2 class="font-display text-2xl sm:text-3xl font-semibold leading-tight text-balance">' +
-        escapeHtml(title) +
-        "</h2>"
-      : "",
-    body
-      ? '<p class="mt-3 text-white/80 leading-relaxed max-w-2xl">' + escapeHtml(body) + "</p>"
-      : "",
-    '<div class="mt-6 flex flex-col sm:flex-row gap-3">',
-    primaryLabel && primaryHref
-      ? '<a href="' +
-        escapeHtml(primaryHref) +
-        '" class="inline-flex items-center justify-center gap-2 bg-brand-gold text-brand-navy px-5 py-3 rounded-lg text-sm font-bold hover:bg-brand-gold-light transition-colors">' +
-        escapeHtml(primaryLabel) +
-        "</a>"
-      : "",
-    secondaryLabel && secondaryHref
-      ? '<a href="' +
-        escapeHtml(secondaryHref) +
-        '" class="inline-flex items-center justify-center gap-2 border border-white/30 text-white px-5 py-3 rounded-lg text-sm font-semibold hover:bg-white/10 transition-colors">' +
-        escapeHtml(secondaryLabel) +
-        "</a>"
-      : "",
-    "</div>",
-    "</aside>",
-  ].join("");
+function normalizeCta(attrs: Record<string, string>, fallback?: BlogCtaData): BlogCtaData {
+  return {
+    eyebrow: attrs.eyebrow ?? fallback?.eyebrow,
+    title: attrs.title ?? fallback?.title,
+    body: attrs.body ?? fallback?.body,
+    primaryLabel: attrs.primaryLabel ?? fallback?.primaryLabel,
+    primaryHref: attrs.primaryHref ?? fallback?.primaryHref,
+    secondaryLabel: attrs.secondaryLabel ?? fallback?.secondaryLabel,
+    secondaryHref: attrs.secondaryHref ?? fallback?.secondaryHref,
+  };
 }
 
 const RATES_TOKEN = "%%RATES_TABLE%%";
 const CTA_TOKEN = (n: number) => "%%CTA_BLOCK_" + n + "%%";
 
 function unwrapParagraphToken(html: string, token: string): string {
-  const wrapped = "<p>" + token + "</p>";
-  return html.split(wrapped).join(token).split("<p>" + token + "\n</p>").join(token);
+  return html
+    .split("<p>" + token + "</p>")
+    .join(token)
+    .split("<p>" + token + "\n</p>")
+    .join(token);
 }
 
 /**
- * Convert blog markdown + shortcodes into HTML.
- * Shortcodes (on their own line recommended):
+ * Convert blog markdown + shortcodes into ordered segments.
+ * Shortcodes (prefer own line):
  *   {{rates}}
  *   {{cta}}
  *   {{cta title="..." body="..." primaryLabel="..." primaryHref="..." secondaryLabel="..." secondaryHref="..."}}
+ *
+ * CTA/rate embeds are returned as structured segments so Astro can render
+ * them outside article prose styles (avoids color cascade bugs).
  */
-export async function renderBlogHtml(
+export async function renderBlogSegments(
   markdown: string,
   options?: { cta?: BlogCtaData }
-): Promise<{ html: string; hasRatesEmbed: boolean }> {
-  const tokens: string[] = [];
-  let hasRatesEmbed = false;
+): Promise<{ segments: BlogSegment[]; hasInlineCta: boolean }> {
+  const ctaBlocks: BlogCtaData[] = [];
+  let hasInlineCta = false;
 
   const withPlaceholders = markdown.replace(
     /\{\{\s*(rates|cta)((?:\s+[a-zA-Z][\w-]*\s*=\s*"[^"]*")*)\s*\}\}/g,
     (_full, kind: string, rawAttrs: string) => {
       if (kind === "rates") {
-        hasRatesEmbed = true;
         return "\n\n" + RATES_TOKEN + "\n\n";
       }
+      hasInlineCta = true;
       const attrs = parseAttrs(rawAttrs || "");
-      const token = CTA_TOKEN(tokens.length);
-      tokens.push(renderCtaHtml(attrs, options?.cta));
+      const token = CTA_TOKEN(ctaBlocks.length);
+      ctaBlocks.push(normalizeCta(attrs, options?.cta));
       return "\n\n" + token + "\n\n";
     }
   );
@@ -119,17 +94,35 @@ export async function renderBlogHtml(
   });
 
   html = unwrapParagraphToken(html, RATES_TOKEN);
-  tokens.forEach((_block, index) => {
+  ctaBlocks.forEach((_block, index) => {
     html = unwrapParagraphToken(html, CTA_TOKEN(index));
   });
 
-  tokens.forEach((block, index) => {
-    html = html.split(CTA_TOKEN(index)).join(block);
-  });
+  // Tokenize into ordered segments on rates + CTA markers.
+  const splitter = /(%%RATES_TABLE%%|%%CTA_BLOCK_\d+%%)/g;
+  const chunks = html.split(splitter).filter((chunk) => chunk.length > 0);
+  const segments: BlogSegment[] = [];
 
-  return { html, hasRatesEmbed };
+  for (const chunk of chunks) {
+    if (chunk === RATES_TOKEN) {
+      segments.push({ type: "rates" });
+      continue;
+    }
+    const ctaMatch = /^%%CTA_BLOCK_(\d+)%%$/.exec(chunk);
+    if (ctaMatch) {
+      const idx = Number(ctaMatch[1]);
+      segments.push({ type: "cta", cta: ctaBlocks[idx] || {} });
+      continue;
+    }
+    // Skip empty HTML husks from split points.
+    if (chunk.replace(/<p>\s*<\/p>/g, "").trim() === "") continue;
+    segments.push({ type: "html", html: chunk });
+  }
+
+  return { segments, hasInlineCta };
 }
 
-export function splitOnRatesToken(html: string): string[] {
-  return html.split(RATES_TOKEN);
+// Keep a tiny helper used by any older import path.
+export function escapeAttr(value: string): string {
+  return escapeHtml(value);
 }
