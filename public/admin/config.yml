@@ -1,3 +1,5 @@
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
+
 backend:
   name: github
   repo: breyes-oss/texas-gulf-bank
@@ -8,57 +10,61 @@ backend:
 
 media_folder: public/blog
 public_folder: /blog
-publish_mode: editorial_workflow
+
+# Editorial workflow is not yet supported in Sveltia CMS.
+# Content publishes as direct commits to the configured branch.
 
 collections:
-  - name: "blog"
-    label: "Blog Posts"
-    label_singular: "Blog Post"
-    folder: "src/content/blog"
+  - name: blog
+    label: Blog Posts
+    label_singular: Blog Post
+    folder: src/content/blog
     create: true
     delete: true
-    preview_path: "blog/{{slug}}"
+    slug: "{{slug}}"
+    preview_path: blog/{{slug}}
     extension: md
     format: frontmatter
     fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Publish Date", name: "date", widget: "datetime", format: "MMMM D, YYYY" }
-      - { label: "Featured Image", name: "image", widget: "image", required: false }
-      - { label: "Category", name: "category", widget: "select", options: ["Business", "Community", "Security", "Personal"] }
-      - { label: "Excerpt", name: "excerpt", widget: "text", required: false }
-      - { label: "Body", name: "body", widget: "markdown" }
+      - { label: Title, name: title, widget: string }
+      - { label: Publish Date, name: date, widget: datetime, format: MMMM D, YYYY }
+      - { label: Featured Image, name: image, widget: image, required: false }
+      - { label: Category, name: category, widget: select, options: [Business, Community, Security, Personal] }
+      - { label: Excerpt, name: excerpt, widget: text, required: false }
+      - { label: Body, name: body, widget: markdown }
 
-  - name: "pages"
-    label: "Pages"
-    label_singular: "Page"
-    folder: "src/content/pages"
+  - name: pages
+    label: Pages
+    label_singular: Page
+    folder: src/content/pages
     create: true
     delete: false
     extension: yaml
     format: yaml
+    identifier_field: title
     fields:
-      - { label: "Title", name: "title", widget: "string" }
+      - { label: Title, name: title, widget: string }
       # Hero
-      - { label: "Hero Tagline", name: "hero_tagline", widget: "string", required: false }
-      - { label: "Hero Headline", name: "hero_headline", widget: "string", required: false }
-      - { label: "Hero Headline Accent", name: "hero_headline_accent", widget: "string", required: false }
-      - { label: "Hero Subtext", name: "hero_subtext", widget: "text", required: false }
-      - { label: "Hero Primary Button", name: "hero_primary_cta", widget: "string", required: false }
-      - { label: "Hero Secondary Button", name: "hero_secondary_cta", widget: "string", required: false }
+      - { label: Hero Tagline, name: hero_tagline, widget: string, required: false }
+      - { label: Hero Headline, name: hero_headline, widget: string, required: false }
+      - { label: Hero Headline Accent, name: hero_headline_accent, widget: string, required: false }
+      - { label: Hero Subtext, name: hero_subtext, widget: text, required: false }
+      - { label: Hero Primary Button, name: hero_primary_cta, widget: string, required: false }
+      - { label: Hero Secondary Button, name: hero_secondary_cta, widget: string, required: false }
       # Story
-      - { label: "Story Headline", name: "story_headline", widget: "string", required: false }
-      - { label: "Story Headline Accent", name: "story_headline_accent", widget: "string", required: false }
-      - { label: "Story Body 1", name: "story_body_1", widget: "text", required: false }
-      - { label: "Story Body 2", name: "story_body_2", widget: "text", required: false }
-      - { label: "Stat 1 Number", name: "story_stat_1_number", widget: "string", required: false }
-      - { label: "Stat 1 Label", name: "story_stat_1_label", widget: "string", required: false }
-      - { label: "Stat 2 Number", name: "story_stat_2_number", widget: "string", required: false }
-      - { label: "Stat 2 Label", name: "story_stat_2_label", widget: "string", required: false }
-      - { label: "Stat 3 Number", name: "story_stat_3_number", widget: "string", required: false }
-      - { label: "Stat 3 Label", name: "story_stat_3_label", widget: "string", required: false }
+      - { label: Story Headline, name: story_headline, widget: string, required: false }
+      - { label: Story Headline Accent, name: story_headline_accent, widget: string, required: false }
+      - { label: Story Body 1, name: story_body_1, widget: text, required: false }
+      - { label: Story Body 2, name: story_body_2, widget: text, required: false }
+      - { label: Stat 1 Number, name: story_stat_1_number, widget: string, required: false }
+      - { label: Stat 1 Label, name: story_stat_1_label, widget: string, required: false }
+      - { label: Stat 2 Number, name: story_stat_2_number, widget: string, required: false }
+      - { label: Stat 2 Label, name: story_stat_2_label, widget: string, required: false }
+      - { label: Stat 3 Number, name: story_stat_3_number, widget: string, required: false }
+      - { label: Stat 3 Label, name: story_stat_3_label, widget: string, required: false }
       # CTA
-      - { label: "CTA Headline", name: "cta_headline", widget: "string", required: false }
-      - { label: "CTA Headline Accent", name: "cta_headline_accent", widget: "string", required: false }
-      - { label: "CTA Subtext", name: "cta_subtext", widget: "text", required: false }
-      - { label: "CTA Primary Button", name: "cta_primary_button", widget: "string", required: false }
-      - { label: "CTA Phone", name: "cta_phone", widget: "string", required: false }
+      - { label: CTA Headline, name: cta_headline, widget: string, required: false }
+      - { label: CTA Headline Accent, name: cta_headline_accent, widget: string, required: false }
+      - { label: CTA Subtext, name: cta_subtext, widget: text, required: false }
+      - { label: CTA Primary Button, name: cta_primary_button, widget: string, required: false }
+      - { label: CTA Phone, name: cta_phone, widget: string, required: false }

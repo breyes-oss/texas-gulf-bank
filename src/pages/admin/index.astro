@@ -1,0 +1,17 @@
+---
+// Sveltia CMS admin shell — served at /admin/ (and /admin).
+// Config lives at public/admin/config.yml → /admin/config.yml
+export const prerender = true;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <title>Content Manager — Texas Gulf Bank</title>
+    <!-- Do not add type="module" or a separate CSS link for Sveltia CDN builds. -->
+    <script is:inline src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js"></script>
+  </head>
+  <body></body>
+</html>
