@@ -31,7 +31,29 @@ collections:
       - { label: Featured Image, name: image, widget: image, required: false }
       - { label: Category, name: category, widget: select, options: [Business, Community, Security, Personal] }
       - { label: Excerpt, name: excerpt, widget: text, required: false }
-      - { label: Body, name: body, widget: markdown }
+      - label: Show end-of-article CTA
+        name: showCta
+        widget: boolean
+        default: true
+        required: false
+        hint: "Adds a call-to-action card after the article body."
+      - label: End-of-article CTA
+        name: cta
+        widget: object
+        required: false
+        collapsed: true
+        fields:
+          - { label: Eyebrow, name: eyebrow, widget: string, required: false, default: "Next step" }
+          - { label: Title, name: title, widget: string, required: false }
+          - { label: Body, name: body, widget: text, required: false }
+          - { label: Primary button label, name: primaryLabel, widget: string, required: false, default: "Find a Branch" }
+          - { label: Primary button URL, name: primaryHref, widget: string, required: false, default: "https://www.texasgulfbank.com/locations/" }
+          - { label: Secondary button label, name: secondaryLabel, widget: string, required: false, default: "Call 800.467.7216" }
+          - { label: Secondary button URL, name: secondaryHref, widget: string, required: false, default: "tel:8004677216" }
+      - label: Body
+        name: body
+        widget: markdown
+        hint: "Optional shortcodes — on their own line: {{rates}} for the live rate table, {{cta}} for an in-body CTA. Customize with attributes like {{cta title=\"Open an account\" primaryLabel=\"Get started\" primaryHref=\"https://...\"}}"
 
   - name: pages
     label: Pages
@@ -44,14 +66,12 @@ collections:
     identifier_field: title
     fields:
       - { label: Title, name: title, widget: string }
-      # Hero
       - { label: Hero Tagline, name: hero_tagline, widget: string, required: false }
       - { label: Hero Headline, name: hero_headline, widget: string, required: false }
       - { label: Hero Headline Accent, name: hero_headline_accent, widget: string, required: false }
       - { label: Hero Subtext, name: hero_subtext, widget: text, required: false }
       - { label: Hero Primary Button, name: hero_primary_cta, widget: string, required: false }
       - { label: Hero Secondary Button, name: hero_secondary_cta, widget: string, required: false }
-      # Story
       - { label: Story Headline, name: story_headline, widget: string, required: false }
       - { label: Story Headline Accent, name: story_headline_accent, widget: string, required: false }
       - { label: Story Body 1, name: story_body_1, widget: text, required: false }
@@ -62,9 +82,31 @@ collections:
       - { label: Stat 2 Label, name: story_stat_2_label, widget: string, required: false }
       - { label: Stat 3 Number, name: story_stat_3_number, widget: string, required: false }
       - { label: Stat 3 Label, name: story_stat_3_label, widget: string, required: false }
-      # CTA
       - { label: CTA Headline, name: cta_headline, widget: string, required: false }
       - { label: CTA Headline Accent, name: cta_headline_accent, widget: string, required: false }
       - { label: CTA Subtext, name: cta_subtext, widget: text, required: false }
       - { label: CTA Primary Button, name: cta_primary_button, widget: string, required: false }
       - { label: CTA Phone, name: cta_phone, widget: string, required: false }
+
+  - name: data
+    label: Site Data
+    label_singular: Data file
+    folder: src/content/data
+    create: false
+    delete: false
+    extension: yaml
+    format: yaml
+    identifier_field: title
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Published date label, name: published, widget: string, required: false, hint: "Shown as “Featured APYs published …”" }
+      - { label: Disclaimer, name: disclaimer, widget: text, required: false }
+      - { label: Full rates URL, name: full_rates_url, widget: string, required: false }
+      - label: Rate rows
+        name: items
+        widget: list
+        summary: "{{fields.name}} — {{fields.value}}"
+        fields:
+          - { label: Product name, name: name, widget: string }
+          - { label: Detail / minimum, name: detail, widget: string, required: false }
+          - { label: APY value, name: value, widget: string, hint: "Example: 3.45%" }

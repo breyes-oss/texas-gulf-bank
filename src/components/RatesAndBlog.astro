@@ -1,16 +1,10 @@
 ---
 import { getCollection } from "astro:content";
+import RateTable from "./RateTable.astro";
 
 const allPosts = await getCollection("blog");
 allPosts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
 const latestPosts = allPosts.slice(0, 3);
-
-const rates = [
-  { name: "12-Month CD", detail: "$2,500 minimum", value: "3.45%" },
-  { name: "18-Month CD", detail: "$2,500 minimum", value: "3.30%" },
-  { name: "Gulf Advantage Checking", detail: "Requirements apply", value: "0.80%" },
-  { name: "Money Market", detail: "$1M+ tier", value: "1.66%" }
-];
 ---
 
 <section class="bg-brand-cream py-20 lg:py-28">
@@ -24,28 +18,9 @@ const rates = [
         <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-semibold text-brand-text leading-[1.08] tracking-tight text-balance">
           Make more of what<br /><span class="text-brand-navy-light">you've built.</span>
         </h2>
-        <p class="mt-4 text-brand-muted text-base">Featured annual percentage yields published July 13, 2026.</p>
-
-        <div class="mt-8 border-y border-brand-navy/15">
-          {rates.map((rate) => (
-            <div class="grid grid-cols-[1fr_auto] gap-5 items-center py-5 border-b last:border-b-0 border-brand-navy/10">
-              <div>
-                <p class="font-semibold text-brand-text">{rate.name}</p>
-                <p class="text-sm text-brand-muted mt-0.5">{rate.detail}</p>
-              </div>
-              <div class="text-right">
-                <p class="font-display text-3xl font-semibold text-brand-navy-light">{rate.value}</p>
-                <p class="text-[11px] font-semibold tracking-[0.16em] text-brand-muted">APY</p>
-              </div>
-            </div>
-          ))}
+        <div class="mt-8">
+          <RateTable showHeader={false} />
         </div>
-
-        <p class="mt-5 text-xs text-brand-muted leading-relaxed">Rates may change. Fees may reduce earnings. CD early-withdrawal penalties may apply. See the complete rate sheet for terms and account requirements.</p>
-        <a href="https://www.texasgulfbank.com/investment-rate-index-time-and-non-time-accounts/" class="inline-flex items-center gap-2 mt-6 text-brand-navy-light font-semibold hover:text-brand-gold-dark transition-colors text-sm">
-          View complete rates and disclosures
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-        </a>
       </div>
 
       <div class="lg:col-span-2 animate-fade-in-right">

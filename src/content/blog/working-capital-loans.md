@@ -4,6 +4,13 @@ date: "April 15, 2026"
 image: "/blog/working-capital.jpg"
 category: "Business"
 excerpt: "Seasonal revenue cycles are a reality for many businesses. Working capital loans help bridge the gap so you can operate consistently year-round."
+cta:
+  title: "Ready to talk working capital?"
+  body: "Meet with a local loan officer who understands Gulf Coast business cycles and can help structure financing around your cash flow."
+  primaryLabel: "Contact a banker"
+  primaryHref: "https://www.texasgulfbank.com/contact-texas-gulf-bank/"
+  secondaryLabel: "Find a Branch"
+  secondaryHref: "https://www.texasgulfbank.com/locations/"
 ---
 
 Seasonal revenue cycles are a reality for many businesses in the Southeast Texas Gulf Coast region. You may experience strong periods of demand followed by slower months, or your revenue may depend on project timelines and client payment schedules.
@@ -21,6 +28,12 @@ During slower periods, your business may still need to maintain payroll, cover r
 - **Construction:** Support payroll between draws, cover upfront material costs, and manage delays without slowing operations.
 - **Manufacturing:** Purchase materials, maintain production schedules, and manage the gap between delivery and customer payment.
 - **Professional Services:** Bridge gaps between invoicing and collections while receivables are outstanding.
+
+### Competitive deposit options while you grow
+
+Some owners prefer to keep operating reserves in a high-visibility deposit product while they plan the next financing step. Current featured rates:
+
+{{rates}}
 
 ### How to Prepare to Apply
 

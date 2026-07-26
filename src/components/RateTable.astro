@@ -1,0 +1,70 @@
+---
+import { getEntry } from "astro:content";
+
+interface Props {
+  compact?: boolean;
+  showHeader?: boolean;
+  class?: string;
+}
+
+const { compact = false, showHeader = true, class: className = "" } = Astro.props;
+const entry = await getEntry("data", "rates");
+const rates = entry?.data;
+
+if (!rates) {
+  throw new Error("Missing rates data at src/content/data/rates.yaml");
+}
+---
+
+<div class:list={["rate-table", className]}>
+  {showHeader && (
+    <div class:list={[compact ? "mb-4" : "mb-6"]}>
+      <p class="text-xs font-semibold uppercase tracking-[0.16em] text-brand-gold-dark">Current Rates</p>
+      {rates.published && (
+        <p class:list={[compact ? "mt-1 text-xs text-brand-muted" : "mt-2 text-sm text-brand-muted"]}>
+          Featured annual percentage yields published {rates.published}.
+        </p>
+      )}
+    </div>
+  )}
+
+  <div class:list={[compact ? "border-y border-brand-navy/15" : "border-y border-brand-navy/15"]}>
+    {rates.items.map((rate) => (
+      <div class:list={[
+        "grid grid-cols-[1fr_auto] gap-5 items-center border-b last:border-b-0 border-brand-navy/10",
+        compact ? "py-3.5" : "py-5"
+      ]}>
+        <div>
+          <p class:list={["font-semibold text-brand-text", compact && "text-sm"]}>{rate.name}</p>
+          {rate.detail && <p class="text-sm text-brand-muted mt-0.5">{rate.detail}</p>}
+        </div>
+        <div class="text-right">
+          <p class:list={[
+            "font-display font-semibold text-brand-navy-light",
+            compact ? "text-2xl" : "text-3xl"
+          ]}>{rate.value}</p>
+          <p class="text-[11px] font-semibold tracking-[0.16em] text-brand-muted">APY</p>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  {rates.disclaimer && (
+    <p class:list={["text-brand-muted leading-relaxed", compact ? "mt-3 text-[11px]" : "mt-5 text-xs"]}>
+      {rates.disclaimer}
+    </p>
+  )}
+
+  {rates.full_rates_url && (
+    <a
+      href={rates.full_rates_url}
+      class:list={[
+        "inline-flex items-center gap-2 font-semibold text-brand-navy-light hover:text-brand-gold-dark transition-colors",
+        compact ? "mt-4 text-sm" : "mt-6 text-sm"
+      ]}
+    >
+      View complete rates and disclosures
+      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+    </a>
+  )}
+</div>

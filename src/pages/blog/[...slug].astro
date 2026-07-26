@@ -1,6 +1,9 @@
 ---
 import { getCollection, render } from "astro:content";
 import BlogLayout from "../../layouts/BlogLayout.astro";
+import BlogCta from "../../components/BlogCta.astro";
+import RateTable from "../../components/RateTable.astro";
+import { renderBlogHtml, splitOnRatesToken } from "../../lib/blog-embeds";
 
 export async function getStaticPaths() {
   const blogPosts = await getCollection("blog");
@@ -11,9 +14,52 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
-const { Content } = await render(post);
+const body = post.body ?? "";
+const usesShortcodes = /\{\{\s*(rates|cta)\b/.test(body);
+
+let parts: string[] = [];
+let hasRatesEmbed = false;
+let Content: any = null;
+
+if (usesShortcodes) {
+  const rendered = await renderBlogHtml(body, { cta: post.data.cta });
+  hasRatesEmbed = rendered.hasRatesEmbed;
+  parts = splitOnRatesToken(rendered.html);
+} else {
+  ({ Content } = await render(post));
+}
+
+const showEndCta = post.data.showCta !== false;
+const cta = post.data.cta ?? {};
 ---
 
 <BlogLayout title={post.data.title} date={post.data.date} image={post.data.image} category={post.data.category}>
-  <Content />
+  {usesShortcodes ? (
+    <>
+      {parts.map((part, index) => (
+        <>
+          {part && <div set:html={part} />}
+          {hasRatesEmbed && index < parts.length - 1 && (
+            <div class="not-prose my-10 rounded-2xl border border-brand-navy/10 bg-brand-cream/70 p-5 sm:p-7">
+              <RateTable compact />
+            </div>
+          )}
+        </>
+      ))}
+    </>
+  ) : (
+    Content && <Content />
+  )}
+
+  {showEndCta && (
+    <BlogCta
+      eyebrow={cta.eyebrow}
+      title={cta.title}
+      body={cta.body}
+      primaryLabel={cta.primaryLabel}
+      primaryHref={cta.primaryHref}
+      secondaryLabel={cta.secondaryLabel}
+      secondaryHref={cta.secondaryHref}
+    />
+  )}
 </BlogLayout>
