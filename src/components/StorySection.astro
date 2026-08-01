@@ -1,84 +1,52 @@
 ---
-// StorySection.astro — Brand story with stats
+// StorySection.astro — Brand story with a real, unposed feel
 const { home } = Astro.props;
 ---
 
 <section class="bg-white py-20 lg:py-28">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-      <!-- Left: Story text -->
-      <div class="animate-fade-in-left">
-        <div class="inline-flex items-center gap-2 text-brand-gold-dark text-xs font-semibold uppercase tracking-widest mb-4">
-          <span class="w-8 h-px bg-brand-gold-dark"></span>
-          Our Story
-        </div>
+    <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+      <div class="lg:col-span-7">
         <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-semibold text-brand-text leading-[1.08] tracking-tight text-balance">
-          {home.story_headline || "Over a Century of"}
-          <span class="block text-brand-navy-light">{home.story_headline_accent || "Texas Banking"}</span>
+          {home.story_headline || "Over a century of"}
+          <span class="block text-brand-navy-light">{home.story_headline_accent || "Texas banking"}</span>
         </h2>
-        <p class="mt-6 text-brand-muted text-base sm:text-lg leading-relaxed">
+        <p class="mt-6 text-brand-muted text-base sm:text-lg leading-relaxed max-w-xl">
           {home.story_body_1 || "Texas Gulf Bank is an independently owned and operated community bank with locations in Harris, Galveston, and Brazoria counties. For over 100 years, we've been a strong and financially secure member of the Texas Gulf Coast community."}
         </p>
-        <p class="mt-4 text-brand-muted text-base sm:text-lg leading-relaxed">
+        <p class="mt-4 text-brand-muted text-base sm:text-lg leading-relaxed max-w-xl">
           {home.story_body_2 || "We pride ourselves on personal relationships — you'll always speak face-to-face with a local decision-maker. Our team members live and work in the same communities where our branches are located."}
         </p>
 
-        <!-- Stats -->
-        <div class="mt-10 grid grid-cols-3 gap-6 sm:gap-10">
+        <div class="mt-10 grid grid-cols-3 gap-6 sm:gap-10 border-t border-brand-navy/10 pt-8">
           <div>
             <p class="text-3xl sm:text-4xl font-bold text-brand-navy-light">{home.story_stat_1_number || "100+"}</p>
-            <p class="text-sm text-brand-muted mt-1">{home.story_stat_1_label || "Years Serving Texas"}</p>
+            <p class="text-sm text-brand-muted mt-1">{home.story_stat_1_label || "Years serving Texas"}</p>
           </div>
           <div>
             <p class="text-3xl sm:text-4xl font-bold text-brand-navy-light">{home.story_stat_2_number || "12"}</p>
-            <p class="text-sm text-brand-muted mt-1">{home.story_stat_2_label || "Community Branches"}</p>
+            <p class="text-sm text-brand-muted mt-1">{home.story_stat_2_label || "Community branches"}</p>
           </div>
           <div>
             <p class="text-3xl sm:text-4xl font-bold text-brand-navy-light">{home.story_stat_3_number || "3"}</p>
-            <p class="text-sm text-brand-muted mt-1">{home.story_stat_3_label || "Coastal Counties"}</p>
+            <p class="text-sm text-brand-muted mt-1">{home.story_stat_3_label || "Coastal counties"}</p>
           </div>
         </div>
 
-        <a href="https://www.texasgulfbank.com/about-texas-gulf-bank/" class="inline-flex items-center gap-2 mt-10 text-brand-navy-light font-semibold hover:text-brand-gold transition-colors">
-          Read Our Full Story
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+        <a href="https://www.texasgulfbank.com/about-texas-gulf-bank/" class="inline-block mt-10 text-brand-navy-light font-semibold hover:text-brand-gold transition-colors underline underline-offset-4">
+          Read our full story
         </a>
       </div>
 
-      <!-- Right: Visual card -->
-      <div class="relative animate-fade-in-right">
-        <div class="aspect-[4/3] rounded-2xl overflow-hidden bg-gradient-to-br from-brand-navy to-brand-navy-light shadow-xl">
-          <!-- Decorative pattern -->
-          <div class="absolute inset-0 opacity-10">
-            <svg class="w-full h-full" viewBox="0 0 600 450">
-              <defs>
-                <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                  <path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" stroke-width="0.5"/>
-                </pattern>
-              </defs>
-              <rect width="600" height="450" fill="url(#grid)"/>
-            </svg>
-          </div>
-
-          <!-- Content inside the card -->
-          <div class="relative z-10 p-8 sm:p-12 flex flex-col justify-between h-full">
-            <div>
-              <div class="w-14 h-14 bg-brand-gold/20 rounded-xl flex items-center justify-center mb-6">
-                <svg class="w-7 h-7 text-brand-gold" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-              </div>
-              <blockquote class="text-white/90 text-lg sm:text-xl leading-relaxed italic">
-                "Building relationships that last generations — that's what community banking is all about."
-              </blockquote>
-            </div>
-            <div class="mt-8 pt-6 border-t border-white/10">
-              <p class="text-white font-semibold">The Texas Gulf Bank Team</p>
-              <p class="text-gray-400 text-sm">Proudly serving the Gulf Coast since 1920</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Decorative accent -->
-        <div class="absolute -bottom-4 -right-4 w-32 h-32 bg-brand-gold/10 rounded-full blur-2xl"></div>
+      <div class="lg:col-span-5">
+        <blockquote class="border-l-4 border-brand-gold bg-brand-warm p-6 sm:p-8">
+          <p class="text-lg sm:text-xl leading-relaxed text-brand-text font-sans">
+            "Building relationships that last generations — that's what community banking is all about."
+          </p>
+          <footer class="mt-5 text-sm text-brand-muted font-sans">
+            The Texas Gulf Bank team, serving the Gulf Coast since 1920
+          </footer>
+        </blockquote>
       </div>
     </div>
   </div>

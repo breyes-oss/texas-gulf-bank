@@ -4,7 +4,7 @@ const pathways = [
   {
     eyebrow: "Everyday banking",
     title: "Personal",
-    description: "Checking, savings, CDs and lending with a local banker who knows your goals.",
+    description: "Checking, savings, CDs, and loans — from a banker who knows your goals and will answer when you call.",
     cta: "Explore personal banking",
     href: "https://www.texasgulfbank.com/personal-checking/",
     icon: "user"
@@ -12,7 +12,7 @@ const pathways = [
   {
     eyebrow: "Built for growth",
     title: "Business",
-    description: "Commercial lending, treasury services and practical support for Texas businesses.",
+    description: "Commercial lending, treasury services, and practical support from a team that understands Gulf Coast business.",
     cta: "Explore business banking",
     href: "https://www.texasgulfbank.com/business-checking/",
     icon: "briefcase"
@@ -20,7 +20,7 @@ const pathways = [
   {
     eyebrow: "Bank from anywhere",
     title: "Digital Banking",
-    description: "Secure access to accounts, transfers and mobile deposit whenever you need it.",
+    description: "Check balances, pay bills, and deposit checks from your phone — whenever and wherever it suits you.",
     cta: "Explore digital banking",
     href: "https://www.texasgulfbank.com/online-and-mobile-banking/",
     icon: "phone"
@@ -28,47 +28,27 @@ const pathways = [
 ];
 ---
 
-<section class="bg-brand-cream pt-7 pb-20 lg:pt-10 lg:pb-28">
+<section class="bg-brand-cream pb-20 lg:pb-28">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-5 mb-9">
-      <div class="max-w-2xl animate-fade-in-left">
-        <div class="inline-flex items-center gap-2 text-brand-gold-dark text-xs font-semibold uppercase tracking-[0.18em] mb-3">
-          <span class="w-8 h-px bg-brand-gold-dark"></span>
-          How can we help?
-        </div>
-        <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-semibold text-brand-text tracking-tight text-balance">Banking that starts with your needs.</h2>
-      </div>
-      <p class="max-w-md text-brand-muted leading-relaxed animate-fade-in-right">Choose a path below, or visit a branch to talk through the right next step with a local banker.</p>
-    </div>
+    <h2 class="max-w-2xl font-display text-3xl sm:text-4xl lg:text-[2.75rem] font-semibold text-brand-text leading-[1.1] tracking-tight text-balance">
+      Three ways we help, no matter where you bank with us.
+    </h2>
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 border border-brand-navy/10 rounded-2xl overflow-hidden bg-white shadow-[0_12px_35px_rgba(10,22,40,0.06)]">
-      {pathways.map((item, index) => (
-        <a href={item.href} class:list={["group p-7 sm:p-9 lg:p-10 min-h-[330px] flex flex-col transition-colors hover:bg-brand-navy", "animate-fade-in", `delay-${index + 1}`, index < pathways.length - 1 && "border-b lg:border-b-0 lg:border-r border-brand-navy/10"]}>
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-bold uppercase tracking-[0.16em] text-brand-gold-dark group-hover:text-brand-gold-light transition-colors">{item.eyebrow}</span>
-            <span class="text-xs text-brand-muted group-hover:text-white/55 transition-colors">0{index + 1}</span>
-          </div>
-
-          <div class="w-12 h-12 mt-10 rounded-full border border-brand-navy/15 flex items-center justify-center text-brand-navy-light group-hover:border-brand-gold/45 group-hover:text-brand-gold-light transition-colors">
-            {item.icon === "user" && <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2m7-10a4 4 0 100-8 4 4 0 000 8zm13 10v-2a4 4 0 00-3-3.87m-1-11.96a4 4 0 010 7.75"/></svg>}
-            {item.icon === "briefcase" && <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M20 7h-4V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2H4a2 2 0 00-2 2v9a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2zM8 7h8m-6 6h4"/></svg>}
-            {item.icon === "phone" && <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M8 2h8a2 2 0 012 2v16a2 2 0 01-2 2H8a2 2 0 01-2-2V4a2 2 0 012-2zm4 17h.01"/></svg>}
-          </div>
-
+    <div class="mt-10 grid grid-cols-1 lg:grid-cols-3 gap-px bg-brand-navy/10 border border-brand-navy/10">
+      {pathways.map((item) => (
+        <a href={item.href} class="group bg-white p-8 lg:p-10 flex flex-col transition-colors hover:bg-brand-navy">
+          <span class="text-sm font-semibold text-brand-gold-dark group-hover:text-brand-gold-light transition-colors">{item.eyebrow}</span>
           <h3 class="font-display text-3xl font-semibold text-brand-text mt-6 group-hover:text-white transition-colors">{item.title}</h3>
-          <p class="text-brand-muted leading-relaxed mt-3 group-hover:text-white/70 transition-colors">{item.description}</p>
-          <span class="inline-flex items-center gap-2 mt-auto pt-8 text-brand-navy-light font-semibold group-hover:text-brand-gold-light transition-colors">
-            {item.cta}
-            <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-          </span>
+          <p class="text-brand-muted leading-relaxed mt-3 group-hover:text-white/75 transition-colors">{item.description}</p>
+          <span class="mt-auto pt-8 text-brand-navy-light font-semibold group-hover:text-brand-gold-light transition-colors">{item.cta}</span>
         </a>
       ))}
     </div>
 
-    <div class="mt-6 flex flex-wrap items-center justify-center gap-x-7 gap-y-3 text-sm text-brand-muted animate-fade-in">
-      <a href="https://app.loanspq.com/apply.aspx?enc=Kw21Wblm1yxpjJabdoZaD_1XCeB6DUzWcPY_g38Z9Jqr0clsjQUYVmTraoEngafVkCgQedLZhb-S5_xgQhN9fA" class="hover:text-brand-navy-light transition-colors">Open an account →</a>
-      <a href="https://www.texasgulfbank.com/locations/" class="hover:text-brand-navy-light transition-colors">Find a branch →</a>
-      <a href="https://www.texasgulfbank.com/investment-rate-index-time-and-non-time-accounts/" class="hover:text-brand-navy-light transition-colors">View current rates →</a>
+    <div class="mt-8 flex flex-wrap items-center gap-x-7 gap-y-3 text-sm text-brand-navy-light">
+      <a href="https://app.loanspq.com/apply.aspx?enc=Kw21Wblm1yxpjJabdoZaD_1XCeB6DUzWcPY_g38Z9Jqr0clsjQUYVmTraoEngafVkCgQedLZhb-S5_xgQhN9fA" class="hover:text-brand-gold-dark transition-colors underline underline-offset-2">Open an account</a>
+      <a href="https://www.texasgulfbank.com/locations/" class="hover:text-brand-gold-dark transition-colors underline underline-offset-2">Find a branch</a>
+      <a href="https://www.texasgulfbank.com/investment-rate-index-time-and-non-time-accounts/" class="hover:text-brand-gold-dark transition-colors underline underline-offset-2">View current rates</a>
     </div>
   </div>
 </section>

@@ -9,47 +9,35 @@ const latestPosts = allPosts.slice(0, 3);
 
 <section class="bg-brand-cream py-20 lg:py-28">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid lg:grid-cols-5 gap-12 lg:gap-16">
-      <div class="lg:col-span-3 animate-fade-in-left">
-        <div class="inline-flex items-center gap-2 text-brand-gold-dark text-xs font-semibold uppercase tracking-widest mb-4">
-          <span class="w-8 h-px bg-brand-gold-dark"></span>
-          Current Rates
-        </div>
+    <div class="grid lg:grid-cols-12 gap-12 lg:gap-16">
+      <div class="lg:col-span-7">
         <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-semibold text-brand-text leading-[1.08] tracking-tight text-balance">
-          Make more of what<br /><span class="text-brand-navy-light">you've built.</span>
+          Current rates,<br /><span class="text-brand-navy-light">no runaround.</span>
         </h2>
-        <div class="mt-8">
+        <div class="mt-8 max-w-xl">
           <RateTable showHeader={false} />
         </div>
       </div>
 
-      <div class="lg:col-span-2 animate-fade-in-right">
-        <div class="inline-flex items-center gap-2 text-brand-gold-dark text-xs font-semibold uppercase tracking-widest mb-4">
-          <span class="w-8 h-px bg-brand-gold-dark"></span>
-          From the Bank
-        </div>
-        <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-semibold text-brand-text leading-[1.08] tracking-tight">Local insight.</h2>
+      <div class="lg:col-span-5">
+        <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-semibold text-brand-text leading-[1.08] tracking-tight">News from the bank.</h2>
 
         <div class="mt-8 border-t border-brand-navy/15">
           {latestPosts.map((post) => (
             <a href={`/blog/${post.id}`} class="block group py-6 border-b border-brand-navy/10">
-              <div class="flex items-center gap-2 text-xs text-brand-muted mb-3">
-                <span class="font-semibold uppercase tracking-[0.12em] text-brand-gold-dark">{post.data.category}</span>
+              <div class="flex items-center gap-2 text-xs text-brand-muted mb-3 font-sans">
+                <span class="font-semibold text-brand-gold-dark">{post.data.category}</span>
                 <span aria-hidden="true">·</span>
                 <span>{post.data.date}</span>
               </div>
               <h3 class="font-display text-xl font-semibold leading-snug text-brand-text group-hover:text-brand-navy-light transition-colors">{post.data.title}</h3>
-              <span class="inline-flex items-center gap-1 mt-3 text-brand-navy-light text-sm font-semibold group-hover:text-brand-gold-dark transition-colors">
-                Read article
-                <svg class="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-              </span>
+              <span class="inline-block mt-2 text-brand-navy-light text-sm font-semibold group-hover:text-brand-gold-dark transition-colors underline underline-offset-2">Read article</span>
             </a>
           ))}
         </div>
 
-        <a href="/blog" class="inline-flex items-center gap-2 mt-6 text-brand-navy-light font-semibold hover:text-brand-gold-dark transition-colors text-sm">
-          View all insights
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+        <a href="/blog" class="inline-block mt-6 text-brand-navy-light font-semibold hover:text-brand-gold-dark transition-colors text-sm underline underline-offset-2">
+          View all posts
         </a>
       </div>
     </div>
