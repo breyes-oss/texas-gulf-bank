@@ -1,0 +1,53 @@
+---
+// FeeSchedule.astro — renders the personal fee schedule from the `fees` content collection
+import { getEntry } from "astro:content";
+
+const entry = await getEntry("fees", "personal-fees");
+const fees = entry?.data;
+
+if (!fees) {
+  throw new Error("Missing fees data at src/content/fees/personal-fees.yaml");
+}
+---
+
+<div class="space-y-12">
+  {fees.sections.map((section) => (
+    <section class="space-y-4">
+      <div>
+        <h3 class="font-display text-2xl font-semibold text-brand-navy">{section.name}</h3>
+        {section.note && (
+          <p class="mt-1.5 text-sm text-brand-muted leading-relaxed max-w-3xl">{section.note}</p>
+        )}
+      </div>
+
+      <div class="overflow-x-auto rounded-lg border border-brand-navy/10 bg-white shadow-sm">
+        <table class="w-full text-left text-sm">
+          <caption class="sr-only">{section.name}</caption>
+          <thead>
+            <tr class="border-b border-brand-navy/10 bg-brand-cream/60">
+              <th scope="col" class="py-3 px-5 text-xs font-semibold uppercase tracking-[0.14em] text-brand-gold-dark">
+                Fee
+              </th>
+              <th scope="col" class="py-3 px-5 text-right text-xs font-semibold uppercase tracking-[0.14em] text-brand-gold-dark">
+                Amount
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {section.items.map((item) => (
+              <tr class="border-b last:border-b-0 border-brand-navy/10 align-top">
+                <td class="py-3.5 px-5 text-brand-text">
+                  <span class="font-medium">{item.name}</span>
+                  {item.detail && (
+                    <p class="mt-0.5 text-xs text-brand-muted leading-relaxed">{item.detail}</p>
+                  )}
+                </td>
+                <td class="py-3.5 px-5 text-right font-semibold text-brand-navy-light">{item.value}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  ))}
+</div>

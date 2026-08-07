@@ -1,0 +1,155 @@
+title: "Personal Fee Schedule"
+published: "As published on the website's Personal Checking Comparison Chart"
+disclaimer: >-
+  Fees may change at any time. Some fees and limitations vary by account type; the
+  following fees may be assessed against your account. Not all products are available at
+  every location. See the complete schedule and disclosures for terms and requirements.
+full_schedule_url: "https://www.texasgulfbank.com/personal-comparison-chart/"
+sections:
+  - name: "ATM & Debit Card"
+    note: >-
+      ATM/Debit Card Monthly Fee does not apply to Gulf Advantage Checking, VIP High Yield
+      Checking, or Gulf Rewards Checking.
+    items:
+      - name: "ATM/Debit Card Monthly Fee"
+        value: "$1.00 per month, per account"
+      - name: "Replacement or Lost ATM / Debit Cards"
+        value: "$7.00 each"
+      - name: "Change PIN (ATM or Debit card)"
+        value: "No fee"
+      - name: "Withdrawal at any of our ATM locations"
+        value: "No fee"
+      - name: "Balance inquiry at any of our ATM locations"
+        value: "No fee"
+      - name: "Withdrawal or Balance Inquiry at ATM locations we do not own or operate"
+        value: "$2.00 each"
+      - name: "Non-customer using TGB ATM machines (withdrawals or balance inquiries)"
+        value: "$3.00 each"
+      - name: "Dollar limitations (ATM card)"
+        detail: >-
+          Saturday, Sunday & Monday are treated as one processing day. Cash withdrawals and
+          point-of-sale transactions from all accounts per accountholder are combined for one
+          $1,000.00 limitation.
+        value: "$1,000.00 per processing day"
+      - name: "Dollar limitations (Debit card)"
+        detail: >-
+          Saturday, Sunday & Monday are treated as one processing day. Cash withdrawals from
+          ATMs $1,000.00 and point-of-sale $2,000.00. Transactions from all accounts per
+          accountholder are combined for the $3,000.00 limitation.
+        value: "$3,000.00 per processing day"
+
+  - name: "Overdrafts & Non-Sufficient Funds"
+    note: >-
+      Fees may be imposed by any of the following means: check, in-person withdrawal or
+      transfer, or by electronic means, excluding ATM or one-time debit card transactions.
+    items:
+      - name: "Overdraft Paid Item Fee"
+        value: "$30.00 each"
+      - name: "Non-Sufficient Funds (NSF) Return Item Fee"
+        value: "$30.00 each"
+      - name: "Maximum Overdraft Paid Item / NSF Return Item fees"
+        value: "$120.00 per day (both categories combined)"
+      - name: "Courtesy Threshold"
+        detail: "No fee for de minimis transaction amounts ($5.00 or less)."
+        value: "No fee"
+      - name: "No Representment Fee"
+        detail: "Only a single NSF Return Item Fee &/or Overdraft Paid Item Fee for multiple presentations of the same item."
+        value: "Policy"
+
+  - name: "Bookkeeping & Other Fees"
+    items:
+      - name: "Check printing"
+        value: "Depends on style & quantity of check ordered"
+      - name: "Temporary checks"
+        value: "$.50 each (limit 12)"
+      - name: "Cashier's Checks (Customer)"
+        value: "$7.00 each"
+      - name: "Money Orders (Customer)"
+        value: "$3.00 each"
+      - name: "Online Banking"
+        value: "No charge"
+      - name: "Online Banking with Bill Pay"
+        value: "No charge"
+      - name: "Outgoing Bank-to-Bank Transfers"
+        value: "$3.00 each"
+      - name: "Garnishments"
+        value: "$50.00 + attorney's fees"
+      - name: "Subpoenas"
+        value: "$50.00 + attorney's fees"
+      - name: "Levies"
+        value: "$50.00 + attorney's fees"
+      - name: "Account Activity Printout"
+        value: "$3.00 each"
+      - name: "Special Statement Cutoff"
+        value: "$5.00 each"
+      - name: "Account Research"
+        value: "$30.00 per hour, minimum 1/2 hour"
+      - name: "Account Balancing Assistance"
+        value: "$30.00 per hour, minimum 1/2 hour"
+      - name: "Account Monthly Monitoring Fee"
+        value: "$50.00 per account per month"
+      - name: "Balance Inquiry (no charge for Q-Line Automated Phone Banking)"
+        value: "$2.00 each"
+      - name: "Activity Inquiry (no charge for Q-Line Automated Phone Banking)"
+        value: "$3.00 each"
+      - name: "Telephone Transfer to and from Accounts (no charge for Q-Line Automated Phone Banking)"
+        value: "$5.00 each"
+      - name: "Foreign Currency Order"
+        value: "$10.00 per order + Correspondent Bank Fees"
+      - name: "Stop Payments (all items)"
+        value: "$30.00 each"
+      - name: "Non-time Account Closed within 30 Days of Opening"
+        value: "$15.00 each"
+
+  - name: "Wire Transfers"
+    items:
+      - name: "Domestic wire — Customer incoming"
+        value: "$10.00 each"
+      - name: "Domestic wire — Customer outgoing"
+        value: "$25.00 each"
+      - name: "Foreign wire — Customer incoming"
+        value: "$10.00 each"
+      - name: "Foreign wire — Customer outgoing"
+        value: "$45.00"
+
+  - name: "Collections"
+    items:
+      - name: "Incoming customer"
+        value: "$10.00 each"
+      - name: "Outgoing customer"
+        value: "$12.00 each"
+
+  - name: "Additional Service Fees"
+    items:
+      - name: "Dealer Drafts (incoming or outgoing)"
+        value: "$10.00 each"
+      - name: "Lost Coupon Book"
+        value: "$10.00 each"
+      - name: "Amortization Schedule"
+        value: "$10.00 each"
+      - name: "Zipper Bags (small)"
+        value: "$10.00 each"
+      - name: "Zipper Bags (large)"
+        value: "$15.00 each"
+      - name: "Lock Bags (night depository)"
+        value: "$40.00 each"
+      - name: "Strapped Currency"
+        value: "$.40 per strap"
+      - name: "Rolled Coin"
+        value: "$.30 per roll"
+      - name: "Non-Client Check Cashing Fee (Commercial Checks > $500)"
+        value: "1% per check, $50.00 max fee"
+      - name: "Deposit Corrections"
+        value: "$3.00 each"
+      - name: "Photocopies (Customer)"
+        value: "$.25 each page"
+      - name: "Photocopies (Non-Customer)"
+        value: "$.50 each page"
+
+  - name: "Safe Deposit Box"
+    note: "Annual rental — price varies by size and location."
+    items:
+      - name: "Key deposit"
+        value: "$25.00 per box"
+      - name: "Box drilling"
+        value: "$50.00 + vendor's charges"

@@ -76,4 +76,31 @@ const data = defineCollection({
   }),
 });
 
-export const collections = { blog, pages, data };
+const fees = defineCollection({
+  loader: glob({ pattern: "*.yaml", base: "./src/content/fees" }),
+  schema: z.object({
+    title: z.string(),
+    published: z.string().optional(),
+    disclaimer: z.string().optional(),
+    full_schedule_url: z.string().optional(),
+    sections: z
+      .array(
+        z.object({
+          name: z.string(),
+          note: z.string().optional(),
+          items: z
+            .array(
+              z.object({
+                name: z.string(),
+                detail: z.string().optional(),
+                value: z.string(),
+              })
+            )
+            .min(1),
+        })
+      )
+      .min(1),
+  }),
+});
+
+export const collections = { blog, pages, data, fees };

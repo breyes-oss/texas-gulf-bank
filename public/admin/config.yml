@@ -110,3 +110,33 @@ collections:
           - { label: Product name, name: name, widget: string }
           - { label: Detail / minimum, name: detail, widget: string, required: false }
           - { label: APY value, name: value, widget: string, hint: "Example: 3.45%" }
+
+  - name: fees
+    label: Fee Schedule
+    label_singular: Fee Schedule
+    folder: src/content/fees
+    create: false
+    delete: false
+    extension: yaml
+    format: yaml
+    identifier_field: title
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Effective / published note, name: published, widget: string, required: false }
+      - { label: Disclaimer, name: disclaimer, widget: text, required: false }
+      - { label: Full schedule URL, name: full_schedule_url, widget: string, required: false }
+      - label: Fee sections
+        name: sections
+        widget: list
+        summary: "{{fields.name}}"
+        fields:
+          - { label: Section name, name: name, widget: string }
+          - { label: Note (shown under section title), name: note, widget: text, required: false }
+          - label: Fee rows
+            name: items
+            widget: list
+            summary: "{{fields.name}} — {{fields.value}}"
+            fields:
+              - { label: Fee name, name: name, widget: string }
+              - { label: Detail / footnote, name: detail, widget: text, required: false }
+              - { label: Amount, name: value, widget: string, hint: "Example: $30.00 each or No fee" }

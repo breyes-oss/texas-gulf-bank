@@ -1,0 +1,93 @@
+---
+import Layout from "../layouts/Layout.astro";
+import RateTable from "../components/RateTable.astro";
+import FeeSchedule from "../components/FeeSchedule.astro";
+import CtaSection from "../components/CtaSection.astro";
+import { getCollection, getEntry } from "astro:content";
+
+const pages = await getCollection("pages");
+const home = pages.find((p) => p.id === "home")?.data || {};
+
+const feesEntry = await getEntry("fees", "personal-fees");
+const fees = feesEntry?.data;
+---
+
+<Layout
+  title="Rates & Fees"
+  description="Current deposit rates and the personal fee schedule for Texas Gulf Bank. See featured annual percentage yields and a full listing of consumer fees."
+>
+  <!-- Page header -->
+  <section class="bg-brand-cream border-b border-brand-navy/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 lg:py-20">
+      <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-black text-brand-navy leading-[1.05] tracking-tight text-balance">
+        Rates &amp; Fees
+      </h1>
+      <p class="mt-5 text-lg text-brand-muted max-w-2xl text-balance">
+        Featured deposit rates and a complete personal fee schedule. All rates and fees are
+        transparent, easy to understand, and subject to the disclosures below.
+      </p>
+    </div>
+  </section>
+
+  <!-- Deposit Rates -->
+  <section class="py-14 lg:py-20" id="rates">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl">
+        <h2 class="font-display text-3xl sm:text-4xl font-black text-brand-navy tracking-tight text-balance">
+          Deposit Rates
+        </h2>
+        <p class="mt-3 text-base text-brand-muted leading-relaxed">
+          Featured annual percentage yields on our most popular deposit products. Rates are
+          variable and may change at any time; see the complete rate sheet for all terms,
+          tiers, and account requirements.
+        </p>
+      </div>
+
+      <div class="mt-8 max-w-3xl">
+        <RateTable />
+      </div>
+    </div>
+  </section>
+
+  <!-- Fee Schedule -->
+  <section class="py-14 lg:py-20 bg-brand-warm border-t border-brand-navy/10" id="fees">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl">
+        <h2 class="font-display text-3xl sm:text-4xl font-black text-brand-navy tracking-tight text-balance">
+          Personal Fee Schedule
+        </h2>
+        <p class="mt-3 text-base text-brand-muted leading-relaxed">
+          The following fees may be assessed against your account, and the following
+          transaction limitations, if any, apply to your account. {fees?.published}
+        </p>
+      </div>
+
+      <div class="mt-10">
+        <FeeSchedule />
+      </div>
+
+      <div class="mt-12 border border-brand-navy/10 rounded-lg bg-brand-cream/60 p-6 sm:p-8 max-w-4xl">
+        <h3 class="font-display text-xl font-semibold text-brand-navy">Disclosures</h3>
+        <p class="mt-3 text-sm text-brand-muted leading-relaxed">
+          {fees?.disclaimer}
+        </p>
+        <p class="mt-4 text-sm text-brand-text leading-relaxed">
+          Texas Gulf Bank, N.A. is a Member FDIC and an Equal Housing Lender.
+        </p>
+        <div class="mt-5 flex flex-wrap gap-4">
+          {fees?.full_schedule_url && (
+            <a
+              href={fees.full_schedule_url}
+              class="inline-flex items-center gap-2 font-semibold text-brand-navy-light hover:text-brand-gold-dark transition-colors text-sm"
+            >
+              View the full published schedule
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </a>
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CtaSection home={home} />
+</Layout>
