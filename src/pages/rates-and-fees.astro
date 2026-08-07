@@ -18,7 +18,7 @@ const fees = feesEntry?.data;
 >
   <!-- Page header -->
   <section class="bg-brand-cream border-b border-brand-navy/10">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 lg:py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 lg:py-16">
       <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-black text-brand-navy leading-[1.05] tracking-tight text-balance">
         Rates &amp; Fees
       </h1>
@@ -30,7 +30,7 @@ const fees = feesEntry?.data;
   </section>
 
   <!-- Deposit Rates -->
-  <section class="py-14 lg:py-20" id="rates">
+  <section class="py-10 sm:py-14 lg:py-16" id="rates">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="max-w-3xl">
         <h2 class="font-display text-3xl sm:text-4xl font-black text-brand-navy tracking-tight text-balance">
@@ -50,7 +50,7 @@ const fees = feesEntry?.data;
   </section>
 
   <!-- Fee Schedule -->
-  <section class="py-14 lg:py-20 bg-brand-warm border-t border-brand-navy/10" id="fees">
+  <section class="py-10 sm:py-14 lg:py-16 bg-brand-warm border-t border-brand-navy/10" id="fees">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="max-w-3xl">
         <h2 class="font-display text-3xl sm:text-4xl font-black text-brand-navy tracking-tight text-balance">
@@ -66,7 +66,7 @@ const fees = feesEntry?.data;
         <FeeSchedule />
       </div>
 
-      <div class="mt-12 border border-brand-navy/10 rounded-lg bg-brand-cream/60 p-6 sm:p-8 max-w-4xl">
+      <div class="mt-8 sm:mt-12 border border-brand-navy/10 rounded-lg bg-brand-cream/60 p-6 sm:p-8 max-w-4xl">
         <h3 class="font-display text-xl font-semibold text-brand-navy">Disclosures</h3>
         <p class="mt-3 text-sm text-brand-muted leading-relaxed">
           {fees?.disclaimer}
