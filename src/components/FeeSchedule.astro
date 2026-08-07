@@ -42,7 +42,10 @@ if (!fees) {
                     <p class="mt-0.5 text-xs text-brand-muted leading-relaxed">{item.detail}</p>
                   )}
                 </td>
-                <td class="py-3.5 px-5 text-right font-semibold text-brand-navy-light">{item.value}</td>
+                <td class:list={[
+                  "py-3.5 px-5 text-right font-semibold",
+                  /no fee|no charge/i.test(item.value) ? "text-brand-rate" : "text-brand-navy-light"
+                ]}>{item.value}</td>
               </tr>
             ))}
           </tbody>
