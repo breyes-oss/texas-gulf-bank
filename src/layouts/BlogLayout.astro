@@ -20,7 +20,7 @@ const { title, date, image, category } = Astro.props;
     <meta name="description" content={title} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   </head>
   <body class="min-h-screen flex flex-col bg-brand-warm">
     <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -61,7 +61,7 @@ const { title, date, image, category } = Astro.props;
           {category && <span class="bg-brand-gold-pale text-brand-gold-dark font-semibold px-2.5 py-1 rounded-full text-xs">{category}</span>}
           <time datetime={date}>{date}</time>
         </div>
-        <h1 class="font-display text-3xl sm:text-4xl font-semibold text-brand-text leading-tight mb-8">{title}</h1>
+        <h1 class="font-display text-3xl sm:text-4xl font-black text-brand-text leading-tight mb-8">{title}</h1>
 
         <!--
           Page content supplies its own .article-prose wrappers around markdown,

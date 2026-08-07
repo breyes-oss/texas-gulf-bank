@@ -19,7 +19,7 @@ const { title, description } = Astro.props;
     <meta name="description" content={description} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   </head>
   <body class="min-h-screen flex flex-col">
     <!-- Skip Navigation Link (WCAG 2.4.1) -->
@@ -51,6 +51,7 @@ const { title, description } = Astro.props;
           <nav class="hidden lg:flex items-center gap-1">
             <a href="https://www.texasgulfbank.com/business-checking/" class="px-4 py-2 text-sm font-medium text-brand-text hover:text-brand-navy-light rounded-lg hover:bg-gray-50 transition-colors">Business</a>
             <a href="https://www.texasgulfbank.com/personal-checking/" class="px-4 py-2 text-sm font-medium text-brand-text hover:text-brand-navy-light rounded-lg hover:bg-gray-50 transition-colors">Personal</a>
+            <a href="/rates-and-fees" class="px-4 py-2 text-sm font-medium text-brand-text hover:text-brand-navy-light rounded-lg hover:bg-gray-50 transition-colors">Rates &amp; Fees</a>
             <a href="https://www.texasgulfbank.com/wealth-management/" class="px-4 py-2 text-sm font-medium text-brand-text hover:text-brand-navy-light rounded-lg hover:bg-gray-50 transition-colors">Wealth</a>
             <a href="https://www.texasgulfbank.com/about-texas-gulf-bank/" class="px-4 py-2 text-sm font-medium text-brand-text hover:text-brand-navy-light rounded-lg hover:bg-gray-50 transition-colors">About</a>
             <a href="https://www.texasgulfbank.com/frequently-asked-questions/" class="px-4 py-2 text-sm font-medium text-brand-text hover:text-brand-navy-light rounded-lg hover:bg-gray-50 transition-colors">Support</a>
@@ -83,7 +84,7 @@ const { title, description } = Astro.props;
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
           <!-- Column 1: Business -->
           <div>
-            <h3 class="text-brand-gold-dark font-semibold text-sm uppercase tracking-wider mb-4">Business</h3>
+            <h3 class="text-brand-gold font-semibold text-sm uppercase tracking-wider mb-4">Business</h3>
             <ul class="space-y-2.5">
               <li><a href="https://www.texasgulfbank.com/business-checking/" class="text-gray-300 hover:text-white text-sm transition-colors">Business Checking</a></li>
               <li><a href="https://www.texasgulfbank.com/business-loans-financing/" class="text-gray-300 hover:text-white text-sm transition-colors">Business Loans</a></li>
@@ -94,24 +95,25 @@ const { title, description } = Astro.props;
           </div>
           <!-- Column 2: Personal -->
           <div>
-            <h3 class="text-brand-gold-dark font-semibold text-sm uppercase tracking-wider mb-4">Personal</h3>
+            <h3 class="text-brand-gold font-semibold text-sm uppercase tracking-wider mb-4">Personal</h3>
             <ul class="space-y-2.5">
               <li><a href="https://www.texasgulfbank.com/personal-checking/" class="text-gray-300 hover:text-white text-sm transition-colors">Personal Checking</a></li>
               <li><a href="https://www.texasgulfbank.com/personal-savings-cds-iras/" class="text-gray-300 hover:text-white text-sm transition-colors">Savings & CDs</a></li>
               <li><a href="https://www.texasgulfbank.com/loans/" class="text-gray-300 hover:text-white text-sm transition-colors">Personal Loans</a></li>
               <li><a href="https://www.texasgulfbank.com/online-and-mobile-banking/" class="text-gray-300 hover:text-white text-sm transition-colors">Online Banking</a></li>
               <li><a href="https://www.texasgulfbank.com/zelle/" class="text-gray-300 hover:text-white text-sm transition-colors">Zelle®</a></li>
+              <li><a href="/rates-and-fees" class="text-gray-300 hover:text-white text-sm transition-colors">Rates &amp; Fees</a></li>
             </ul>
           </div>
           <!-- Column 3: Wealth & About -->
           <div>
-            <h3 class="text-brand-gold-dark font-semibold text-sm uppercase tracking-wider mb-4">Wealth</h3>
+            <h3 class="text-brand-gold font-semibold text-sm uppercase tracking-wider mb-4">Wealth</h3>
             <ul class="space-y-2.5 mb-8">
               <li><a href="https://www.texasgulfbank.com/wealth-management/" class="text-gray-300 hover:text-white text-sm transition-colors">Wealth Management</a></li>
               <li><a href="https://www.texasgulfbank.com/safeguarding-your-childs-financial-future-a-special-needs-trust/" class="text-gray-300 hover:text-white text-sm transition-colors">Special Needs Trusts</a></li>
               <li><a href="https://www.texasgulfbank.com/wealth-management/" class="text-gray-300 hover:text-white text-sm transition-colors">Financial Planning</a></li>
             </ul>
-            <h3 class="text-brand-gold-dark font-semibold text-sm uppercase tracking-wider mb-4">About</h3>
+            <h3 class="text-brand-gold font-semibold text-sm uppercase tracking-wider mb-4">About</h3>
             <ul class="space-y-2.5">
               <li><a href="https://www.texasgulfbank.com/our-story-texas-gulf-bank/" class="text-gray-300 hover:text-white text-sm transition-colors">Our Story</a></li>
               <li><a href="https://www.texasgulfbank.com/our-team/" class="text-gray-300 hover:text-white text-sm transition-colors">Leadership</a></li>
@@ -121,11 +123,11 @@ const { title, description } = Astro.props;
           </div>
           <!-- Column 4: Support + Social -->
           <div>
-            <h3 class="text-brand-gold-dark font-semibold text-sm uppercase tracking-wider mb-4">Support</h3>
+            <h3 class="text-brand-gold font-semibold text-sm uppercase tracking-wider mb-4">Support</h3>
             <ul class="space-y-2.5 mb-8">
               <li><a href="https://www.texasgulfbank.com/customer-service-help-support/" class="text-gray-300 hover:text-white text-sm transition-colors">FAQ</a></li>
               <li><a href="https://www.texasgulfbank.com/locations/" class="text-gray-300 hover:text-white text-sm transition-colors">Locations</a></li>
-              <li><a href="https://www.texasgulfbank.com/investment-rate-index-time-and-non-time-accounts/" class="text-gray-300 hover:text-white text-sm transition-colors">View Rates</a></li>
+              <li><a href="/rates-and-fees" class="text-gray-300 hover:text-white text-sm transition-colors">View Rates &amp; Fees</a></li>
               <li><a href="https://www.texasgulfbank.com/privacy-security/" class="text-gray-300 hover:text-white text-sm transition-colors">Privacy & Security</a></li>
               <li><a href="https://www.texasgulfbank.com/website-accessibility/" class="text-gray-300 hover:text-white text-sm transition-colors">Accessibility</a></li>
             </ul>

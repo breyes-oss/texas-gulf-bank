@@ -2,22 +2,29 @@
 
 /* ── Texas Gulf Bank Brand Theme ── */
 @theme {
-  --color-brand-navy: #0a1628;
-  --color-brand-navy-light: #1a3668;
-  --color-brand-navy-mid: #25407a;
-  --color-brand-gold: #c9952a;
-  --color-brand-gold-dark: #7a5c10;
-  --color-brand-gold-light: #e0b04d;
-  --color-brand-gold-pale: #f5e6c8;
-  --color-brand-cream: #f7f3ee;
+  /* Official brand palette (tgb-brand-guidev2.netlify.app) */
+  --color-brand-navy: #19294b;
+  --color-brand-navy-light: #2b4a80;
+  --color-brand-navy-mid: #23406e;
+  --color-brand-blue: #0476a9;
+  --color-brand-aqua: #39b6d3;
+  --color-brand-green: #0f973a;
+  --color-brand-terra: #c25c29;
+  /* Sunshine + derived tints (replaces legacy gold) */
+  --color-brand-gold: #ffe66d;
+  --color-brand-gold-dark: #5a4a00;
+  --color-brand-gold-light: #39b6d3;
+  --color-brand-gold-pale: #fff7d3;
+  /* Neutrals */
+  --color-brand-cream: #f7f9fc;
   --color-brand-warm: #fdfcfb;
-  --color-brand-text: #1a1a2e;
-  --color-brand-muted: #6b7280;
-  --color-brand-rate: #15803d;
+  --color-brand-text: #20242c;
+  --color-brand-muted: #5b626e;
+  --color-brand-rate: #0f973a;
 
   --font-serif: "Georgia", "Times New Roman", serif;
-  --font-sans: "Inter", "Segoe UI", system-ui, sans-serif;
-  --font-display: "Playfair Display", "Georgia", serif;
+  --font-sans: "Open Sans", "Segoe UI", system-ui, sans-serif;
+  --font-display: "Montserrat", "Segoe UI", system-ui, sans-serif;
 }
 
 /* ── Base Styles ── */
@@ -68,7 +75,7 @@ body {
   text-wrap: balance;
 }
 
-/* ── Display Headings (Playfair Display serif) ── */
+/* ── Display Headings (Montserrat bold sans) ── */
 .font-display {
   font-family: var(--font-display);
 }
