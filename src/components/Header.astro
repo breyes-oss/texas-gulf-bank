@@ -1,0 +1,141 @@
+---
+// Header.astro — sticky header that shrinks on scroll:
+// FDIC sign fades/collapses, logo gets smaller, soft shadow appears.
+import FdicDigitalSign from './FdicDigitalSign.astro';
+
+interface NavLink {
+  label: string;
+  href: string;
+  active?: boolean;
+}
+
+interface Props {
+  links?: NavLink[];
+  showCta?: boolean;
+  showHamburger?: boolean;
+}
+
+const {
+  showCta = true,
+  showHamburger = true,
+  links = [
+    { label: "Business", href: "https://www.texasgulfbank.com/business-checking/" },
+    { label: "Personal", href: "https://www.texasgulfbank.com/personal-checking/" },
+    { label: "Rates & Fees", href: "/rates-and-fees" },
+    { label: "Wealth", href: "https://www.texasgulfbank.com/wealth-management/" },
+    { label: "About", href: "https://www.texasgulfbank.com/about-texas-gulf-bank/" },
+    { label: "Support", href: "https://www.texasgulfbank.com/frequently-asked-questions/" },
+  ],
+} = Astro.props;
+---
+
+<header class="site-header bg-white border-b border-gray-100 sticky top-0 z-50" data-shrink-header>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
+    <div class="flex items-center justify-between h-full">
+      <!-- Logo + FDIC sign (FDIC fades away on scroll) -->
+      <div class="flex flex-col items-start justify-center gap-0">
+        <a href="/" class="flex items-center group" aria-label="Texas Gulf Bank home">
+          <img src="/logo-navy.png" alt="Texas Gulf Bank" class="logo-img w-auto" />
+        </a>
+        <div class="fdic-fade overflow-hidden">
+          <FdicDigitalSign />
+        </div>
+      </div>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden lg:flex items-center gap-1">
+        {links.map((l) => (
+          <a
+            href={l.href}
+            class:list={[
+              "px-4 py-2 text-sm font-medium rounded-lg transition-colors",
+              l.active
+                ? "text-brand-gold-dark bg-brand-gold-pale/30"
+                : "text-brand-text hover:text-brand-navy-light hover:bg-gray-50",
+            ]}
+          >
+            {l.label}
+          </a>
+        ))}
+      </nav>
+
+      <!-- CTA + Mobile Toggle -->
+      {showCta && (
+        <div class="flex items-center gap-3">
+          <a
+            href="https://www.netteller.com/login2008/Authentication/Views/Login.aspx?returnUrl=%2Ftexasgulfbank"
+            class="hidden sm:inline-flex items-center gap-2 bg-brand-gold text-brand-navy px-5 py-2.5 rounded-lg text-sm font-bold hover:bg-brand-gold-light transition-colors shadow-sm"
+          >
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+            Online Banking
+          </a>
+          {showHamburger && (
+            <button class="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors" aria-label="Menu">
+              <svg class="w-6 h-6 text-brand-text" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+          )}
+        </div>
+      )}
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    height: 4rem; /* h-16 */
+    transition: height 0.28s ease, box-shadow 0.28s ease;
+  }
+  .logo-img {
+    height: 2rem; /* h-8 */
+    transition: height 0.28s ease;
+  }
+  .fdic-fade {
+    max-height: 48px;
+    opacity: 1;
+    transition: opacity 0.28s ease, max-height 0.28s ease;
+  }
+  .site-header.is-scrolled {
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
+  }
+  .site-header.is-scrolled .logo-img {
+    height: 1.5rem; /* h-6 */
+  }
+  .site-header.is-scrolled .fdic-fade {
+    max-height: 0;
+    opacity: 0;
+  }
+  @media (min-width: 1024px) {
+    .site-header {
+      height: 5rem; /* lg:h-20 */
+    }
+    .logo-img {
+      height: 2.5rem; /* lg:h-10 */
+    }
+    .site-header.is-scrolled {
+      height: 3.5rem; /* lg:h-14 */
+    }
+    .site-header.is-scrolled .logo-img {
+      height: 2rem; /* lg:h-8 */
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .site-header,
+    .logo-img,
+    .fdic-fade {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  const header = document.querySelector("[data-shrink-header]");
+  if (header) {
+    const onScroll = () => {
+      header.classList.toggle("is-scrolled", window.scrollY > 16);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+  }
+</script>

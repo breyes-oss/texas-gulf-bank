@@ -4,7 +4,7 @@ export interface Props {
   description: string;
 }
 import '../styles/global.css';
-import FdicDigitalSign from '../components/FdicDigitalSign.astro';
+import Header from '../components/Header.astro';
 
 const { title, description } = Astro.props;
 ---
@@ -35,43 +35,8 @@ const { title, description } = Astro.props;
       </div>
     </div>
 
-    <!-- Main Header -->
-    <header class="bg-white border-b border-gray-100 sticky top-0 z-50">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between h-16 lg:h-20">
-          <!-- Logo Area: stacked logo + FDIC sign -->
-          <div class="flex flex-col items-start gap-0">
-            <a href="/" class="flex items-center group">
-              <img src="/logo-navy.png" alt="Texas Gulf Bank" class="h-8 lg:h-10 w-auto" />
-            </a>
-            <FdicDigitalSign />
-          </div>
-
-          <!-- Desktop Nav -->
-          <nav class="hidden lg:flex items-center gap-1">
-            <a href="https://www.texasgulfbank.com/business-checking/" class="px-4 py-2 text-sm font-medium text-brand-text hover:text-brand-navy-light rounded-lg hover:bg-gray-50 transition-colors">Business</a>
-            <a href="https://www.texasgulfbank.com/personal-checking/" class="px-4 py-2 text-sm font-medium text-brand-text hover:text-brand-navy-light rounded-lg hover:bg-gray-50 transition-colors">Personal</a>
-            <a href="/rates-and-fees" class="px-4 py-2 text-sm font-medium text-brand-text hover:text-brand-navy-light rounded-lg hover:bg-gray-50 transition-colors">Rates &amp; Fees</a>
-            <a href="https://www.texasgulfbank.com/wealth-management/" class="px-4 py-2 text-sm font-medium text-brand-text hover:text-brand-navy-light rounded-lg hover:bg-gray-50 transition-colors">Wealth</a>
-            <a href="https://www.texasgulfbank.com/about-texas-gulf-bank/" class="px-4 py-2 text-sm font-medium text-brand-text hover:text-brand-navy-light rounded-lg hover:bg-gray-50 transition-colors">About</a>
-            <a href="https://www.texasgulfbank.com/frequently-asked-questions/" class="px-4 py-2 text-sm font-medium text-brand-text hover:text-brand-navy-light rounded-lg hover:bg-gray-50 transition-colors">Support</a>
-          </nav>
-
-          <!-- CTA + Mobile Toggle -->
-          <div class="flex items-center gap-3">
-            <a href="https://www.netteller.com/login2008/Authentication/Views/Login.aspx?returnUrl=%2Ftexasgulfbank" class="hidden sm:inline-flex items-center gap-2 bg-brand-gold text-brand-navy px-5 py-2.5 rounded-lg text-sm font-bold hover:bg-brand-gold-light transition-colors shadow-sm">
-              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
-              Online Banking
-            </a>
-            <button class="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors" aria-label="Menu">
-              <svg class="w-6 h-6 text-brand-text" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
-          </div>
-        </div>
-      </div>
-    </header>
+    <!-- Main Header (shrinks on scroll) -->
+    <Header />
 
     <!-- Main Content -->
     <main id="main-content" class="flex-1">
