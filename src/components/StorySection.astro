@@ -9,7 +9,7 @@ const { home } = Astro.props;
       <div class="lg:col-span-7">
         <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-black text-brand-text leading-[1.08] tracking-tight text-balance">
           {home.story_headline || "Over a century of"}
-          <span class="block text-brand-navy-light">{home.story_headline_accent || "Texas banking"}</span>
+          <span class="block text-brand-blue">{home.story_headline_accent || "Texas banking"}</span>
         </h2>
         <p class="mt-6 text-brand-muted text-base sm:text-lg leading-relaxed max-w-xl">
           {home.story_body_1 || "Texas Gulf Bank is an independently owned and operated community bank with locations in Harris, Galveston, and Brazoria counties. For over 100 years, we've been a strong and financially secure member of the Texas Gulf Coast community."}
@@ -20,15 +20,15 @@ const { home } = Astro.props;
 
         <div class="mt-10 grid grid-cols-3 gap-6 sm:gap-10 border-t border-brand-navy/10 pt-8">
           <div>
-            <p class="text-3xl sm:text-4xl font-bold text-brand-navy-light">{home.story_stat_1_number || "100+"}</p>
+            <p class="text-3xl sm:text-4xl font-bold text-brand-blue">{home.story_stat_1_number || "100+"}</p>
             <p class="text-sm text-brand-muted mt-1">{home.story_stat_1_label || "Years serving Texas"}</p>
           </div>
           <div>
-            <p class="text-3xl sm:text-4xl font-bold text-brand-navy-light">{home.story_stat_2_number || "12"}</p>
+            <p class="text-3xl sm:text-4xl font-bold text-brand-blue">{home.story_stat_2_number || "12"}</p>
             <p class="text-sm text-brand-muted mt-1">{home.story_stat_2_label || "Community branches"}</p>
           </div>
           <div>
-            <p class="text-3xl sm:text-4xl font-bold text-brand-navy-light">{home.story_stat_3_number || "3"}</p>
+            <p class="text-3xl sm:text-4xl font-bold text-brand-blue">{home.story_stat_3_number || "3"}</p>
             <p class="text-sm text-brand-muted mt-1">{home.story_stat_3_label || "Coastal counties"}</p>
           </div>
         </div>
@@ -39,7 +39,7 @@ const { home } = Astro.props;
       </div>
 
       <div class="lg:col-span-5">
-        <blockquote class="border-l-4 border-brand-gold bg-brand-warm p-6 sm:p-8">
+        <blockquote class="border-l-4 border-brand-terra bg-brand-warm p-6 sm:p-8">
           <p class="text-lg sm:text-xl leading-relaxed text-brand-text font-sans">
             "Building relationships that last generations — that's what community banking is all about."
           </p>
