@@ -24,14 +24,20 @@ const { title, description } = Astro.props;
   <body class="min-h-screen flex flex-col">
     <!-- Skip Navigation Link (WCAG 2.4.1) -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
-    <!-- Top Utility Bar -->
+    <!-- Top Utility Bar: FDIC sign + quick links | Routing number -->
     <div class="bg-brand-navy text-white text-xs">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-9">
-        <div class="flex items-center gap-5">
-          <a href="/locations/" class="hover:text-brand-gold transition-colors">Locations</a>
-          <a href="https://www.texasgulfbank.com/contact-texas-gulf-bank/" class="hover:text-brand-gold transition-colors">Contact</a>
-          <a href="https://www.texasgulfbank.com/careers/" class="hover:text-brand-gold transition-colors">Careers</a>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4 h-10">
+        <div class="flex items-center gap-4 min-w-0">
+          <span class="inline-flex items-center bg-white rounded-sm px-1.5 py-0.5 shrink-0" title="FDIC-Insured - Backed by the full faith and credit of the U.S. Government">
+            <img src="/fdic-digital-sign.png" alt="FDIC-Insured - Backed by the full faith and credit of the U.S. Government" class="h-5 w-auto" loading="eager" />
+          </span>
+          <div class="flex items-center gap-5">
+            <a href="/locations/" class="hover:text-brand-gold transition-colors">Locations</a>
+            <a href="https://www.texasgulfbank.com/contact-texas-gulf-bank/" class="hover:text-brand-gold transition-colors">Contact</a>
+            <a href="https://www.texasgulfbank.com/careers/" class="hover:text-brand-gold transition-colors">Careers</a>
+          </div>
         </div>
+        <span class="shrink-0">Routing Number: 113115484</span>
       </div>
     </div>
 

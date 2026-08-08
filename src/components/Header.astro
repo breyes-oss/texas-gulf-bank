@@ -1,8 +1,5 @@
 ---
-// Header.astro — sticky header that shrinks on scroll:
-// FDIC sign fades/collapses, logo gets smaller, soft shadow appears.
-import FdicDigitalSign from './FdicDigitalSign.astro';
-
+// Header.astro — sticky header that shrinks on scroll.
 interface NavLink {
   label: string;
   href: string;
@@ -19,13 +16,10 @@ const {
   showCta = true,
   showHamburger = true,
   links = [
-    { label: "Business", href: "https://www.texasgulfbank.com/business-checking/" },
     { label: "Personal", href: "https://www.texasgulfbank.com/personal-checking/" },
-    { label: "Rates & Fees", href: "/rates-and-fees" },
-    { label: "Locations", href: "/locations/" },
+    { label: "Business", href: "https://www.texasgulfbank.com/business-checking/" },
     { label: "Wealth", href: "https://www.texasgulfbank.com/wealth-management/" },
     { label: "About", href: "https://www.texasgulfbank.com/about-texas-gulf-bank/" },
-    { label: "Support", href: "https://www.texasgulfbank.com/frequently-asked-questions/" },
   ],
 } = Astro.props;
 ---
@@ -33,14 +27,11 @@ const {
 <header class="site-header bg-white sticky top-0 z-50" data-shrink-header>
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
     <div class="flex items-center justify-between h-full">
-      <!-- Logo + FDIC sign (FDIC fades away on scroll) -->
+      <!-- Logo (FDIC sign lives in the top navy utility bar) -->
       <div class="flex flex-col items-start justify-center gap-0">
         <a href="/" class="flex items-center group" aria-label="Texas Gulf Bank home">
           <img src="/logo-navy.png" alt="Texas Gulf Bank" class="logo-img w-auto" />
         </a>
-        <div class="fdic-fade overflow-hidden">
-          <FdicDigitalSign />
-        </div>
       </div>
 
       <!-- Desktop Nav -->
@@ -171,11 +162,6 @@ const {
     height: 1.75rem; /* h-7 on mobile */
     transition: height 0.28s ease;
   }
-  .fdic-fade {
-    max-height: 48px;
-    opacity: 1;
-    transition: opacity 0.28s ease, max-height 0.28s ease;
-  }
   .site-header.is-scrolled {
     height: 3.25rem; /* compact pill */
     top: 0.5rem;
@@ -200,10 +186,6 @@ const {
   }
   .site-header.is-scrolled .logo-img {
     height: 1.5rem; /* h-6 */
-  }
-  .site-header.is-scrolled .fdic-fade {
-    max-height: 0;
-    opacity: 0;
   }
   @media (min-width: 1024px) {
     .site-header {
