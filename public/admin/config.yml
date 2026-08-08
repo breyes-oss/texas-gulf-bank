@@ -156,6 +156,7 @@ collections:
           - { label: Language, name: value, widget: string }
       - { label: Latitude, name: lat, widget: number, hint: "Decimal degrees, e.g. 29.1822543" }
       - { label: Longitude, name: lng, widget: number, hint: "Decimal degrees, e.g. -95.4338758" }
+      - { label: Exterior photo, name: photo, widget: image, required: false, hint: "Upload an exterior photo of this location (optional)" }
       - label: Hours of operation
         name: hours
         widget: object

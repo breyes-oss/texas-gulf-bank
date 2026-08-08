@@ -17,6 +17,7 @@ services:
 languages: []
 lat: 29.7825364
 lng: -95.5586516
+photo: ""
 hours:
   lobby:
     - days: "Mon - Fri"

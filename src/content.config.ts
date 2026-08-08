@@ -130,6 +130,7 @@ const locations = defineCollection({
     languages: z.array(z.string()).default([]),
     lat: z.number(),
     lng: z.number(),
+    photo: z.string().optional(),
     hours: z
       .object({
         lobby: z.array(hoursRow).default([]),

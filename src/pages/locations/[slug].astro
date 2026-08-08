@@ -1,7 +1,6 @@
 ---
 import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
-import type { CollectionEntry } from "astro:content";
 
 export async function getStaticPaths() {
   const locations = await getCollection("locations");
@@ -23,7 +22,7 @@ const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${enco
 )}`;
 const telHref = `tel:${d.phone.replace(/[^0-9]/g, "")}`;
 
-// Nearby: same region first, then by proximity (static, deterministic)
+// Nearby: same region first, then alphabetical (deterministic, static build)
 const nearby = allLocations
   .filter((l) => l.id !== loc.id)
   .sort((a, b) => {
@@ -37,6 +36,36 @@ const nearby = allLocations
 const fullAddress = `${d.street}${d.suite ? ", " + d.suite : ""}, ${d.city}, ${d.state} ${d.zip}`;
 const pageTitle = `${d.name} ATM and Banking Center`;
 const pageDescription = `Texas Gulf Bank ${d.name} branch in ${d.city}, TX. Lobby and drive-thru hours, phone ${d.phone}, directions, and services.`;
+
+// Expand "Mon - Fri" style ranges into per-day rows for display (Southwest/Vibe pattern)
+const DAY_ORDER = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+const DAY_ABBR: Record<string, string> = {
+  Mon: "Monday", Tue: "Tuesday", Wed: "Wednesday", Thu: "Thursday",
+  Fri: "Friday", Sat: "Saturday", Sun: "Sunday",
+};
+
+function expandDays(rows: { days: string; open: string; close: string }[]) {
+  const out: { day: string; open: string; close: string }[] = [];
+  for (const row of rows) {
+    const parts = row.days.split("-").map((s) => s.trim());
+    if (parts.length === 2 && DAY_ABBR[parts[0]] && DAY_ABBR[parts[1]]) {
+      const start = DAY_ORDER.indexOf(DAY_ABBR[parts[0]]);
+      const end = DAY_ORDER.indexOf(DAY_ABBR[parts[1]]);
+      for (let i = start; i <= end; i++) {
+        out.push({ day: DAY_ORDER[i], open: row.open, close: row.close });
+      }
+    } else if (DAY_ABBR[parts[0]]) {
+      out.push({ day: DAY_ABBR[parts[0]], open: row.open, close: row.close });
+    } else {
+      out.push({ day: row.days, open: row.open, close: row.close });
+    }
+  }
+  return out;
+}
+
+const lobbyDays = expandDays(d.hours.lobby);
+const driveThruDays = expandDays(d.hours.drive_thru);
+const hasPhoto = Boolean(d.photo);
 ---
 
 <Layout title={pageTitle} description={pageDescription}>
@@ -53,81 +82,86 @@ const pageDescription = `Texas Gulf Bank ${d.name} branch in ${d.city}, TX. Lobb
     </div>
   </nav>
 
-  <!-- Page header -->
+  <!-- Header: name, address, phone, primary actions -->
   <section class="bg-brand-cream border-b border-brand-navy/10">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
-      <div class="flex flex-wrap items-start justify-between gap-6">
-        <div>
-          <p class="text-sm font-semibold uppercase tracking-[0.14em] text-brand-blue mb-2">{d.region}</p>
-          <h1 class="font-display text-4xl sm:text-5xl font-black text-brand-navy leading-[1.05] tracking-tight text-balance">
-            {d.name} ATM and Banking Center
-          </h1>
-          <p class="mt-4 text-lg text-brand-muted">{fullAddress}</p>
-        </div>
-        <div class="flex flex-col sm:flex-row gap-3">
-          <a
-            href={directionsUrl}
-            class="inline-flex items-center justify-center gap-2 bg-brand-navy text-white px-6 py-3 rounded-lg text-sm font-bold hover:bg-brand-navy-light transition-colors"
-          >
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-            Get Directions
-          </a>
-          <a
-            href={telHref}
-            class="inline-flex items-center justify-center gap-2 bg-brand-gold text-brand-navy px-6 py-3 rounded-lg text-sm font-bold hover:bg-brand-gold-light transition-colors"
-          >
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-            {d.phone}
-          </a>
-        </div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
+      <p class="text-sm font-semibold uppercase tracking-[0.14em] text-brand-blue mb-2">{d.region}</p>
+      <h1 class="font-display text-4xl sm:text-5xl font-black text-brand-navy leading-[1.05] tracking-tight text-balance">
+        {d.name} ATM and Banking Center
+      </h1>
+      <p class="mt-4 text-lg text-brand-text">
+        {d.street}{d.suite ? ", " + d.suite : ""}<br class="sm:hidden" />
+        <span class="sm:inline"> · </span>{d.city}, {d.state} {d.zip}
+      </p>
+      <p class="mt-1 text-lg">
+        <a href={telHref} class="text-brand-navy-light font-bold hover:text-brand-gold-dark transition-colors">{d.phone}</a>
+      </p>
+
+      <div class="mt-6 flex flex-col sm:flex-row gap-3">
+        <a
+          href={directionsUrl}
+          class="inline-flex items-center justify-center gap-2 bg-brand-navy text-white px-6 py-3 rounded-lg text-sm font-bold hover:bg-brand-navy-light transition-colors"
+        >
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          Get Directions
+        </a>
+        <a
+          href={telHref}
+          class="inline-flex items-center justify-center gap-2 bg-brand-gold text-brand-navy px-6 py-3 rounded-lg text-sm font-bold hover:bg-brand-gold-light transition-colors"
+        >
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+          Call Us Now
+        </a>
       </div>
     </div>
   </section>
 
-  <!-- Main content: hours + contact + services -->
-  <section class="py-10 sm:py-14 lg:py-16">
+  <!-- Body: photo + hours + services | map + connect -->
+  <section class="py-10 sm:py-14">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid lg:grid-cols-12 gap-10 lg:gap-14">
-        <!-- Left: hours + services -->
+        <!-- Left column -->
         <div class="lg:col-span-7">
+          {hasPhoto && (
+            <div class="rounded-xl overflow-hidden border border-brand-navy/10 mb-8">
+              <img src={d.photo} alt={`Exterior of the Texas Gulf Bank ${d.name} location`} class="w-full aspect-[16/9] object-cover" loading="lazy" />
+            </div>
+          )}
+
           <h2 class="font-display text-2xl sm:text-3xl font-black text-brand-navy tracking-tight">Hours of Operation</h2>
           <p class="mt-2 text-sm text-brand-muted">All times US Central. Hours may change on holidays or during severe weather.</p>
 
           <div class="mt-6 grid sm:grid-cols-2 gap-6">
-            {d.hours.lobby.length > 0 && (
-              <div class="border border-brand-navy/10 rounded-lg overflow-hidden">
-                <h3 class="bg-brand-navy text-white px-5 py-3 font-display font-semibold text-sm">Lobby Hours</h3>
-                <table class="w-full text-sm">
-                  <tbody>
-                    {d.hours.lobby.map((row) => (
-                      <tr class="border-b border-brand-navy/5 last:border-b-0">
-                        <td class="px-5 py-3 text-brand-text">{row.days}</td>
-                        <td class="px-5 py-3 text-right text-brand-muted">{row.open} – {row.close}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+            {lobbyDays.length > 0 && (
+              <div>
+                <h3 class="font-display font-semibold text-brand-navy text-base mb-2">Lobby</h3>
+                <dl class="text-sm">
+                  {lobbyDays.map((row) => (
+                    <div class="flex items-baseline justify-between gap-4 py-1.5 border-b border-brand-navy/5 last:border-b-0">
+                      <dt class="text-brand-text">{row.day}</dt>
+                      <dd class="text-brand-muted text-right">{row.open} – {row.close}</dd>
+                    </div>
+                  ))}
+                </dl>
               </div>
             )}
-            {d.hours.drive_thru.length > 0 && (
-              <div class="border border-brand-navy/10 rounded-lg overflow-hidden">
-                <h3 class="bg-brand-navy text-white px-5 py-3 font-display font-semibold text-sm">Drive-Thru Hours</h3>
-                <table class="w-full text-sm">
-                  <tbody>
-                    {d.hours.drive_thru.map((row) => (
-                      <tr class="border-b border-brand-navy/5 last:border-b-0">
-                        <td class="px-5 py-3 text-brand-text">{row.days}</td>
-                        <td class="px-5 py-3 text-right text-brand-muted">{row.open} – {row.close}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+            {driveThruDays.length > 0 && (
+              <div>
+                <h3 class="font-display font-semibold text-brand-navy text-base mb-2">Drive-Thru</h3>
+                <dl class="text-sm">
+                  {driveThruDays.map((row) => (
+                    <div class="flex items-baseline justify-between gap-4 py-1.5 border-b border-brand-navy/5 last:border-b-0">
+                      <dt class="text-brand-text">{row.day}</dt>
+                      <dd class="text-brand-muted text-right">{row.open} – {row.close}</dd>
+                    </div>
+                  ))}
+                </dl>
               </div>
             )}
           </div>
 
-          <h2 class="font-display text-2xl sm:text-3xl font-black text-brand-navy tracking-tight mt-10">Services &amp; Amenities</h2>
-          <div class="mt-5 flex flex-wrap gap-2.5">
+          <h2 class="font-display text-2xl sm:text-3xl font-black text-brand-navy tracking-tight mt-10">Services</h2>
+          <div class="mt-4 flex flex-wrap gap-2.5">
             {(d.services.length ? d.services : ["ATM", "Drive-Thru"]).map((s) => (
               <span class="inline-flex items-center gap-1.5 bg-brand-cream border border-brand-navy/10 rounded-full px-4 py-2 text-sm text-brand-text">
                 <svg class="w-4 h-4 text-brand-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
@@ -157,7 +191,7 @@ const pageDescription = `Texas Gulf Bank ${d.name} branch in ${d.city}, TX. Lobb
           </div>
         </div>
 
-        <!-- Right: map + contact -->
+        <!-- Right column: map + connect -->
         <div class="lg:col-span-5">
           <div class="border border-brand-navy/10 rounded-lg overflow-hidden">
             <div class="aspect-[4/3] bg-brand-cream">
@@ -177,15 +211,16 @@ const pageDescription = `Texas Gulf Bank ${d.name} branch in ${d.city}, TX. Lobb
               {d.street}{d.suite ? ", " + d.suite : ""}<br />
               {d.city}, {d.state} {d.zip}
             </address>
-            <p class="mt-3">
-              <a href={telHref} class="text-brand-navy-light font-bold hover:text-brand-gold-dark transition-colors">{d.phone}</a>
-            </p>
             <div class="mt-5 flex flex-col gap-3">
-              <a href={directionsUrl} class="inline-flex items-center justify-center gap-2 border border-brand-navy/20 text-brand-navy px-5 py-2.5 rounded-lg text-sm font-bold hover:bg-brand-cream transition-colors">
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+              <a href={telHref} class="inline-flex items-center gap-3 border border-brand-navy/15 text-brand-text px-5 py-3 rounded-lg text-sm font-semibold hover:bg-brand-cream transition-colors">
+                <svg class="w-5 h-5 text-brand-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                Call {d.phone}
+              </a>
+              <a href={directionsUrl} class="inline-flex items-center gap-3 border border-brand-navy/15 text-brand-text px-5 py-3 rounded-lg text-sm font-semibold hover:bg-brand-cream transition-colors">
+                <svg class="w-5 h-5 text-brand-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
                 Get Directions
               </a>
-              <a href="https://www.texasgulfbank.com/contact-texas-gulf-bank/" class="inline-flex items-center justify-center gap-2 bg-brand-aqua text-white px-5 py-2.5 rounded-lg text-sm font-bold hover:bg-brand-blue transition-colors">
+              <a href="https://www.texasgulfbank.com/contact-texas-gulf-bank/" class="inline-flex items-center justify-center gap-2 bg-brand-aqua text-white px-5 py-3 rounded-lg text-sm font-bold hover:bg-brand-blue transition-colors">
                 Contact a Banker
               </a>
             </div>
@@ -203,7 +238,7 @@ const pageDescription = `Texas Gulf Bank ${d.name} branch in ${d.city}, TX. Lobb
         {nearby.map((l) => (
           <a
             href={`/locations/${l.id}/`}
-            class="group border border-brand-navy/10 rounded-lg p-6 hover:border-brand-aqua/50 hover:shadow-md transition-all"
+            class="group border border-brand-navy/10 rounded-lg p-6 hover:border-brand-aqua/50 hover:shadow-md transition-all bg-white"
           >
             <h3 class="font-display text-lg font-bold text-brand-navy group-hover:text-brand-blue transition-colors">{l.data.name} ATM and Banking Center</h3>
             <p class="mt-2 text-sm text-brand-muted leading-relaxed">

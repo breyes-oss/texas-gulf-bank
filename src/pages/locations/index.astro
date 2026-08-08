@@ -26,6 +26,11 @@ const clientData = sorted.map((l) => ({
 
 const dataJson = JSON.stringify(clientData);
 const searchPlaceholder = "Search by city, ZIP, or location name";
+
+// Compact hours summary for cards: "Mon–Fri 9 AM – 5 PM · Sat 9 AM – 12 PM"
+function hoursSummary(rows: { days: string; open: string; close: string }[]) {
+  return rows.map((r) => `${r.days} ${r.open} – ${r.close}`).join(" · ");
+}
 ---
 
 <Layout
@@ -94,19 +99,18 @@ const searchPlaceholder = "Search by city, ZIP, or location name";
       <div class="grid lg:grid-cols-2 gap-8">
         <!-- Map -->
         <div class="order-2 lg:order-1">
-          <div id="loc-map" class="w-full h-[420px] lg:h-[560px] rounded-xl border border-brand-navy/10 overflow-hidden" aria-label="Map of Texas Gulf Bank locations"></div>
+          <div id="loc-map" class="w-full h-[420px] lg:h-[640px] rounded-xl border border-brand-navy/10 overflow-hidden" aria-label="Map of Texas Gulf Bank locations"></div>
           <p class="mt-3 text-xs text-brand-muted">
             Map tiles © <a href="https://www.openstreetmap.org/copyright" class="underline underline-offset-2 hover:text-brand-navy-light" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors. Hours may change on holidays or during severe weather.
           </p>
         </div>
 
-        <!-- Results list -->
+        <!-- Results list: Cornhusker-style cards -->
         <div class="order-1 lg:order-2">
-          <div class="space-y-4" data-loc-results>
+          <div class="space-y-5" data-loc-results>
             {sorted.map((l) => (
-              <a
-                href={`/locations/${l.id}/`}
-                class="block border border-brand-navy/10 rounded-lg p-5 hover:border-brand-aqua/60 hover:shadow-md transition-all bg-white"
+              <article
+                class="border border-brand-navy/10 rounded-lg overflow-hidden bg-white hover:border-brand-aqua/60 hover:shadow-md transition-all"
                 data-loc-card={l.id}
                 data-loc-lat={l.data.lat}
                 data-loc-lng={l.data.lng}
@@ -116,20 +120,61 @@ const searchPlaceholder = "Search by city, ZIP, or location name";
                 data-loc-atm={l.data.has_atm ? "1" : "0"}
                 data-loc-drive={l.data.has_drive_thru ? "1" : "0"}
               >
-                <div class="flex items-start justify-between gap-4">
-                  <div>
-                    <h2 class="font-display text-lg font-bold text-brand-navy">{l.data.name} ATM and Banking Center</h2>
-                    <p class="mt-1 text-sm text-brand-muted">
-                      {l.data.street}{l.data.suite ? ", " + l.data.suite : ""}, {l.data.city}, {l.data.state} {l.data.zip}
-                    </p>
-                    <p class="mt-1 text-sm font-semibold text-brand-navy-light">{l.data.phone}</p>
+                <div class="p-5 sm:p-6">
+                  <div class="flex items-start justify-between gap-4">
+                    <div>
+                      <h2 class="font-display text-lg font-bold text-brand-navy leading-snug">
+                        <a href={`/locations/${l.id}/`} class="hover:text-brand-blue transition-colors">{l.data.name} ATM and Banking Center</a>
+                      </h2>
+                      <p class="mt-1 text-sm font-semibold text-brand-navy-light">
+                        <a href={`tel:${l.data.phone.replace(/[^0-9]/g, "")}`} class="hover:text-brand-gold-dark transition-colors">{l.data.phone}</a>
+                      </p>
+                    </div>
+                    <div class="flex flex-wrap gap-1.5 justify-end shrink-0">
+                      {l.data.has_atm && (
+                        <span class="inline-flex items-center rounded-full bg-brand-cream border border-brand-navy/10 px-2.5 py-0.5 text-[11px] font-semibold text-brand-text">ATM</span>
+                      )}
+                      {l.data.has_drive_thru && (
+                        <span class="inline-flex items-center rounded-full bg-brand-cream border border-brand-navy/10 px-2.5 py-0.5 text-[11px] font-semibold text-brand-text">Drive-thru</span>
+                      )}
+                    </div>
                   </div>
-                  <span class="text-xs font-bold text-brand-blue whitespace-nowrap pt-1">{l.data.region}</span>
+
+                  <p class="mt-2 text-sm text-brand-muted leading-relaxed">
+                    {l.data.street}{l.data.suite ? ", " + l.data.suite : ""}, {l.data.city}, {l.data.state} {l.data.zip}
+                  </p>
+
+                  <dl class="mt-3 text-sm space-y-0.5">
+                    <div class="flex gap-2">
+                      <dt class="text-brand-muted shrink-0">Lobby:</dt>
+                      <dd class="text-brand-text">{hoursSummary(l.data.hours.lobby)}</dd>
+                    </div>
+                    {l.data.hours.drive_thru.length > 0 && (
+                      <div class="flex gap-2">
+                        <dt class="text-brand-muted shrink-0">Drive-thru:</dt>
+                        <dd class="text-brand-text">{hoursSummary(l.data.hours.drive_thru)}</dd>
+                      </div>
+                    )}
+                  </dl>
+
+                  <div class="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2">
+                    <a
+                      href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${l.data.street}${l.data.suite ? " " + l.data.suite : ""}, ${l.data.city}, ${l.data.state} ${l.data.zip}`)}`}
+                      class="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-navy-light hover:text-brand-gold-dark transition-colors"
+                    >
+                      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+                      Get Directions
+                    </a>
+                    <a
+                      href={`/locations/${l.id}/`}
+                      class="inline-flex items-center gap-1.5 text-sm font-bold text-brand-navy group-hover:text-brand-blue transition-colors"
+                    >
+                      Branch Details
+                      <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                    </a>
+                  </div>
                 </div>
-                <div class="mt-3 flex flex-wrap items-center gap-2 text-xs">
-                  <span class="inline-flex items-center gap-1 rounded-full bg-brand-gold-pale text-brand-gold-dark px-2.5 py-1 font-semibold" data-loc-status>Hours below</span>
-                </div>
-              </a>
+              </article>
             ))}
           </div>
           <p class="hidden mt-6 text-center text-brand-muted" data-loc-empty>
@@ -143,11 +188,8 @@ const searchPlaceholder = "Search by city, ZIP, or location name";
 
 <script>
   // ── Locations index: search, filters, geolocation sort, map sync ──
-  // Static-first: all locations are server-rendered; JS enhances.
-  // Open-now is computed client-side in America/Chicago from the CMS hours.
   const LOCATIONS = JSON.parse(document.getElementById("__LOCATIONS_JSON__")?.textContent || "[]");
 
-  // Leaflet + OSM tiles (no API key). Loaded on demand; page still works without JS.
   function loadLeaflet() {
     return new Promise((resolve, reject) => {
       if (window.L) return resolve(window.L);
@@ -173,7 +215,7 @@ const searchPlaceholder = "Search by city, ZIP, or location name";
       hour12: false,
     }).formatToParts(new Date());
     const get = (t) => parts.find((p) => p.type === t)?.value || "";
-    let day = get("weekday"); // Sun..Sat
+    let day = get("weekday");
     const dayMap = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
     let hour = parseInt(get("hour"), 10);
     const minute = parseInt(get("minute"), 10);
@@ -252,20 +294,6 @@ const searchPlaceholder = "Search by city, ZIP, or location name";
         ? `${visible.length} of ${cards.length} · sorted by distance`
         : `${visible.length} of ${cards.length}`;
     }
-    // Update open-now badges
-    for (const card of cards) {
-      const loc = LOCATIONS.find((l) => l.id === card.dataset.locCard);
-      const badge = card.querySelector("[data-loc-status]");
-      if (badge && loc) {
-        badge.textContent = isOpenNow(loc) ? "Open now (lobby)" : "Hours below";
-        badge.className =
-          "inline-flex items-center gap-1 rounded-full px-2.5 py-1 font-semibold " +
-          (isOpenNow(loc)
-            ? "bg-brand-gold-pale text-brand-gold-dark"
-            : "bg-brand-cream text-brand-muted border border-brand-navy/10");
-      }
-    }
-    // Sync map markers
     if (window.__locMap) {
       window.__locMap.eachLayer((layer) => {
         if (layer.options?.locId) {
@@ -301,7 +329,6 @@ const searchPlaceholder = "Search by city, ZIP, or location name";
       }
       if (bounds.length) map.fitBounds(bounds, { padding: [40, 40] });
     } catch (e) {
-      // No map if Leaflet fails to load; list still works.
       console.warn("Map unavailable", e);
     }
   }
@@ -332,10 +359,8 @@ const searchPlaceholder = "Search by city, ZIP, or location name";
     );
   });
 
-  // Precompute open-now badges immediately; enhance with map + search.
   applyFilters();
   initMap();
 </script>
 
 <script is:inline type="application/json" id="__LOCATIONS_JSON__" set:html={dataJson}></script>
-
