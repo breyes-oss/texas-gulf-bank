@@ -1,13 +1,19 @@
 ---
-// Header.astro — sticky header that shrinks on scroll.
-interface NavLink {
+// Header.astro — sticky header that shrinks on scroll, with desktop dropdown nav.
+interface SubLink {
   label: string;
   href: string;
+}
+
+interface NavItem {
+  label: string;
+  href: string;
+  children?: SubLink[];
   active?: boolean;
 }
 
 interface Props {
-  links?: NavLink[];
+  links?: NavItem[];
   showCta?: boolean;
   showHamburger?: boolean;
 }
@@ -16,10 +22,49 @@ const {
   showCta = true,
   showHamburger = true,
   links = [
-    { label: "Personal", href: "https://www.texasgulfbank.com/personal-checking/" },
-    { label: "Business", href: "https://www.texasgulfbank.com/business-checking/" },
-    { label: "Wealth", href: "https://www.texasgulfbank.com/wealth-management/" },
-    { label: "About", href: "https://www.texasgulfbank.com/about-texas-gulf-bank/" },
+    {
+      label: "Personal",
+      href: "https://www.texasgulfbank.com/personal-checking/",
+      children: [
+        { label: "Personal Checking", href: "https://www.texasgulfbank.com/personal-checking/" },
+        { label: "Savings & CDs", href: "https://www.texasgulfbank.com/personal-savings-cds-iras/" },
+        { label: "Personal Loans", href: "https://www.texasgulfbank.com/loans/" },
+        { label: "Online Banking", href: "https://www.texasgulfbank.com/online-and-mobile-banking/" },
+        { label: "Zelle®", href: "https://www.texasgulfbank.com/zelle/" },
+        { label: "Rates & Fees", href: "/rates-and-fees" },
+      ],
+    },
+    {
+      label: "Business",
+      href: "https://www.texasgulfbank.com/business-checking/",
+      children: [
+        { label: "Business Checking", href: "https://www.texasgulfbank.com/business-checking/" },
+        { label: "Business Loans", href: "https://www.texasgulfbank.com/business-loans-financing/" },
+        { label: "Card Services", href: "https://www.texasgulfbank.com/business-card-services/" },
+        { label: "Treasury Services", href: "https://www.texasgulfbank.com/treasury-services-2024/" },
+        { label: "Remote Deposit", href: "https://www.texasgulfbank.com/remote-deposit/" },
+      ],
+    },
+    {
+      label: "Wealth",
+      href: "https://www.texasgulfbank.com/wealth-management/",
+      children: [
+        { label: "Wealth Management", href: "https://www.texasgulfbank.com/wealth-management/" },
+        { label: "Special Needs Trusts", href: "https://www.texasgulfbank.com/safeguarding-your-childs-financial-future-a-special-needs-trust/" },
+        { label: "Financial Planning", href: "https://www.texasgulfbank.com/wealth-management/" },
+      ],
+    },
+    {
+      label: "About",
+      href: "https://www.texasgulfbank.com/about-texas-gulf-bank/",
+      children: [
+        { label: "Our Story", href: "https://www.texasgulfbank.com/our-story-texas-gulf-bank/" },
+        { label: "Leadership", href: "https://www.texasgulfbank.com/our-team/" },
+        { label: "Community", href: "https://www.texasgulfbank.com/community-0/" },
+        { label: "Blog", href: "/blog" },
+        { label: "Locations", href: "/locations/" },
+      ],
+    },
   ],
 } = Astro.props;
 ---
@@ -27,27 +72,52 @@ const {
 <header class="site-header bg-white sticky top-0 z-50" data-shrink-header>
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
     <div class="flex items-center justify-between h-full">
-      <!-- Logo (FDIC sign lives in the top navy utility bar) -->
+      <!-- Logo -->
       <div class="flex flex-col items-start justify-center gap-0">
         <a href="/" class="flex items-center group" aria-label="Texas Gulf Bank home">
           <img src="/logo-navy.png" alt="Texas Gulf Bank" class="logo-img w-auto" />
         </a>
       </div>
 
-      <!-- Desktop Nav -->
-      <nav class="hidden lg:flex items-center gap-1">
-        {links.map((l) => (
-          <a
-            href={l.href}
-            class:list={[
-              "px-4 py-2 text-sm font-medium rounded-lg transition-colors",
-              l.active
-                ? "text-brand-gold-dark bg-brand-gold-pale/30"
-                : "text-brand-text hover:text-brand-navy-light hover:bg-gray-50",
-            ]}
-          >
-            {l.label}
-          </a>
+      <!-- Desktop Nav with dropdowns -->
+      <nav class="hidden lg:flex items-center gap-0.5" aria-label="Main navigation">
+        {links.map((item) => (
+          <div class="nav-item relative" data-nav-item>
+            <a
+              href={item.href}
+              class:list={[
+                "inline-flex items-center gap-1 px-4 py-2 text-sm font-medium rounded-lg transition-colors nav-trigger",
+                item.active
+                  ? "text-brand-gold-dark bg-brand-gold-pale/30"
+                  : "text-brand-text hover:text-brand-navy-light hover:bg-gray-50",
+              ]}
+              aria-haspopup={item.children?.length ? "true" : undefined}
+              aria-expanded={item.children?.length ? "false" : undefined}
+              data-nav-trigger
+            >
+              {item.label}
+              {item.children?.length > 0 && (
+                <svg class="w-3.5 h-3.5 nav-chevron transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              )}
+            </a>
+
+            {item.children?.length > 0 && (
+              <div class="nav-dropdown hidden absolute left-0 top-full pt-2 min-w-[240px]" data-nav-dropdown>
+                <div class="bg-white border border-brand-navy/10 rounded-xl shadow-lg overflow-hidden py-2">
+                  {item.children.map((child) => (
+                    <a
+                      href={child.href}
+                      class="block px-4 py-2.5 text-sm text-brand-text hover:bg-brand-cream hover:text-brand-navy-light transition-colors"
+                    >
+                      {child.label}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
         ))}
       </nav>
 
@@ -85,54 +155,21 @@ const {
   <!-- Mobile full-screen menu overlay (covers the header bar entirely) -->
   <div id="mobile-menu" class="mobile-menu" aria-hidden="true">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <!-- Overlay top bar: white logo on navy, aligned where the header logo sits -->
       <div class="mobile-menu-top">
         <img src="/logo-white.png" alt="Texas Gulf Bank" class="mobile-menu-logo" />
       </div>
 
       <nav class="mobile-menu-nav" aria-label="Mobile navigation">
-        <div class="menu-section">
-          <h3 class="menu-section-title font-display">Business</h3>
-          <ul class="menu-links">
-            <li><a href="https://www.texasgulfbank.com/business-checking/">Business Checking</a></li>
-            <li><a href="https://www.texasgulfbank.com/business-loans-financing/">Business Loans</a></li>
-            <li><a href="https://www.texasgulfbank.com/business-card-services/">Card Services</a></li>
-            <li><a href="https://www.texasgulfbank.com/treasury-services-2024/">Treasury Services</a></li>
-            <li><a href="https://www.texasgulfbank.com/remote-deposit/">Remote Deposit</a></li>
-          </ul>
-        </div>
-
-        <div class="menu-section">
-          <h3 class="menu-section-title font-display">Personal</h3>
-          <ul class="menu-links">
-            <li><a href="https://www.texasgulfbank.com/personal-checking/">Personal Checking</a></li>
-            <li><a href="https://www.texasgulfbank.com/personal-savings-cds-iras/">Savings &amp; CDs</a></li>
-            <li><a href="https://www.texasgulfbank.com/loans/">Personal Loans</a></li>
-            <li><a href="https://www.texasgulfbank.com/online-and-mobile-banking/">Online Banking</a></li>
-            <li><a href="https://www.texasgulfbank.com/zelle/">Zelle®</a></li>
-            <li><a href="/rates-and-fees">Rates &amp; Fees</a></li>
-          </ul>
-        </div>
-
-        <div class="menu-section">
-          <h3 class="menu-section-title font-display">Wealth</h3>
-          <ul class="menu-links">
-            <li><a href="https://www.texasgulfbank.com/wealth-management/">Wealth Management</a></li>
-            <li><a href="https://www.texasgulfbank.com/safeguarding-your-childs-financial-future-a-special-needs-trust/">Special Needs Trusts</a></li>
-            <li><a href="https://www.texasgulfbank.com/wealth-management/">Financial Planning</a></li>
-          </ul>
-        </div>
-
-        <div class="menu-section">
-          <h3 class="menu-section-title font-display">About</h3>
-          <ul class="menu-links">
-            <li><a href="https://www.texasgulfbank.com/our-story-texas-gulf-bank/">Our Story</a></li>
-            <li><a href="https://www.texasgulfbank.com/our-team/">Leadership</a></li>
-            <li><a href="https://www.texasgulfbank.com/community-0/">Community</a></li>
-            <li><a href="/blog">Blog</a></li>
-            <li><a href="/locations/">Locations</a></li>
-          </ul>
-        </div>
+        {links.map((item) => (
+          <div class="menu-section">
+            <h3 class="menu-section-title font-display">{item.label}</h3>
+            <ul class="menu-links">
+              {item.children?.map((child) => (
+                <li><a href={child.href}>{child.label}</a></li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </nav>
 
       <!-- Bottom: Online Banking CTA (header CTA is hidden on phones) + trust line -->
@@ -152,21 +189,21 @@ const {
 
 <style>
   .site-header {
-    height: 4.75rem; /* mobile: room for logo + stacked FDIC sign without the star tip riding into the bar above */
-    border-bottom: 1px solid #f3f4f6; /* gray-100 */
+    height: 4.75rem;
+    border-bottom: 1px solid #f3f4f6;
     transition: height 0.28s ease, box-shadow 0.28s ease, border-radius 0.28s ease,
       margin 0.28s ease, top 0.28s ease, border-color 0.28s ease,
       background-color 0.28s ease;
   }
   .logo-img {
-    height: 1.75rem; /* h-7 on mobile */
+    height: 1.75rem;
     transition: height 0.28s ease;
   }
   .site-header.is-scrolled {
-    height: 3.25rem; /* compact pill */
+    height: 3.25rem;
     top: 0.5rem;
     margin-inline: 0.75rem;
-    border-radius: 9999px; /* pill */
+    border-radius: 9999px;
     border-bottom-color: transparent;
     background-color: rgba(255, 255, 255, 0.88);
     -webkit-backdrop-filter: blur(12px);
@@ -185,26 +222,43 @@ const {
     }
   }
   .site-header.is-scrolled .logo-img {
-    height: 1.5rem; /* h-6 */
+    height: 1.5rem;
   }
   @media (min-width: 1024px) {
     .site-header {
-      height: 5rem; /* lg:h-20 */
+      height: 5rem;
     }
     .logo-img {
-      height: 2.5rem; /* lg:h-10 */
+      height: 2.5rem;
     }
     .site-header.is-scrolled {
-      height: 3.5rem; /* lg:h-14 */
+      height: 3.5rem;
     }
     .site-header.is-scrolled .logo-img {
-      height: 2rem; /* lg:h-8 */
+      height: 2rem;
     }
   }
+
+  /* ── Desktop dropdown nav ── */
+  .nav-dropdown {
+    transition: opacity 0.15s ease, transform 0.15s ease;
+    opacity: 0;
+    transform: translateY(-4px);
+    pointer-events: none;
+  }
+  .nav-item.is-open .nav-dropdown {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .nav-item.is-open .nav-chevron {
+    transform: rotate(180deg);
+  }
+
   /* ── Mobile full-screen menu ── */
   .menu-toggle {
     position: relative;
-    z-index: 70; /* stays clickable above the overlay */
+    z-index: 70;
   }
   .menu-toggle .icon-close {
     display: none;
@@ -239,7 +293,7 @@ const {
   .mobile-menu-top {
     display: flex;
     align-items: center;
-    height: 4rem; /* matches header height */
+    height: 4rem;
   }
   .mobile-menu-logo {
     height: 2rem;
@@ -301,7 +355,7 @@ const {
   @media (prefers-reduced-motion: reduce) {
     .site-header,
     .logo-img,
-    .fdic-fade {
+    .nav-dropdown {
       transition: none;
     }
   }
@@ -316,6 +370,70 @@ const {
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
   }
+
+  // ── Desktop dropdown nav: open on hover, toggle on click, close on outside/Escape ──
+  const navItems = [...document.querySelectorAll("[data-nav-item]")];
+  let openItem = null;
+
+  function closeDropdowns(except) {
+    navItems.forEach((item) => {
+      if (item !== except) {
+        item.classList.remove("is-open");
+        const trigger = item.querySelector("[data-nav-trigger]");
+        if (trigger) trigger.setAttribute("aria-expanded", "false");
+      }
+    });
+    if (!except) openItem = null;
+  }
+
+  navItems.forEach((item) => {
+    const trigger = item.querySelector("[data-nav-trigger]");
+    const dropdown = item.querySelector("[data-nav-dropdown]");
+    if (!trigger || !dropdown) return;
+
+    // Hover open/close (desktop)
+    item.addEventListener("mouseenter", () => {
+      closeDropdowns(item);
+      item.classList.add("is-open");
+      openItem = item;
+      trigger.setAttribute("aria-expanded", "true");
+    });
+    item.addEventListener("mouseleave", () => {
+      // Only close on leave if the pointer is no longer inside the item (incl. dropdown)
+      const rect = item.getBoundingClientRect();
+      const x = event.clientX, y = event.clientY;
+      if (x < rect.left || x > rect.right || y < rect.top || y > rect.bottom) {
+        item.classList.remove("is-open");
+        trigger.setAttribute("aria-expanded", "false");
+        openItem = null;
+      }
+    });
+
+    // Click toggles (touch/keyboard parity)
+    trigger.addEventListener("click", (e) => {
+      e.preventDefault(); // prevent navigating away; dropdown reveals pages
+      const willOpen = !item.classList.contains("is-open");
+      closeDropdowns(item);
+      if (willOpen) {
+        item.classList.add("is-open");
+        openItem = item;
+        trigger.setAttribute("aria-expanded", "true");
+      } else {
+        openItem = null;
+      }
+    });
+  });
+
+  // Close on outside click
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest("[data-nav-item]")) {
+      closeDropdowns();
+    }
+  });
+  // Close on Escape
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeDropdowns();
+  });
 
   // Mobile full-screen menu toggle
   const menuToggle = document.querySelector("[data-menu-toggle]");
@@ -342,15 +460,12 @@ const {
         openMenu();
       }
     });
-    // Close when a menu link is chosen
     mobileMenu.querySelectorAll("a").forEach((link) => {
       link.addEventListener("click", closeMenu);
     });
-    // Close on Escape
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape") closeMenu();
     });
-    // Close if resized to desktop (hamburger is hidden there)
     window.addEventListener("resize", () => {
       if (window.innerWidth >= 1024) closeMenu();
     });
