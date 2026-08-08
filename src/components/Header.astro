@@ -211,10 +211,27 @@ const {
     margin-inline: 0.75rem;
     border-radius: 9999px;
     border-bottom-color: transparent;
-    background-color: rgba(255, 255, 255, 0.88);
+    background-color: transparent; /* frosted layer lives on ::before so backdrop-filter doesn't trap the fixed mobile menu */
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.14);
+  }
+  /* Frosted pill background — kept off the header element itself: backdrop-filter
+     on an element makes it the containing block for position:fixed descendants,
+     which would trap the mobile menu overlay inside the pill (blue bar + frozen page). */
+  .site-header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: rgba(255, 255, 255, 0.88);
     -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
-    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.14);
+    opacity: 0;
+    transition: opacity 0.28s ease;
+    z-index: -1;
+    pointer-events: none;
+  }
+  .site-header.is-scrolled::before {
+    opacity: 1;
   }
   @media (min-width: 640px) {
     .site-header.is-scrolled {
@@ -430,6 +447,7 @@ const {
 
   @media (prefers-reduced-motion: reduce) {
     .site-header,
+    .site-header::before,
     .logo-img,
     .nav-dropdown,
     .nav-dropdown-panel,
