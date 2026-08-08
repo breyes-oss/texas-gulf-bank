@@ -1,0 +1,33 @@
+title: "CityCentre ATM and Banking Center"
+name: "CityCentre"
+region: "Harris County"
+street: "900 Town & Country Lane"
+suite: "Suite 100"
+city: "Houston"
+state: TX
+zip: "77024"
+phone: "281-888-3898"
+has_atm: true
+has_drive_thru: true
+atm_types:
+  - "Drive-Thru ATM"
+services:
+  - "ATM"
+  - "Drive-Thru"
+languages: []
+lat: 29.7825364
+lng: -95.5586516
+hours:
+  lobby:
+    - days: "Mon - Fri"
+      open: "9 AM"
+      close: "4 PM"
+      open24: "09:00"
+      close24: "16:00"
+  drive_thru:
+    - days: "Mon - Fri"
+      open: "8 AM"
+      close: "5 PM"
+      open24: "08:00"
+      close24: "17:00"
+notes: ""

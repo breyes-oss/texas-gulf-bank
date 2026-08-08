@@ -1,0 +1,33 @@
+title: "Voss ATM and Banking Center"
+name: "Voss"
+region: "Harris County"
+street: "1626 South Voss Road"
+suite: ""
+city: "Houston"
+state: TX
+zip: "77057"
+phone: "713-595-7400"
+has_atm: true
+has_drive_thru: true
+atm_types:
+  - "Drive-Thru ATM"
+services:
+  - "ATM"
+  - "Drive-Thru"
+languages: []
+lat: 29.750738
+lng: -95.5016043
+hours:
+  lobby:
+    - days: "Mon - Fri"
+      open: "9 AM"
+      close: "4 PM"
+      open24: "09:00"
+      close24: "16:00"
+  drive_thru:
+    - days: "Mon - Fri"
+      open: "8 AM"
+      close: "5 PM"
+      open24: "08:00"
+      close24: "17:00"
+notes: ""

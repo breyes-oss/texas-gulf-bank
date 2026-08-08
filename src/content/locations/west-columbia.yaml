@@ -1,0 +1,33 @@
+title: "West Columbia ATM and Banking Center"
+name: "West Columbia"
+region: "Brazoria County"
+street: "109 East Brazos Avenue"
+suite: ""
+city: "West Columbia"
+state: TX
+zip: "77486"
+phone: "979-345-1666"
+has_atm: true
+has_drive_thru: true
+atm_types:
+  - "Drive-Thru ATM"
+services:
+  - "ATM"
+  - "Drive-Thru"
+languages: []
+lat: 29.1441735
+lng: -95.6473501
+hours:
+  lobby:
+    - days: "Mon - Fri"
+      open: "9 AM"
+      close: "5 PM"
+      open24: "09:00"
+      close24: "17:00"
+  drive_thru:
+    - days: "Mon - Fri"
+      open: "8 AM"
+      close: "5 PM"
+      open24: "08:00"
+      close24: "17:00"
+notes: ""

@@ -1,0 +1,43 @@
+title: "Freeport ATM and Banking Center"
+name: "Freeport"
+region: "Brazoria County"
+street: "1400 Brazosport Boulevard"
+suite: ""
+city: "Freeport"
+state: TX
+zip: "77541"
+phone: "979-233-3536"
+has_atm: true
+has_drive_thru: true
+atm_types:
+  - "Drive-Thru ATM"
+services:
+  - "ATM"
+  - "Drive-Thru"
+languages: []
+lat: 28.9734713
+lng: -95.3716635
+hours:
+  lobby:
+    - days: "Mon - Fri"
+      open: "9 AM"
+      close: "5 PM"
+      open24: "09:00"
+      close24: "17:00"
+    - days: "Sat"
+      open: "9 AM"
+      close: "12 PM"
+      open24: "09:00"
+      close24: "12:00"
+  drive_thru:
+    - days: "Mon - Fri"
+      open: "8 AM"
+      close: "5 PM"
+      open24: "08:00"
+      close24: "17:00"
+    - days: "Sat"
+      open: "9 AM"
+      close: "12 PM"
+      open24: "09:00"
+      close24: "12:00"
+notes: ""

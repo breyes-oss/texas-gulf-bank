@@ -103,4 +103,41 @@ const fees = defineCollection({
   }),
 });
 
-export const collections = { blog, pages, data, fees };
+const hoursRow = z.object({
+  days: z.string(),
+  open: z.string(),
+  close: z.string(),
+  open24: z.string().optional(),
+  close24: z.string().optional(),
+});
+
+const locations = defineCollection({
+  loader: glob({ pattern: "*.yaml", base: "./src/content/locations" }),
+  schema: z.object({
+    title: z.string(),
+    name: z.string(),
+    region: z.string(),
+    street: z.string(),
+    suite: z.string().optional(),
+    city: z.string(),
+    state: z.string().default("TX"),
+    zip: z.string(),
+    phone: z.string(),
+    has_atm: z.boolean().default(true),
+    has_drive_thru: z.boolean().default(true),
+    atm_types: z.array(z.string()).default([]),
+    services: z.array(z.string()).default([]),
+    languages: z.array(z.string()).default([]),
+    lat: z.number(),
+    lng: z.number(),
+    hours: z
+      .object({
+        lobby: z.array(hoursRow).default([]),
+        drive_thru: z.array(hoursRow).default([]),
+      })
+      .default({ lobby: [], drive_thru: [] }),
+    notes: z.string().optional(),
+  }),
+});
+
+export const collections = { blog, pages, data, fees, locations };

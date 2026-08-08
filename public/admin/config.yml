@@ -111,6 +111,81 @@ collections:
           - { label: Detail / minimum, name: detail, widget: string, required: false }
           - { label: APY value, name: value, widget: string, hint: "Example: 3.45%" }
 
+  - name: locations
+    label: Locations
+    label_singular: Location
+    folder: src/content/locations
+    create: true
+    delete: true
+    extension: yaml
+    format: yaml
+    identifier_field: title
+    slug: "{{name}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Location name, name: name, widget: string }
+      - { label: Region / county, name: region, widget: string, hint: "Example: Brazoria County" }
+      - { label: Street address, name: street, widget: string }
+      - { label: Suite, name: suite, widget: string, required: false }
+      - { label: City, name: city, widget: string }
+      - { label: State, name: state, widget: string, default: TX }
+      - { label: ZIP, name: zip, widget: string }
+      - { label: Phone, name: phone, widget: string, hint: "Format: 979-849-2372" }
+      - { label: Has ATM, name: has_atm, widget: boolean, default: true, required: false }
+      - { label: Has drive-thru, name: has_drive_thru, widget: boolean, default: true, required: false }
+      - label: ATM types
+        name: atm_types
+        widget: list
+        required: false
+        summary: "{{fields.value}}"
+        fields:
+          - { label: Type, name: value, widget: string }
+      - label: Services
+        name: services
+        widget: list
+        required: false
+        summary: "{{fields.value}}"
+        fields:
+          - { label: Service, name: value, widget: string }
+      - label: Languages spoken
+        name: languages
+        widget: list
+        required: false
+        summary: "{{fields.value}}"
+        fields:
+          - { label: Language, name: value, widget: string }
+      - { label: Latitude, name: lat, widget: number, hint: "Decimal degrees, e.g. 29.1822543" }
+      - { label: Longitude, name: lng, widget: number, hint: "Decimal degrees, e.g. -95.4338758" }
+      - label: Hours of operation
+        name: hours
+        widget: object
+        required: false
+        fields:
+          - label: Lobby
+            name: lobby
+            widget: list
+            required: false
+            summary: "{{fields.days}} {{fields.open}} – {{fields.close}}"
+            fields:
+              - { label: Days, name: days, widget: string, hint: "Example: Mon - Fri or Sat" }
+              - { label: Open (display), name: open, widget: string, hint: "Example: 9 AM" }
+              - { label: Close (display), name: close, widget: string, hint: "Example: 5 PM" }
+              - { label: Open 24h, name: open24, widget: string, required: false, hint: "Example: 09:00 — used for open-now status" }
+              - { label: Close 24h, name: close24, widget: string, required: false, hint: "Example: 17:00 — used for open-now status" }
+          - label: Drive-thru
+            name: drive_thru
+            widget: list
+            required: false
+            summary: "{{fields.days}} {{fields.open}} – {{fields.close}}"
+            fields:
+              - { label: Days, name: days, widget: string, hint: "Example: Mon - Fri or Sat" }
+              - { label: Open (display), name: open, widget: string, hint: "Example: 8 AM" }
+              - { label: Close (display), name: close, widget: string, hint: "Example: 5 PM" }
+              - { label: Open 24h, name: open24, widget: string, required: false, hint: "Example: 08:00 — used for open-now status" }
+              - { label: Close 24h, name: close24, widget: string, required: false, hint: "Example: 17:00 — used for open-now status" }
+      - { label: Notes / special hours, name: notes, widget: text, required: false, hint: "Holiday, weather, or temporary changes" }
+
+
   - name: fees
     label: Fee Schedule
     label_singular: Fee Schedule

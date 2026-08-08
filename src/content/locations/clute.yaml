@@ -1,0 +1,43 @@
+title: "Clute ATM and Banking Center"
+name: "Clute"
+region: "Brazoria County"
+street: "1030 Dixie Drive"
+suite: ""
+city: "Clute"
+state: TX
+zip: "77531"
+phone: "979-297-7211"
+has_atm: true
+has_drive_thru: true
+atm_types:
+  - "Drive-Thru ATM"
+services:
+  - "ATM"
+  - "Drive-Thru"
+languages: []
+lat: 29.0113203
+lng: -95.420677
+hours:
+  lobby:
+    - days: "Mon - Fri"
+      open: "9 AM"
+      close: "5 PM"
+      open24: "09:00"
+      close24: "17:00"
+    - days: "Sat"
+      open: "9 AM"
+      close: "12 PM"
+      open24: "09:00"
+      close24: "12:00"
+  drive_thru:
+    - days: "Mon - Fri"
+      open: "8 AM"
+      close: "5 PM"
+      open24: "08:00"
+      close24: "17:00"
+    - days: "Sat"
+      open: "9 AM"
+      close: "12 PM"
+      open24: "09:00"
+      close24: "12:00"
+notes: ""
