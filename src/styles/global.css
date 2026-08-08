@@ -41,6 +41,11 @@ body {
   background-color: var(--color-brand-warm);
 }
 
+/* Mobile full-screen menu open — lock page scroll behind the overlay */
+body.menu-open {
+  overflow: hidden;
+}
+
 /* ── Skip Navigation Link (WCAG 2.4.1) ── */
 .skip-link {
   position: absolute;
