@@ -104,14 +104,20 @@ const {
             </a>
 
             {item.children?.length > 0 && (
-              <div class="nav-dropdown absolute left-0 top-full pt-2 min-w-[240px] invisible" data-nav-dropdown>
-                <div class="bg-white border border-brand-navy/10 rounded-xl shadow-lg overflow-hidden py-2">
+              <div class="nav-dropdown absolute left-0 top-full pt-2 w-[300px] invisible" data-nav-dropdown>
+                <div class="nav-dropdown-panel rounded-2xl bg-white/95 backdrop-blur-xl border border-brand-navy/10 shadow-[0_24px_60px_rgba(15,23,42,0.18)] overflow-hidden py-2">
                   {item.children.map((child) => (
                     <a
                       href={child.href}
-                      class="block px-4 py-2.5 text-sm text-brand-text hover:bg-brand-cream hover:text-brand-navy-light transition-colors"
+                      class="menu-link group/link flex items-center justify-between gap-3 px-5 py-3 text-sm text-brand-text hover:text-brand-navy transition-all duration-300"
                     >
-                      {child.label}
+                      <span class="relative">
+                        {child.label}
+                        <span class="menu-link-underline"></span>
+                      </span>
+                      <svg class="menu-link-arrow w-4 h-4 text-brand-aqua shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                      </svg>
                     </a>
                   ))}
                 </div>
@@ -239,11 +245,11 @@ const {
     }
   }
 
-  /* ── Desktop dropdown nav ── */
+  /* ── Desktop dropdown nav (SouthWest Bank style) ── */
   .nav-dropdown {
-    transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s ease;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out, visibility 0.3s ease-in-out;
     opacity: 0;
-    transform: translateY(-4px);
+    transform: translateY(-12px);
     visibility: hidden;
     pointer-events: none;
   }
@@ -253,8 +259,76 @@ const {
     visibility: visible;
     pointer-events: auto;
   }
+  /* Frosted panel reveal */
+  .nav-dropdown-panel {
+    transform: translateY(-8px);
+    transition: transform 0.3s ease-in-out;
+  }
+  .nav-item.is-open .nav-dropdown-panel {
+    transform: translateY(0);
+  }
+  /* Trigger hover: pill highlight like SWB's category hover */
+  .nav-trigger {
+    position: relative;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+  }
+  .nav-trigger:hover,
+  .nav-item.is-open .nav-trigger {
+    background-color: rgba(25, 41, 75, 0.06);
+    color: var(--color-brand-navy);
+  }
+  .nav-item.is-open .nav-trigger {
+    color: var(--color-brand-blue);
+  }
   .nav-item.is-open .nav-chevron {
     transform: rotate(180deg);
+    color: var(--color-brand-blue);
+  }
+  /* Link rows: hairline divider that fades, arrow slides in on hover */
+  .menu-link {
+    position: relative;
+  }
+  .menu-link::after {
+    content: "";
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    bottom: 0;
+    height: 1px;
+    background: rgba(9, 26, 52, 0.08);
+    transition: background-color 0.3s ease-in-out;
+  }
+  .menu-link:last-child::after {
+    display: none;
+  }
+  .menu-link:hover::after {
+    background: transparent;
+  }
+  .menu-link-underline {
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 1px;
+    background: var(--color-brand-aqua);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease-in-out;
+  }
+  .menu-link:hover .menu-link-underline {
+    transform: scaleX(1);
+  }
+  .menu-link-arrow {
+    opacity: 0;
+    transform: translateX(-16px);
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  }
+  .menu-link:hover .menu-link-arrow {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  .menu-link:hover {
+    background-color: rgba(57, 182, 211, 0.08);
   }
 
   /* ── Mobile full-screen menu ── */
@@ -357,7 +431,13 @@ const {
   @media (prefers-reduced-motion: reduce) {
     .site-header,
     .logo-img,
-    .nav-dropdown {
+    .nav-dropdown,
+    .nav-dropdown-panel,
+    .nav-trigger,
+    .menu-link,
+    .menu-link::after,
+    .menu-link-underline,
+    .menu-link-arrow {
       transition: none;
     }
   }
