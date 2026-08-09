@@ -9,9 +9,12 @@ zip: '77515'
 phone: 979-849-2372
 has_atm: true
 has_drive_thru: true
+atm_types: []
+services:
+  - ATM
 languages: []
-lat: 29.1822543
-lng: -95.4338758
+lat: 29
+lng: -95
 photo: ''
 hours:
   lobby:
@@ -37,8 +40,3 @@ hours:
       open24: 09:00
       close24: 12:00
 notes: ''
-atm_types:
-  - Drive-Thru ATM
-services:
-  - ATM
-  - Drive-Thru
