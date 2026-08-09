@@ -1,44 +1,44 @@
-title: "Angleton ATM and Banking Center"
-name: "Angleton"
-region: "Brazoria County"
-street: "1717 North Velasco"
-suite: ""
-city: "Angleton"
+title: Angleton Banking Center
+name: Angleton
+region: Brazoria County
+street: 1717 North Velasco
+suite: ''
+city: Angleton
 state: TX
-zip: "77515"
-phone: "979-849-2372"
+zip: '77515'
+phone: 979-849-2372
 has_atm: true
 has_drive_thru: true
-atm_types:
-  - "Drive-Thru ATM"
-services:
-  - "ATM"
-  - "Drive-Thru"
 languages: []
 lat: 29.1822543
 lng: -95.4338758
-photo: ""
+photo: ''
 hours:
   lobby:
-    - days: "Mon - Fri"
-      open: "9 AM"
-      close: "5 PM"
-      open24: "09:00"
-      close24: "17:00"
-    - days: "Sat"
-      open: "9 AM"
-      close: "12 PM"
-      open24: "09:00"
-      close24: "12:00"
+    - days: Mon - Fri
+      open: 9 AM
+      close: 5 PM
+      open24: 09:00
+      close24: 17:00
+    - days: Sat
+      open: 9 AM
+      close: 12 PM
+      open24: 09:00
+      close24: 12:00
   drive_thru:
-    - days: "Mon - Fri"
-      open: "8 AM"
-      close: "5 PM"
-      open24: "08:00"
-      close24: "17:00"
-    - days: "Sat"
-      open: "9 AM"
-      close: "12 PM"
-      open24: "09:00"
-      close24: "12:00"
-notes: ""
+    - days: Mon - Fri
+      open: 8 AM
+      close: 5 PM
+      open24: 08:00
+      close24: 17:00
+    - days: Sat
+      open: 9 AM
+      close: 12 PM
+      open24: 09:00
+      close24: 12:00
+notes: ''
+atm_types:
+  - Drive-Thru ATM
+services:
+  - ATM
+  - Drive-Thru
