@@ -141,4 +141,40 @@ const locations = defineCollection({
   }),
 });
 
-export const collections = { blog, pages, data, fees, locations };
+const products = defineCollection({
+  loader: glob({ pattern: "*.yaml", base: "./src/content/products" }),
+  schema: z.object({
+    title: z.string(),
+    published: z.string().optional(),
+    products: z
+      .array(
+        z.object({
+          id: z.string(),
+          name: z.string(),
+          tagline: z.string().optional(),
+          best_for: z.string().optional(),
+          monthly_fee: z.string(),
+          fee_note: z.string().optional(),
+          min_opening: z.string().optional(),
+          interest: z.boolean().default(false),
+          highlights: z.array(z.string()).default([]),
+          qualify_label: z.string().optional(),
+          qualify: z.array(z.string()).default([]),
+          open_url: z.string().optional(),
+          details_url: z.string().optional(),
+        })
+      )
+      .min(1),
+    compare_rows: z
+      .array(
+        z.object({
+          label: z.string(),
+          values: z.array(z.string()),
+        })
+      )
+      .default([]),
+    disclaimer_short: z.string().optional(),
+  }),
+});
+
+export const collections = { blog, pages, data, fees, locations, products };

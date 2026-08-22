@@ -1,0 +1,95 @@
+title: "Personal Checking Accounts"
+published: "As published on the Personal Checking Comparison Chart"
+products:
+  - id: "gulf-advantage"
+    name: "Gulf Advantage Checking"
+    tagline: "Free interest checking that rewards everyday use"
+    best_for: "Everyday banking with direct deposit and a debit card"
+    monthly_fee: "$0"
+    fee_note: "No monthly maintenance fee, period"
+    min_opening: "$50"
+    interest: true
+    highlights:
+      - "Earns interest on balances up to $25,000"
+      - "Nationwide ATM fee refunds up to $35/month"
+      - "Free Visa® Debit Card"
+      - "Free online banking, bill pay & mobile deposit"
+    qualify:
+      - "12+ debit card purchases post & clear per qualification cycle"
+      - "1+ automatic payment or direct deposit posts per cycle"
+      - "Enroll in free e-statements"
+    qualify_label: "To earn interest + ATM refunds each month:"
+    open_url: "https://app.loanspq.com/apply.aspx?enc=Kw21Wblm1yxpjJabdoZaD_1XCeB6DUzWcPY_g38Z9Jqr0clsjQUYVmTraoEngafVkCgQedLZhb-S5_xgQhN9fA"
+    details_url: "https://www.texasgulfbank.com/personal-comparison-chart/#Gulf-Advantage-Additional-Information"
+
+  - id: "portside"
+    name: "Portside Personal Checking"
+    tagline: "Simple, straightforward everyday checking"
+    best_for: "Straightforward checking — and free for age 62+"
+    monthly_fee: "$7 or $0"
+    fee_note: "Waived with a $700 average daily balance — or at any balance for age 62+"
+    min_opening: "$100"
+    interest: false
+    highlights:
+      - "Unlimited check writing"
+      - "Free Visa® Debit Card"
+      - "Monthly maintenance & debit fees waived for age 62+"
+      - "Free online banking, bill pay & mobile deposit"
+    qualify: []
+    open_url: "https://www.texasgulfbank.com/contact-texas-gulf-bank/"
+    details_url: "https://www.texasgulfbank.com/personal-comparison-chart/#Portside-Checking-Additional-Information"
+
+  - id: "gulf-rewards"
+    name: "Gulf Rewards Checking"
+    tagline: "One relationship, one statement, real perks"
+    best_for: "Families with several TGB accounts who want one combined statement"
+    monthly_fee: "$10 or $0"
+    fee_note: "Waived with $3,000 combined across all your personal TGB accounts"
+    min_opening: "$100"
+    interest: false
+    highlights:
+      - "One combined statement for every personal account"
+      - "Free specialty mint wallet checks (1 box/order)"
+      - "Free cashier's checks"
+      - "10% off safe deposit box rental"
+    qualify: []
+    open_url: "https://www.texasgulfbank.com/contact-texas-gulf-bank/"
+    details_url: "https://www.texasgulfbank.com/personal-comparison-chart/"
+
+  - id: "vip-high-yield"
+    name: "VIP High Yield Checking"
+    tagline: "Tiered rates that grow with your balance"
+    best_for: "Higher balances that should earn more"
+    monthly_fee: "$10 or $0"
+    fee_note: "Waived with a $2,500 average daily balance"
+    min_opening: "$1,000"
+    interest: true
+    highlights:
+      - "Tiered interest — higher balance, higher rate"
+      - "No transaction limitations"
+      - "Free Visa® Debit Card"
+      - "Interest paid monthly"
+    qualify: []
+    open_url: "https://app.loanspq.com/apply.aspx?enc=Kw21Wblm1yxpjJabdoZaD_1XCeB6DUzWcPY_g38Z9Jqr0clsjQUYVmTraoEngafVkCgQedLZhb-S5_xgQhN9fA"
+    details_url: "https://www.texasgulfbank.com/personal-comparison-chart/"
+
+# Comparison table rows. Each row: label + one value per product (order matches products above).
+compare_rows:
+  - label: "Minimum opening deposit"
+    values: ["$50", "$100", "$100", "$1,000"]
+  - label: "Monthly maintenance fee"
+    values: ["$0", "$7 or $0*", "$10 or $0*", "$10 or $0*"]
+  - label: "Balance to avoid the fee"
+    values: ["N/A — no monthly fee", "$700 avg daily balance, or age 62+", "$3,000 combined personal TGB balances", "$2,500 avg daily balance"]
+  - label: "Earns interest"
+    values: ["Yes", "No", "No", "Yes — tiered"]
+  - label: "Unlimited check writing"
+    values: ["Yes", "Yes", "Yes", "Yes"]
+  - label: "Visa® Debit Card"
+    values: ["Yes", "Yes", "Yes", "Yes"]
+  - label: "Free online banking + bill pay"
+    values: ["Yes", "Yes", "Yes", "Yes"]
+  - label: "ATM fee refunds nationwide"
+    values: ["Up to $35/month when you qualify", "—", "—", "—"]
+
+disclaimer_short: "* Monthly maintenance fee is waived when the stated balance requirement is met. See Account Details for complete requirements."
