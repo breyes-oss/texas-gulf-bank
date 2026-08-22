@@ -175,6 +175,18 @@ const products = defineCollection({
       )
       .default([]),
     disclaimer_short: z.string().optional(),
+    secondary: z
+      .array(
+        z.object({
+          id: z.string(),
+          name: z.string(),
+          tagline: z.string(),
+          points: z.array(z.string()).default([]),
+          details: z.array(z.string()).default([]),
+          details_url: z.string().optional(),
+        })
+      )
+      .default([]),
   }),
 });
 

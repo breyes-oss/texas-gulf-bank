@@ -1,0 +1,111 @@
+title: "Savings, CDs & IRAs"
+published: "As published on the Savings / CDs / IRAs Comparison Chart"
+products:
+  - id: "personal-savings"
+    name: "Personal Savings"
+    tagline: "Accessible savings with a competitive rate"
+    best_for: "An emergency fund or first savings account"
+    monthly_fee: "$3 or $0"
+    fee_note: "Waived any quarter your average daily balance stays at or above $200"
+    min_opening: "$100"
+    interest: true
+    highlights:
+      - "Interest compounded and paid quarterly"
+      - "Funds stay accessible — no lock-up period"
+      - "Free online banking & mobile deposit"
+      - "Only $100 to open"
+    qualify: []
+    details:
+      - "You must maintain a minimum balance of $100.00 in the account each day to obtain the disclosed annual percentage yield. Interest is compounded and credited every quarter."
+      - "The $3.00 monthly service charge applies for each month of the quarterly statement cycle in which your average daily balance falls below $200.00."
+      - "Transfers to third parties by check, point-of-sale, or TGB online are prohibited. A $5.00 debit fee applies to each debit beyond 5 per month (electronic payments, transfers between your TGB accounts, and ATM withdrawals excluded). No other transaction limitations apply."
+    open_url: "https://app.loanspq.com/apply.aspx?enc=Kw21Wblm1yxpjJabdoZaD_1XCeB6DUzWcPY_g38Z9Jqr0clsjQUYVmTraoEngafVkCgQedLZhb-S5_xgQhN9fA"
+    details_url: "https://www.texasgulfbank.com/savings-cds-iras-comparison-chart/#sand-dollar"
+
+  - id: "certificate-of-deposit"
+    name: "Certificate of Deposit"
+    tagline: "Lock in a fixed rate, watch it grow"
+    best_for: "Money you won't need until a set date"
+    monthly_fee: "$0"
+    fee_note: "No monthly service charge"
+    min_opening: "$2,500"
+    interest: true
+    highlights:
+      - "Fixed rate locked for your full term"
+      - "Interest compounded and credited monthly"
+      - "Terms to fit your timeline"
+      - "10-day grace period at maturity"
+    qualify: []
+    details:
+      - "A fixed rate is locked for the full term. Upon maturity and renewal, the rate is set to be competitive with current market rates at that time."
+      - "No deposits may be made before maturity, and no withdrawals of principal before maturity — a penalty may apply for early withdrawal (equal to 7 days', 1 month's, 6 months', or 12 months' interest depending on the original term)."
+      - "You can withdraw accrued interest before maturity without penalty."
+      - "At maturity you have a 10-calendar-day grace period to withdraw funds without penalty."
+    open_url: "https://app.loanspq.com/apply.aspx?enc=Kw21Wblm1yxpjJabdoZaD_1XCeB6DUzWcPY_g38Z9Jqr0clsjQUYVmTraoEngafVkCgQedLZhb-S5_xgQhN9fA"
+    details_url: "https://www.texasgulfbank.com/savings-cds-iras-comparison-chart/#cert-deposit"
+
+  - id: "ira"
+    name: "Individual Retirement Account"
+    tagline: "Retirement savings with tax advantages"
+    best_for: "Long-term retirement savings — up to $7,000/year ($8,000 age 50+)"
+    monthly_fee: "$0"
+    fee_note: "No monthly service charge"
+    min_opening: "$1,000 variable / $2,000 fixed"
+    interest: true
+    highlights:
+      - "Variable or fixed rate options"
+      - "Contribute up to $7,000 annually ($8,000 if 50+)"
+      - "Unlimited additional deposits ($50 minimum)"
+      - "Spouse can contribute to their own IRA too"
+    qualify: []
+    details:
+      - "Contribution limits: up to $7,000.00 each per year for individuals under 50, up to $8,000.00 for age 50 and over (tax year 2025) — even if you already participate in an employer-sponsored plan."
+      - "A penalty may be imposed for withdrawals before maturity. In addition, a separate IRS penalty may apply for withdrawals prior to age 59½."
+      - "Variable-rate IRAs accept unlimited additional deposits of $50.00 or more. Fixed-rate IRAs accept no deposits before maturity."
+      - "At maturity you have a 10-calendar-day grace period to withdraw funds without penalty. Consult your tax advisor about how an IRA fits your situation."
+    open_url: "https://www.texasgulfbank.com/contact-texas-gulf-bank/"
+    details_url: "https://www.texasgulfbank.com/savings-cds-iras-comparison-chart/#IRAs"
+
+compare_rows:
+  - label: "Minimum opening deposit"
+    values: ["$100", "$2,500", "$1,000 variable / $2,000 fixed"]
+  - label: "Monthly service charge"
+    values: ["$3 if avg daily balance under $200 that month", "$0", "$0"]
+  - label: "Minimum daily balance to earn interest"
+    values: ["$100", "$2,500", "No minimum"]
+  - label: "Interest rate type"
+    values: ["Variable", "Fixed for the term", "Variable or fixed"]
+  - label: "Interest compounding"
+    values: ["Quarterly", "Monthly", "Quarterly"]
+  - label: "Statement cycle"
+    values: ["Quarterly", "N/A", "N/A"]
+  - label: "Access to funds"
+    values: ["Withdraw anytime (limits apply)", "At maturity — early-withdrawal penalty applies", "At maturity — early-withdrawal penalty may apply"]
+
+# Secondary products shown as compact cards, not full panels
+secondary:
+  - id: "gulf-rewards-savings"
+    name: "Gulf Rewards Savings"
+    tagline: "For Gulf Rewards Checking customers"
+    points:
+      - "No monthly service charge, ever"
+      - "Higher rate than Personal Savings"
+      - "Only $100 to open"
+      - "One combined statement with your Gulf Rewards Checking"
+    details:
+      - "Available exclusively to Gulf Rewards Checking customers. Interest is compounded and credited monthly; maintain a $100.00 minimum daily balance to earn the disclosed APY."
+    details_url: "https://www.texasgulfbank.com/savings-cds-iras-comparison-chart/#gulf-rewards"
+  - id: "hsa"
+    name: "Health Savings Account"
+    tagline: "Tax-advantaged savings for medical expenses"
+    points:
+      - "Tax-deductible contributions"
+      - "Tax-free withdrawals for qualified medical expenses"
+      - "Unused funds roll over year to year"
+      - "Tiered rates ($1,000 and $5,000 tiers)"
+    details:
+      - "Requires a high-deductible health plan. Interest is compounded and credited monthly; tiered rates apply at $1,000.00 and $5,000.00 minimum daily balances. A $3.00 monthly charge applies if your average daily balance falls below $1,000."
+      - "The IRS has specific eligibility rules for opening and maintaining an HSA and for qualified medical expenses. Consult your tax advisor for how IRS rules affect you."
+    details_url: "https://www.texasgulfbank.com/savings-cds-iras-comparison-chart/#health-savings"
+
+disclaimer_short: "Early withdrawal penalties may apply to CDs and IRAs. Interest rates are variable unless stated as fixed and may change at any time. Contact Texas Gulf Bank at 1-800-467-7216 for a Truth-In-Savings / Reg DD disclosure of terms, conditions, fees, and rate information."
