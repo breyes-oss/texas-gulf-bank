@@ -22,15 +22,19 @@ const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${enco
 )}`;
 const telHref = `tel:${d.phone.replace(/[^0-9]/g, "")}`;
 
-// Nearby: same region first, then alphabetical (deterministic, static build)
+// Nearby: genuinely nearest by coordinates (haversine), not alphabetical
+function kmBetween(a: { lat: number; lng: number }, b: { lat: number; lng: number }) {
+  const R = 6371;
+  const dLat = ((b.lat - a.lat) * Math.PI) / 180;
+  const dLng = ((b.lng - a.lng) * Math.PI) / 180;
+  const s =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos((a.lat * Math.PI) / 180) * Math.cos((b.lat * Math.PI) / 180) * Math.sin(dLng / 2) ** 2;
+  return 2 * R * Math.asin(Math.sqrt(s));
+}
 const nearby = allLocations
   .filter((l) => l.id !== loc.id)
-  .sort((a, b) => {
-    const sameA = a.data.region === d.region ? 0 : 1;
-    const sameB = b.data.region === d.region ? 0 : 1;
-    if (sameA !== sameB) return sameA - sameB;
-    return a.data.name.localeCompare(b.data.name);
-  })
+  .sort((a, b) => kmBetween(d, a.data) - kmBetween(d, b.data))
   .slice(0, 3);
 
 const fullAddress = `${d.street}${d.suite ? ", " + d.suite : ""}, ${d.city}, ${d.state} ${d.zip}`;
@@ -66,9 +70,55 @@ function expandDays(rows: { days: string; open: string; close: string }[]) {
 const lobbyDays = expandDays(d.hours.lobby);
 const driveThruDays = expandDays(d.hours.drive_thru);
 const hasPhoto = Boolean(d.photo);
+
+// JSON-LD structured data for local search (BankOrCreditUnion)
+function toIsoDay(daysLabel: string): string[] {
+  const map: Record<string, string> = { Mon: "Monday", Tue: "Tuesday", Wed: "Wednesday", Thu: "Thursday", Fri: "Friday", Sat: "Saturday", Sun: "Sunday" };
+  const parts = daysLabel.split("-").map((s) => s.trim());
+  if (parts.length === 2 && map[parts[0]] && map[parts[1]]) {
+    const order = Object.values(map);
+    return order.slice(order.indexOf(map[parts[0]]), order.indexOf(map[parts[1]]) + 1);
+  }
+  return map[parts[0]] ? [map[parts[0]]] : [];
+}
+const openingHours = [
+  ...d.hours.lobby.map((r) => ({
+    "@type": "OpeningHoursSpecification",
+    dayOfWeek: toIsoDay(r.days),
+    opens: r.open24 || r.open,
+    closes: r.close24 || r.close,
+  })),
+  ...d.hours.drive_thru.map((r) => ({
+    "@type": "OpeningHoursSpecification",
+    dayOfWeek: toIsoDay(r.days),
+    opens: r.open24 || r.open,
+    closes: r.close24 || r.close,
+    description: "Drive-thru",
+  })),
+];
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BankOrCreditUnion",
+  name: `Texas Gulf Bank ${pageTitle}`,
+  telephone: d.phone,
+  url: `/locations/${loc.id}/`,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: `${d.street}${d.suite ? ", " + d.suite : ""}`,
+    addressLocality: d.city,
+    addressRegion: d.state,
+    postalCode: d.zip,
+    addressCountry: "US",
+  },
+  geo: { "@type": "GeoCoordinates", latitude: d.lat, longitude: d.lng },
+  openingHoursSpecification: openingHours,
+  parentOrganization: { "@type": "BankOrCreditUnion", name: "Texas Gulf Bank N.A.", url: "/" },
+};
 ---
 
 <Layout title={pageTitle} description={pageDescription}>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} slot="head" />
+
   <!-- Breadcrumb -->
   <nav aria-label="Breadcrumb" class="bg-brand-cream border-b border-brand-navy/10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 text-sm">
@@ -95,6 +145,16 @@ const hasPhoto = Boolean(d.photo);
       </p>
       <p class="mt-1 text-lg">
         <a href={telHref} class="text-brand-navy-light font-bold hover:text-brand-gold-dark transition-colors">{d.phone}</a>
+      </p>
+      <p class="mt-3">
+        <span
+          id="branch-open-badge"
+          class="hidden inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wide"
+          data-branch-hours={JSON.stringify(d.hours.lobby.map((r) => ({ days: r.days, open24: r.open24 || "", close24: r.close24 || "" })))}
+        >
+          <span class="w-1.5 h-1.5 rounded-full" data-open-dot></span>
+          <span data-open-text></span>
+        </span>
       </p>
 
       <div class="mt-6 flex flex-col sm:flex-row gap-3">
@@ -255,3 +315,62 @@ const hasPhoto = Boolean(d.photo);
     </div>
   </section>
 </Layout>
+
+<script>
+  // Open-now badge for this branch (America/Chicago)
+  const badge = document.getElementById("branch-open-badge");
+  if (badge) {
+    const rows = JSON.parse(badge.dataset.branchHours || "[]");
+    const parts = new Intl.DateTimeFormat("en-US", {
+      timeZone: "America/Chicago",
+      weekday: "short",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    }).formatToParts(new Date());
+    const get = (t) => parts.find((p) => p.type === t)?.value || "";
+    const dayMap = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
+    let hour = parseInt(get("hour"), 10);
+    if (hour === 24) hour = 0;
+    const dayNum = dayMap[get("weekday")];
+    const minutes = hour * 60 + parseInt(get("minute"), 10);
+
+    const inRange = (daysLabel, dayNum) => {
+      if (daysLabel.includes("Sat")) return dayNum === 6;
+      if (daysLabel.includes("Sun")) return dayNum === 0;
+      if (daysLabel.includes("Mon") || daysLabel.includes("Fri")) return dayNum >= 1 && dayNum <= 5;
+      return true;
+    };
+
+    const toMin = (t) => {
+      if (!t || !t.includes(":")) return null;
+      const [h, m] = t.split(":").map(Number);
+      return h * 60 + m;
+    };
+
+    let openNow = false;
+    let todayRow = null;
+    for (const r of rows) {
+      if (!inRange(r.days, dayNum)) continue;
+      todayRow = r;
+      const open = toMin(r.open24);
+      const close = toMin(r.close24);
+      if (open !== null && close !== null && minutes >= open && minutes < close) openNow = true;
+    }
+
+    badge.classList.remove("hidden");
+    badge.classList.add(openNow ? "bg-green-50" : "bg-red-50", openNow ? "text-green-700" : "text-red-700");
+    badge.querySelector("[data-open-dot]")?.classList.add(openNow ? "bg-green-500" : "bg-red-500");
+    const txtEl = badge.querySelector("[data-open-text]");
+    if (txtEl) {
+      const names = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+      txtEl.textContent = openNow
+        ? "Open now"
+        : `Closed · ${todayRow ? `Lobby opens ${todayRow.open24}` : "call for hours"}`;
+      if (!openNow && todayRow) {
+        // Show the day context when closed
+        txtEl.textContent = `Closed now · ${names[dayNum]} hours ${todayRow.open24.replace(":", " ")} – ${todayRow.close24?.replace(":", " ")}`;
+      }
+    }
+  }
+</script>

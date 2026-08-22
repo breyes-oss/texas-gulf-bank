@@ -13,8 +13,8 @@ atm_types: []
 services:
   - ATM
 languages: []
-lat: 29
-lng: -95
+lat: 29.1804086
+lng: -95.4326932
 photo: ''
 hours:
   lobby:
