@@ -19,23 +19,31 @@ products:
       - "1+ automatic payment or direct deposit posts per cycle"
       - "Enroll in free e-statements"
     qualify_label: "To earn interest + ATM refunds each month:"
+    details:
+      - "Gulf Advantage is a free interest-bearing checking account with a free Visa® Debit Card. If you don't meet the requirements one month, you still earn a lower interest rate — and can qualify again the next month."
+      - "When you qualify, ATM fees of $5.00 or less are automatically reimbursed (up to $5.00 per transaction). Fees over $5.00 are reimbursed when you present the ATM receipt at a branch. Maximum reimbursement: $35.00 per qualification cycle."
+      - "The qualification period is generally the statement cycle; the exact cut-off date varies month to month and is emailed to you ahead of time."
+      - "Limited to one Gulf Advantage account per Social Security number."
     open_url: "https://app.loanspq.com/apply.aspx?enc=Kw21Wblm1yxpjJabdoZaD_1XCeB6DUzWcPY_g38Z9Jqr0clsjQUYVmTraoEngafVkCgQedLZhb-S5_xgQhN9fA"
     details_url: "https://www.texasgulfbank.com/personal-comparison-chart/#Gulf-Advantage-Additional-Information"
 
   - id: "portside"
     name: "Portside Personal Checking"
-    tagline: "Simple, straightforward everyday checking"
-    best_for: "Straightforward checking — and free for age 62+"
+    tagline: "Everyday checking with no strings attached"
+    best_for: "Simple everyday checking — no debit counts, no direct deposit required"
     monthly_fee: "$7 or $0"
     fee_note: "Waived with a $700 average daily balance — or at any balance for age 62+"
     min_opening: "$100"
     interest: false
     highlights:
       - "Unlimited check writing"
+      - "No transaction requirements to keep it free"
       - "Free Visa® Debit Card"
-      - "Monthly maintenance & debit fees waived for age 62+"
-      - "Free online banking, bill pay & mobile deposit"
+      - "Age 62+: monthly fee and debit fees waived, any balance"
     qualify: []
+    details:
+      - "An excess debit fee of $0.25 applies to each debit transaction beyond 25 per monthly statement cycle (electronic funds transfers excluded). The fee does not apply if your average daily balance is $700.00 or more for the cycle."
+      - "For individuals age 62 or older, the $0.25 excess debit fee and the monthly maintenance fee are both waived regardless of balance."
     open_url: "https://www.texasgulfbank.com/contact-texas-gulf-bank/"
     details_url: "https://www.texasgulfbank.com/personal-comparison-chart/#Portside-Checking-Additional-Information"
 
@@ -53,6 +61,8 @@ products:
       - "Free cashier's checks"
       - "10% off safe deposit box rental"
     qualify: []
+    details:
+      - "The $3,000 combined balance is calculated using the current ledger balance across all your personal TGB accounts (including CDs and IRAs) as of the end date of your Gulf Rewards Checking statement cycle."
     open_url: "https://www.texasgulfbank.com/contact-texas-gulf-bank/"
     details_url: "https://www.texasgulfbank.com/personal-comparison-chart/"
 
@@ -70,6 +80,8 @@ products:
       - "Free Visa® Debit Card"
       - "Interest paid monthly"
     qualify: []
+    details:
+      - "No transaction limitations apply to this account. Interest rates are tiered — the higher your balance, the higher the rate earned."
     open_url: "https://app.loanspq.com/apply.aspx?enc=Kw21Wblm1yxpjJabdoZaD_1XCeB6DUzWcPY_g38Z9Jqr0clsjQUYVmTraoEngafVkCgQedLZhb-S5_xgQhN9fA"
     details_url: "https://www.texasgulfbank.com/personal-comparison-chart/"
 

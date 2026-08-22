@@ -160,6 +160,7 @@ const products = defineCollection({
           highlights: z.array(z.string()).default([]),
           qualify_label: z.string().optional(),
           qualify: z.array(z.string()).default([]),
+          details: z.array(z.string()).default([]),
           open_url: z.string().optional(),
           details_url: z.string().optional(),
         })
