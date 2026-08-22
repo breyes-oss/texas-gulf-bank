@@ -118,10 +118,10 @@ function todayRows(rows: { days: string; open: string; close: string }[]) {
             return (
               <a
                 href={`#county-${slug}`}
-                class="inline-flex items-center gap-1.5 rounded-full border border-white/30 bg-white/10 px-4 py-1.5 text-sm font-semibold text-white hover:bg-brand-gold hover:border-brand-gold hover:text-brand-navy transition-colors"
+                class="inline-flex items-center gap-1.5 rounded-full border border-brand-navy/15 bg-white px-4 py-1.5 text-sm font-semibold text-brand-navy hover:border-brand-gold hover:bg-brand-gold-pale transition-colors"
               >
                 {region.replace(" County", "")}
-                <span class="text-[11px] font-bold opacity-70">{count}</span>
+                <span class="text-[11px] font-bold text-brand-muted">{count}</span>
               </a>
             );
           })}
