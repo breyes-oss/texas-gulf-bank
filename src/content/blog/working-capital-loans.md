@@ -10,7 +10,7 @@ cta:
   primaryLabel: "Contact a banker"
   primaryHref: "https://www.texasgulfbank.com/contact-texas-gulf-bank/"
   secondaryLabel: "Find a Branch"
-  secondaryHref: "https://www.texasgulfbank.com/locations/"
+  secondaryHref: "/locations/"
 ---
 
 Seasonal revenue cycles are a reality for many businesses in the Southeast Texas Gulf Coast region. You may experience strong periods of demand followed by slower months, or your revenue may depend on project timelines and client payment schedules.

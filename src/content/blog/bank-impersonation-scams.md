@@ -53,4 +53,4 @@ Where available, enable two-factor authentication for an extra layer of protecti
 
 If you receive a call, text, or email that claims to be from Texas Gulf Bank and you're not sure it's real, call us at **1-800-467-7216** or stop by any Texas Gulf Bank banking center.
 
-{{cta title="Think something looks suspicious?" body="Call us right away or stop by a branch. Our team can help you confirm whether a message is legitimate." primaryLabel="Call 800.467.7216" primaryHref="tel:8004677216" secondaryLabel="Find a Branch" secondaryHref="https://www.texasgulfbank.com/locations/"}}
+{{cta title="Think something looks suspicious?" body="Call us right away or stop by a branch. Our team can help you confirm whether a message is legitimate." primaryLabel="Call 800.467.7216" primaryHref="tel:8004677216" secondaryLabel="Find a Branch" secondaryHref="/locations/"}}

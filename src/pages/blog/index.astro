@@ -1,38 +1,54 @@
 ---
 import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
-import "../../styles/global.css";
 
 const posts = await getCollection("blog");
 posts.sort((a, b) => new Date(b.data.date) - new Date(a.data.date));
+
+const readTime = (post) => {
+  const words = (post.body || "").trim().split(/\s+/).length;
+  return Math.max(1, Math.round(words / 220));
+};
 ---
 
-<Layout title="Blog — Texas Gulf Bank" description="Latest news, insights, and updates from Texas Gulf Bank">
-  <section class="bg-brand-navy py-16 sm:py-20">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">Texas Gulf Bank Blog</h1>
-      <p class="mt-4 text-gray-300 text-lg max-w-2xl mx-auto">Latest news, insights, and updates from our team</p>
+<Layout title="News from the bank" description="News and updates from Texas Gulf Bank — community announcements, security alerts, and business banking notes.">
+  <section class="bg-brand-cream border-b border-brand-navy/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+      <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-black text-brand-navy leading-[1.05] tracking-tight text-balance">
+        News from the bank
+      </h1>
+      <p class="mt-5 text-lg text-brand-muted max-w-2xl text-balance">
+        Community announcements, security alerts, and notes from our bankers.
+      </p>
     </div>
   </section>
 
   <section class="bg-brand-warm py-12 lg:py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+      <div class="border-t border-brand-navy/15">
         {posts.map((post) => (
-          <a href={`/blog/${post.id}`} class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg border border-gray-100 hover:border-brand-gold/30 transition-all duration-300">
-            <div class="aspect-[16/9] bg-brand-cream overflow-hidden">
-              <img src={post.data.image} alt={post.data.title} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
-            </div>
-            <div class="p-5 lg:p-6">
-              <div class="flex items-center gap-2 text-xs text-brand-muted mb-3">
-                <span class="bg-brand-gold-pale text-brand-gold-dark font-semibold px-2.5 py-1 rounded-full">{post.data.category}</span>
-                <span>{post.data.date}</span>
+          <a href={`/blog/${post.id}`} class="group grid md:grid-cols-12 gap-6 md:gap-10 py-8 border-b border-brand-navy/10">
+            {post.data.image && (
+              <div class="md:col-span-4 bg-brand-cream overflow-hidden">
+                <img src={post.data.image} alt="" class="w-full h-44 md:h-full object-cover" />
               </div>
-              <h3 class="font-bold text-brand-text group-hover:text-brand-navy-light transition-colors">{post.data.title}</h3>
-              <p class="text-sm text-brand-muted mt-2 leading-relaxed">{post.data.excerpt}</p>
-              <span class="inline-flex items-center gap-1 mt-3 text-brand-navy-light text-sm font-semibold group-hover:text-brand-gold transition-colors">
-                Read More
-                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            )}
+            <div class={post.data.image ? "md:col-span-8 flex flex-col justify-center" : "md:col-span-12"}>
+              <div class="flex items-center gap-2 text-xs text-brand-muted font-sans">
+                <span class="font-semibold text-brand-gold-dark">{post.data.category}</span>
+                <span aria-hidden="true">·</span>
+                <span>{post.data.date}</span>
+                <span aria-hidden="true">·</span>
+                <span>{readTime(post)} min read</span>
+              </div>
+              <h2 class="mt-3 font-display text-xl sm:text-2xl font-semibold leading-snug text-brand-text group-hover:text-brand-navy-light transition-colors">
+                {post.data.title}
+              </h2>
+              {post.data.excerpt && (
+                <p class="mt-2 text-brand-muted leading-relaxed max-w-2xl">{post.data.excerpt}</p>
+              )}
+              <span class="inline-block mt-3 text-brand-navy-light text-sm font-semibold group-hover:text-brand-gold-dark transition-colors underline underline-offset-2">
+                Read article
               </span>
             </div>
           </a>

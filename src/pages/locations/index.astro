@@ -44,7 +44,7 @@ function hoursSummary(rows: { days: string; open: string; close: string }[]) {
         Find a Location
       </h1>
       <p class="mt-5 text-lg text-brand-muted max-w-2xl text-balance">
-        Ten ATM and banking centers across Harris, Galveston, Brazoria, and Montgomery
+        {sorted.length} ATM and banking centers across {[...new Set(sorted.map((l) => l.data.region.replace(/ County$/, "")))].sort().join(", ").replace(/, ([^,]+)$/, ", and $1")}&nbsp;
         counties — with local bankers who know your community. Search below, or call
         <a href="tel:8004677216" class="text-brand-navy-light font-bold underline underline-offset-2">800.467.7216</a>.
       </p>

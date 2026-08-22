@@ -1,6 +1,6 @@
 ---
 import { getCollection, render } from "astro:content";
-import BlogLayout from "../../layouts/BlogLayout.astro";
+import Layout from "../../layouts/Layout.astro";
 import BlogCta from "../../components/BlogCta.astro";
 import RateTable from "../../components/RateTable.astro";
 import { renderBlogSegments } from "../../lib/blog-embeds";
@@ -46,48 +46,76 @@ const proseClass =
   "[&_p]:text-brand-text [&_strong]:font-semibold";
 ---
 
-<BlogLayout title={post.data.title} date={post.data.date} image={post.data.image} category={post.data.category}>
-  {usesShortcodes ? (
-    segments.map((segment) => {
-      if (segment.type === "rates") {
-        return (
-          <div class="blog-embed not-prose my-10 rounded-2xl border border-brand-navy/10 bg-brand-cream p-5 sm:p-7">
-            <RateTable compact />
-          </div>
-        );
-      }
-      if (segment.type === "cta") {
-        return (
-          <BlogCta
-            eyebrow={segment.cta.eyebrow}
-            title={segment.cta.title}
-            body={segment.cta.body}
-            primaryLabel={segment.cta.primaryLabel}
-            primaryHref={segment.cta.primaryHref}
-            secondaryLabel={segment.cta.secondaryLabel}
-            secondaryHref={segment.cta.secondaryHref}
-          />
-        );
-      }
-      return <div class={proseClass} set:html={segment.html} />;
-    })
-  ) : (
-    Content && (
-      <div class={proseClass}>
-        <Content />
+<Layout title={post.data.title} description={post.data.excerpt || post.data.title}>
+  <article>
+    <header class="bg-brand-cream border-b border-brand-navy/10">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+        <p class="text-sm text-brand-muted">
+          <a href="/blog" class="font-semibold text-brand-navy-light hover:text-brand-gold-dark underline underline-offset-2">All posts</a>
+        </p>
+        <div class="mt-5 flex items-center gap-3 text-sm text-brand-muted">
+          {post.data.category && (
+            <span class="font-semibold text-brand-gold-dark">{post.data.category}</span>
+          )}
+          <span aria-hidden="true">·</span>
+          <time datetime={post.data.date}>{post.data.date}</time>
+        </div>
+        <h1 class="mt-4 font-display text-3xl sm:text-4xl lg:text-5xl font-black text-brand-navy leading-[1.08] tracking-tight text-balance">
+          {post.data.title}
+        </h1>
       </div>
-    )
-  )}
+    </header>
 
-  {renderEndCta && (
-    <BlogCta
-      eyebrow={cta.eyebrow}
-      title={cta.title}
-      body={cta.body}
-      primaryLabel={cta.primaryLabel}
-      primaryHref={cta.primaryHref}
-      secondaryLabel={cta.secondaryLabel}
-      secondaryHref={cta.secondaryHref}
-    />
-  )}
-</BlogLayout>
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-14">
+      {post.data.image && (
+        <div class="mb-8 overflow-hidden bg-brand-cream">
+          <img src={post.data.image} alt="" class="w-full h-48 sm:h-64 object-cover" />
+        </div>
+      )}
+
+      {usesShortcodes ? (
+        segments.map((segment) => {
+          if (segment.type === "rates") {
+            return (
+              <div class="blog-embed not-prose my-10 border border-brand-navy/10 bg-brand-cream p-5 sm:p-7">
+                <RateTable compact />
+              </div>
+            );
+          }
+          if (segment.type === "cta") {
+            return (
+              <BlogCta
+                eyebrow={segment.cta.eyebrow}
+                title={segment.cta.title}
+                body={segment.cta.body}
+                primaryLabel={segment.cta.primaryLabel}
+                primaryHref={segment.cta.primaryHref}
+                secondaryLabel={segment.cta.secondaryLabel}
+                secondaryHref={segment.cta.secondaryHref}
+              />
+            );
+          }
+          return <div class={proseClass} set:html={segment.html} />;
+        })
+      ) : (
+        Content && (
+          <div class={proseClass}>
+            <Content />
+          </div>
+        )
+      )}
+
+      {renderEndCta && (
+        <BlogCta
+          eyebrow={cta.eyebrow}
+          title={cta.title}
+          body={cta.body}
+          primaryLabel={cta.primaryLabel}
+          primaryHref={cta.primaryHref}
+          secondaryLabel={cta.secondaryLabel}
+          secondaryHref={cta.secondaryHref}
+        />
+      )}
+    </div>
+  </article>
+</Layout>

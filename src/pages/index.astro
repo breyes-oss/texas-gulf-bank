@@ -9,12 +9,15 @@ import CtaSection from "../components/CtaSection.astro";
 
 const pages = await getCollection("pages");
 const home = pages.find((p) => p.id === "home")?.data || {};
+const locations = await getCollection("locations");
+const branchCount = String(locations.length);
+const countyCount = String(new Set(locations.map((l) => l.data.region)).size);
 ---
 
 <Layout title="Texas Gulf Bank N.A. — Your Local Community Bank" description="Texas Gulf Bank is an independently owned community bank serving Harris, Galveston, and Brazoria counties for over 100 years.">
   <HeroSection home={home} />
   <FeatureCards />
-  <StorySection home={home} />
+  <StorySection home={home} branchCount={branchCount} countyCount={countyCount} />
   <RatesAndBlog />
   <CtaSection home={home} />
 </Layout>

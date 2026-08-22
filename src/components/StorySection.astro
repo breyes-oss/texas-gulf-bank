@@ -1,6 +1,6 @@
 ---
 // StorySection.astro — Brand story with a real, unposed feel
-const { home } = Astro.props;
+const { home, branchCount, countyCount } = Astro.props;
 ---
 
 <section class="bg-white py-20 lg:py-28">
@@ -24,11 +24,11 @@ const { home } = Astro.props;
             <p class="text-sm text-brand-muted mt-1">{home.story_stat_1_label || "Years serving Texas"}</p>
           </div>
           <div>
-            <p class="font-display text-4xl sm:text-5xl font-black text-brand-blue">{home.story_stat_2_number || "12"}</p>
+            <p class="font-display text-4xl sm:text-5xl font-black text-brand-blue">{branchCount || home.story_stat_2_number || "9"}</p>
             <p class="text-sm text-brand-muted mt-1">{home.story_stat_2_label || "Community branches"}</p>
           </div>
           <div>
-            <p class="font-display text-4xl sm:text-5xl font-black text-brand-blue">{home.story_stat_3_number || "3"}</p>
+            <p class="font-display text-4xl sm:text-5xl font-black text-brand-blue">{countyCount || home.story_stat_3_number || "3"}</p>
             <p class="text-sm text-brand-muted mt-1">{home.story_stat_3_label || "Coastal counties"}</p>
           </div>
         </div>

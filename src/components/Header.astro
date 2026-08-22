@@ -51,7 +51,6 @@ const {
       children: [
         { label: "Wealth Management", href: "https://www.texasgulfbank.com/wealth-management/" },
         { label: "Special Needs Trusts", href: "https://www.texasgulfbank.com/safeguarding-your-childs-financial-future-a-special-needs-trust/" },
-        { label: "Financial Planning", href: "https://www.texasgulfbank.com/wealth-management/" },
       ],
     },
     {
@@ -105,19 +104,16 @@ const {
 
             {item.children?.length > 0 && (
               <div class="nav-dropdown absolute left-0 top-full pt-2 w-[300px] invisible" data-nav-dropdown>
-                <div class="nav-dropdown-panel rounded-2xl bg-white/95 backdrop-blur-xl border border-brand-navy/10 shadow-[0_24px_60px_rgba(15,23,42,0.18)] overflow-hidden py-2">
+                <div class="nav-dropdown-panel bg-white border border-brand-navy/10 shadow-[0_12px_32px_rgba(25,41,75,0.12)] overflow-hidden py-2">
                   {item.children.map((child) => (
                     <a
                       href={child.href}
-                      class="menu-link group/link flex items-center justify-between gap-3 px-5 py-3 text-sm text-brand-text hover:text-brand-navy transition-all duration-300"
+                      class="menu-link group/link block px-5 py-3 text-sm text-brand-text hover:text-brand-navy hover:bg-brand-cream transition-colors"
                     >
                       <span class="relative">
                         {child.label}
                         <span class="menu-link-underline"></span>
                       </span>
-                      <svg class="menu-link-arrow w-4 h-4 text-brand-aqua shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                      </svg>
                     </a>
                   ))}
                 </div>
@@ -335,15 +331,6 @@ const {
   .menu-link:hover .menu-link-underline {
     transform: scaleX(1);
   }
-  .menu-link-arrow {
-    opacity: 0;
-    transform: translateX(-16px);
-    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-  }
-  .menu-link:hover .menu-link-arrow {
-    opacity: 1;
-    transform: translateX(0);
-  }
   .menu-link:hover {
     background-color: rgba(57, 182, 211, 0.08);
   }
@@ -454,8 +441,7 @@ const {
     .nav-trigger,
     .menu-link,
     .menu-link::after,
-    .menu-link-underline,
-    .menu-link-arrow {
+    .menu-link-underline {
       transition: none;
     }
   }
