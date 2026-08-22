@@ -17,7 +17,7 @@ services:
 languages: []
 lat: 29.750738
 lng: -95.5016043
-photo: ""
+photo: "/locations/voss.jpg"
 hours:
   lobby:
     - days: "Mon - Fri"

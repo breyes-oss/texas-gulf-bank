@@ -17,7 +17,7 @@ services:
 languages: []
 lat: 29.0113203
 lng: -95.420677
-photo: ""
+photo: "/locations/clute.jpg"
 hours:
   lobby:
     - days: "Mon - Fri"

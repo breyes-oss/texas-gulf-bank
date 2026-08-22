@@ -17,7 +17,7 @@ services:
 languages: []
 lat: 29.5224701
 lng: -95.1921659
-photo: ""
+photo: "/locations/friendswood.jpg"
 hours:
   lobby:
     - days: "Mon - Fri"

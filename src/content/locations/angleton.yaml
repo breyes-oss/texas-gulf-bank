@@ -15,7 +15,7 @@ services:
 languages: []
 lat: 29.1804086
 lng: -95.4326932
-photo: ''
+photo: "/locations/angleton.jpg"
 hours:
   lobby:
     - days: Mon - Fri

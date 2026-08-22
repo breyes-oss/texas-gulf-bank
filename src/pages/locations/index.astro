@@ -58,16 +58,16 @@ function todayRows(rows: { days: string; open: string; close: string }[]) {
   title="Bank &amp; ATM Locations in Houston, Lake Jackson &amp; the Gulf Coast | Texas Gulf Bank"
   description={`Find a Texas Gulf Bank Banking Center near you in Harris, Galveston, and Brazoria counties. ${sorted.length} branches with lobby and drive-thru hours, phone numbers, directions, and services.`}
 >
-  <!-- Page header -->
-  <section class="bg-brand-cream border-b border-brand-navy/10">
+  <!-- Page header: signature navy→aqua gradient band (brand guide: heroes + key moments) -->
+  <section class="bg-gradient-to-r from-brand-navy via-brand-navy-mid to-brand-aqua text-white border-b border-brand-navy/10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
-      <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-black text-brand-navy leading-[1.05] tracking-tight text-balance">
+      <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.05] tracking-tight text-balance">
         Texas Gulf Bank Locations
       </h1>
-      <p class="mt-5 text-lg text-brand-muted max-w-2xl text-balance">
+      <p class="mt-5 text-lg text-white/85 max-w-2xl text-balance">
         {sorted.length} ATM and banking centers across {[...new Set(sorted.map((l) => l.data.region.replace(/ County$/, "")))].sort().join(", ").replace(/, ([^,]+)$/, ", and $1")}&nbsp;
         counties — with local bankers who know your community. Search below, or call
-        <a href="tel:8004677216" class="text-brand-navy-light font-bold underline underline-offset-2">800.467.7216</a>.
+        <a href="tel:8004677216" class="text-brand-gold font-bold underline underline-offset-2">800.467.7216</a>.
       </p>
     </div>
   </section>
@@ -118,10 +118,10 @@ function todayRows(rows: { days: string; open: string; close: string }[]) {
             return (
               <a
                 href={`#county-${slug}`}
-                class="inline-flex items-center gap-1.5 rounded-full border border-brand-navy/15 bg-white px-4 py-1.5 text-sm font-semibold text-brand-navy hover:border-brand-aqua hover:bg-brand-aqua/10 transition-colors"
+                class="inline-flex items-center gap-1.5 rounded-full border border-white/30 bg-white/10 px-4 py-1.5 text-sm font-semibold text-white hover:bg-brand-gold hover:border-brand-gold hover:text-brand-navy transition-colors"
               >
                 {region.replace(" County", "")}
-                <span class="text-[11px] font-bold text-brand-muted">{count}</span>
+                <span class="text-[11px] font-bold opacity-70">{count}</span>
               </a>
             );
           })}
@@ -164,6 +164,11 @@ function todayRows(rows: { days: string; open: string; close: string }[]) {
                         data-loc-name={l.data.name.toLowerCase()}
                         data-loc-drive={l.data.has_drive_thru ? "1" : "0"}
                       >
+                        {l.data.photo && (
+                          <div class="h-36 bg-brand-navy overflow-hidden">
+                            <img src={l.data.photo} alt={`Texas Gulf Bank ${l.data.name} Banking Center`} loading="lazy" decoding="async" width="1000" height="667" class="w-full h-full object-cover" />
+                          </div>
+                        )}
                         <div class="p-5 sm:p-6">
                           <div class="flex items-start justify-between gap-4">
                             <div>
@@ -305,10 +310,11 @@ function todayRows(rows: { days: string; open: string; close: string }[]) {
     const badge = document.querySelector(`[data-loc-open-badge="${loc.id}"]`);
     if (!badge) continue;
     const open = isOpenNow(loc);
-    badge.classList.add(open ? "bg-green-50" : "bg-red-50");
-    badge.classList.add(open ? "text-green-700" : "text-red-700");
+    // Brand Green = open, Terra = closed (palette-consistent status colors)
+    badge.classList.add(open ? "bg-green-50" : "bg-[#C25C29]/10");
+    badge.classList.add(open ? "text-brand-rate" : "text-brand-terra");
     const dot = badge.querySelector("[data-loc-open-dot]");
-    if (dot) dot.classList.add(open ? "bg-green-500" : "bg-red-500");
+    if (dot) dot.classList.add(open ? "bg-brand-rate" : "bg-brand-terra");
     const txt = badge.querySelector("[data-loc-open-text]");
     if (txt) txt.textContent = open ? "Open now" : "Closed";
 

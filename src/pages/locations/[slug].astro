@@ -48,18 +48,20 @@ const DAY_ABBR: Record<string, string> = {
   Fri: "Friday", Sat: "Saturday", Sun: "Sunday",
 };
 
-function expandDays(rows: { days: string; open: string; close: string }[]) {
-  const out: { day: string; open: string; close: string }[] = [];
+function expandDays(rows: { days: string; open: string; close: string }[], isTodayFn?: (day: string) => boolean) {
+  const out: { day: string; open: string; close: string; isToday?: boolean }[] = [];
   for (const row of rows) {
     const parts = row.days.split("-").map((s) => s.trim());
     if (parts.length === 2 && DAY_ABBR[parts[0]] && DAY_ABBR[parts[1]]) {
       const start = DAY_ORDER.indexOf(DAY_ABBR[parts[0]]);
       const end = DAY_ORDER.indexOf(DAY_ABBR[parts[1]]);
       for (let i = start; i <= end; i++) {
-        out.push({ day: DAY_ORDER[i], open: row.open, close: row.close });
+        const day = DAY_ORDER[i];
+        out.push({ day, open: row.open, close: row.close, isToday: isTodayFn ? isTodayFn(day) : undefined });
       }
     } else if (DAY_ABBR[parts[0]]) {
-      out.push({ day: DAY_ABBR[parts[0]], open: row.open, close: row.close });
+      const day = DAY_ABBR[parts[0]];
+      out.push({ day, open: row.open, close: row.close, isToday: isTodayFn ? isTodayFn(day) : undefined });
     } else {
       out.push({ day: row.days, open: row.open, close: row.close });
     }
@@ -67,7 +69,12 @@ function expandDays(rows: { days: string; open: string; close: string }[]) {
   return out;
 }
 
-const lobbyDays = expandDays(d.hours.lobby);
+// Build-time "today" in US Central so the hours table can highlight it.
+// (Static build: correct for the deploy day; the client badge handles live state.)
+const centralDay = new Intl.DateTimeFormat("en-US", { timeZone: "America/Chicago", weekday: "long" }).format(new Date());
+const isCentralToday = (day: string) => day === centralDay;
+
+const lobbyDays = expandDays(d.hours.lobby, isCentralToday);
 const driveThruDays = expandDays(d.hours.drive_thru);
 const hasPhoto = Boolean(d.photo);
 
@@ -135,7 +142,7 @@ const jsonLd = {
   <!-- Header: name, address, phone, primary actions -->
   <section class="bg-brand-cream border-b border-brand-navy/10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
-      <p class="text-sm font-semibold uppercase tracking-[0.14em] text-brand-blue mb-2">{d.region}</p>
+      <p class="text-sm font-semibold uppercase tracking-[0.14em] text-brand-gold-dark mb-2">{d.region}</p>
       <h1 class="font-display text-4xl sm:text-5xl font-black text-brand-navy leading-[1.05] tracking-tight text-balance">
         {d.name} Banking Center
       </h1>
@@ -196,9 +203,9 @@ const jsonLd = {
                 <h3 class="font-display font-semibold text-brand-navy text-base mb-2">Lobby</h3>
                 <dl class="text-sm">
                   {lobbyDays.map((row) => (
-                    <div class="flex items-baseline justify-between gap-4 py-1.5 border-b border-brand-navy/5 last:border-b-0">
-                      <dt class="text-brand-text">{row.day}</dt>
-                      <dd class="text-brand-muted text-right">{row.open} – {row.close}</dd>
+                    <div class:list={["flex items-baseline justify-between gap-4 py-1.5 border-b border-brand-navy/5 last:border-b-0", row.isToday && "font-bold text-brand-navy"]} data-today={row.isToday ? "1" : undefined}>
+                      <dt class="text-brand-text">{row.day}{row.isToday && <span class="ml-2 inline-block rounded-full bg-brand-gold-pale px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-brand-gold-dark">Today</span>}</dt>
+                      <dd class="text-right" class:list={[row.isToday ? "text-brand-gold-dark font-bold" : "text-brand-muted"]}>{row.open} – {row.close}</dd>
                     </div>
                   ))}
                 </dl>
@@ -292,7 +299,7 @@ const jsonLd = {
   <!-- Nearby locations -->
   <section class="pb-16 lg:pb-20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="font-display text-2xl sm:text-3xl font-black text-brand-navy tracking-tight">Nearby Locations</h2>
+      <h2 class="font-display text-2xl sm:text-3xl font-black text-brand-navy tracking-tight">Nearby Banking Centers</h2>
       <div class="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {nearby.map((l) => (
           <a
@@ -363,8 +370,9 @@ const jsonLd = {
     }
 
     badge.classList.remove("hidden");
-    badge.classList.add(openNow ? "bg-green-50" : "bg-red-50", openNow ? "text-green-700" : "text-red-700");
-    badge.querySelector("[data-open-dot]")?.classList.add(openNow ? "bg-green-500" : "bg-red-500");
+    // Brand Green = open, Terra = closed (palette-consistent status colors)
+    badge.classList.add(openNow ? "bg-green-50" : "bg-[#C25C29]/10", openNow ? "text-brand-rate" : "text-brand-terra");
+    badge.querySelector("[data-open-dot]")?.classList.add(openNow ? "bg-brand-rate" : "bg-brand-terra");
     const txtEl = badge.querySelector("[data-open-text]");
     if (txtEl) {
       if (openNow) {

@@ -17,7 +17,7 @@ services:
 languages: []
 lat: 29.0401039
 lng: -95.4512557
-photo: ""
+photo: "/locations/lake-jackson.jpg"
 hours:
   lobby:
     - days: "Mon - Fri"
