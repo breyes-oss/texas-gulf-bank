@@ -35,20 +35,15 @@ const pathways = [
     </h2>
 
     <div class="mt-10 grid grid-cols-1 lg:grid-cols-3 gap-px bg-brand-navy/10 border border-brand-navy/10">
-      {pathways.map((item) => (
-        <a href={item.href} class="group bg-white p-8 lg:p-10 flex flex-col transition-colors hover:bg-brand-navy">
+      {pathways.map((item, i) => (
+        <a href={item.href} class={`group bg-white p-8 lg:p-10 flex flex-col transition-colors hover:bg-brand-navy animate-fade-in delay-${i + 1}`}>
           <span class="text-sm font-semibold text-brand-gold-dark group-hover:text-brand-gold-light transition-colors">{item.eyebrow}</span>
-          <h3 class="font-display text-3xl font-semibold text-brand-text mt-6 group-hover:text-white transition-colors">{item.title}</h3>
+          <h3 class="font-display text-xl font-semibold text-brand-text mt-6 group-hover:text-white transition-colors">{item.title}</h3>
           <p class="text-brand-muted leading-relaxed mt-3 group-hover:text-white/75 transition-colors">{item.description}</p>
           <span class="mt-auto pt-8 text-brand-navy-light font-semibold group-hover:text-brand-gold-light transition-colors">{item.cta}</span>
         </a>
       ))}
     </div>
 
-    <div class="mt-8 flex flex-wrap items-center gap-x-7 gap-y-3 text-sm text-brand-navy-light">
-      <a href="https://app.loanspq.com/apply.aspx?enc=Kw21Wblm1yxpjJabdoZaD_1XCeB6DUzWcPY_g38Z9Jqr0clsjQUYVmTraoEngafVkCgQedLZhb-S5_xgQhN9fA" class="hover:text-brand-gold-dark transition-colors underline underline-offset-2">Open an account</a>
-      <a href="https://www.texasgulfbank.com/locations/" class="hover:text-brand-gold-dark transition-colors underline underline-offset-2">Find a branch</a>
-      <a href="https://www.texasgulfbank.com/investment-rate-index-time-and-non-time-accounts/" class="hover:text-brand-gold-dark transition-colors underline underline-offset-2">View current rates</a>
-    </div>
   </div>
 </section>
