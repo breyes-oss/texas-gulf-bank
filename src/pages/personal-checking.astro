@@ -1,6 +1,7 @@
 ---
 import { getEntry } from "astro:content";
 import Layout from "../layouts/Layout.astro";
+import RateTable from "../components/RateTable.astro";
 
 const entry = await getEntry("products", "personal-checking");
 const d = entry?.data;
@@ -156,6 +157,11 @@ const all = d.products;
         </table>
       </div>
       {d.disclaimer_short && <p class="mt-4 text-xs text-brand-muted max-w-3xl">{d.disclaimer_short}</p>}
+
+      <!-- Gulf Advantage tiered rate (live from rates.yaml) -->
+      <div class="mt-10 max-w-2xl">
+        <RateTable section="gulf-advantage" />
+      </div>
     </div>
   </section>
 

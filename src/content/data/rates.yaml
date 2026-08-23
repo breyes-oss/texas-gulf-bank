@@ -1,5 +1,5 @@
 title: "Featured Rates"
-published: "July 13, 2026"
+published: "August 17, 2026"
 disclaimer: "Rates may change. Fees may reduce earnings. CD early-withdrawal penalties may apply. See the complete rate sheet for terms and account requirements."
 full_rates_url: "https://www.texasgulfbank.com/investment-rate-index-time-and-non-time-accounts/"
 items:
@@ -15,3 +15,88 @@ items:
   - name: "Money Market"
     detail: "$1M+ tier"
     value: "1.66%"
+
+# Full rate sheet sections — rendered by RateTable sections mode
+sections:
+  - id: "cd-fixed"
+    title: "Certificates of Deposit — Fixed Rate"
+    note: "$2,500 minimum to open and earn the stated APY. Interest compounded and credited monthly."
+    columns: ["Term", "Interest Rate", "APY"]
+    rows:
+      - ["30 Days", "1.25%", "1.26%"]
+      - ["90 Days", "1.80%", "1.81%"]
+      - ["180 Days", "3.20%", "3.25%"]
+      - ["1 Year", "3.40%", "3.45%"]
+      - ["18 Months", "3.25%", "3.30%"]
+      - ["2 Years", "2.72%", "2.75%"]
+      - ["3 Years", "2.72%", "2.75%"]
+      - ["4 Years", "2.72%", "2.75%"]
+      - ["5 Years", "2.72%", "2.75%"]
+
+  - id: "ira-fixed"
+    title: "Individual Retirement Accounts — Fixed Rate"
+    note: "$2,000 minimum to open. Interest compounded and credited quarterly."
+    columns: ["Term", "Interest Rate", "APY"]
+    rows:
+      - ["1 Year", "3.41%", "3.45%"]
+      - ["18 Months", "3.26%", "3.30%"]
+      - ["2 Years", "2.72%", "2.75%"]
+      - ["3 Years", "2.72%", "2.75%"]
+      - ["4 Years", "2.72%", "2.75%"]
+      - ["5 Years", "2.72%", "2.75%"]
+
+  - id: "ira-variable"
+    title: "Individual Retirement Accounts — Variable Rate"
+    note: "$1,000 minimum to open. Rate may change after the account is opened. Compounded/credited quarterly."
+    columns: ["Term", "Interest Rate", "APY"]
+    rows:
+      - ["18 Months", "3.26%", "3.30%"]
+
+  - id: "money-market"
+    title: "Personal Money Market"
+    note: "$500 minimum to open. Tiered rates apply to your entire daily balance. Rates may change after the account is opened."
+    columns: ["Account Balance", "Interest Rate", "APY"]
+    rows:
+      - ["$0.01 – $39,999.99", "0.55%", "0.55%"]
+      - ["$40,000 – $99,999.99", "0.65%", "0.65%"]
+      - ["$100,000 – $499,999.99", "0.85%", "0.85%"]
+      - ["$500,000 – $999,999.99", "1.40%", "1.41%"]
+      - ["$1,000,000+", "1.65%", "1.66%"]
+
+  - id: "vip-checking"
+    title: "VIP High Yield Checking"
+    note: "$1,000 minimum to open. Tiered rates apply to your entire daily balance. Rates may change after the account is opened."
+    columns: ["Account Balance", "Interest Rate", "APY"]
+    rows:
+      - ["$0.01 – $74,999.99", "0.35%", "0.35%"]
+      - ["$75,000 – $249,999.99", "0.55%", "0.55%"]
+      - ["$250,000 – $499,999.99", "0.65%", "0.65%"]
+      - ["$500,000 – $999,999.99", "1.20%", "1.21%"]
+      - ["$1,000,000+", "1.45%", "1.46%"]
+
+  - id: "savings"
+    title: "Personal Savings & Gulf Rewards Savings"
+    note: "$100 minimum to open and to earn the disclosed APY. Gulf Rewards Savings requires a Gulf Rewards Checking account. Rates may change after the account is opened."
+    columns: ["Account", "Interest Rate", "APY"]
+    rows:
+      - ["Personal Savings", "0.35%", "0.35%"]
+      - ["Gulf Rewards Savings*", "0.40%", "0.40%"]
+
+  - id: "gulf-advantage"
+    title: "Gulf Advantage Checking"
+    note: "One account allowed per Social Security number. Tiered rate applies to your entire daily balance. Requirements must be met for the higher tier. Rates may change after the account is opened."
+    columns: ["Account Balance", "Interest Rate", "APY"]
+    rows:
+      - ["$0.01 – $24,999.99 (requirements met)", "0.80%", "0.80%"]
+      - ["$25,000 – $50,000 (requirements met)", "0.50%", "0.80% – 0.65%"]
+      - ["$0.01+ (requirements not met)", "0.40%", "0.40%"]
+
+  - id: "hsa"
+    title: "Health Savings Account"
+    note: "$50 minimum to open. Tiered rates apply to your entire daily balance."
+    columns: ["Account Balance", "Interest Rate", "APY"]
+    rows:
+      - ["$1,000 – $4,999.99", "0.30%", "0.30%"]
+      - ["$5,000+", "0.35%", "0.35%"]
+
+sections_footnote: "* Only available to Gulf Rewards Checking customers. The interest rates and annual percentage yields on this sheet are accurate as of August 17, 2026. Fees may reduce earnings. Contact Texas Gulf Bank at 1.800.467.7216 for a Truth-In-Savings / Reg DD disclosure."

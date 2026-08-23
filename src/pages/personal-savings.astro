@@ -1,6 +1,7 @@
 ---
 import { getEntry } from "astro:content";
 import Layout from "../layouts/Layout.astro";
+import RateTable from "../components/RateTable.astro";
 
 const entry = await getEntry("products", "personal-savings");
 const d = entry?.data;
@@ -39,7 +40,7 @@ const featured = d.products; // Personal Savings, CD, IRA
   <section id="accounts" class="py-14 lg:py-20 bg-brand-warm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <h2 class="font-display text-3xl sm:text-4xl font-black text-brand-text tracking-tight text-balance max-w-2xl leading-[1.1]">
-        Three ways to save, by time horizon.
+        Four ways to save, by time horizon.
       </h2>
       <div class="mt-10 grid lg:grid-cols-3 gap-6">
         {featured.map((p, i) => (
@@ -142,6 +143,24 @@ const featured = d.products; // Personal Savings, CD, IRA
         </table>
       </div>
       {d.disclaimer_short && <p class="mt-4 text-xs text-brand-muted max-w-3xl">{d.disclaimer_short}</p>}
+    </div>
+  </section>
+
+  <!-- Current rates (live from rates.yaml) -->
+  <section id="rates" class="py-14 lg:py-20 bg-brand-cream scroll-mt-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="font-display text-3xl sm:text-4xl font-black text-brand-text tracking-tight text-balance leading-[1.1] max-w-2xl">
+        Today's savings rates.
+      </h2>
+      <div class="mt-8 grid lg:grid-cols-2 gap-x-12 gap-y-8 max-w-5xl">
+        <RateTable section="cd-fixed" />
+        <RateTable section="money-market" />
+        <RateTable section="ira-fixed" />
+        <RateTable section="savings" />
+      </div>
+      <div class="mt-10">
+        <RateTable showHeader={false} />
+      </div>
     </div>
   </section>
 

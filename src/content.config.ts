@@ -73,6 +73,18 @@ const data = defineCollection({
         })
       )
       .min(1),
+    sections: z
+      .array(
+        z.object({
+          id: z.string(),
+          title: z.string(),
+          note: z.string().optional(),
+          columns: z.array(z.string()).default(["Term", "Interest Rate", "APY"]),
+          rows: z.array(z.array(z.string()).min(2)).min(1),
+        })
+      )
+      .default([]),
+    sections_footnote: z.string().optional(),
   }),
 });
 

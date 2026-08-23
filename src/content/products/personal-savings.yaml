@@ -66,21 +66,41 @@ products:
     open_url: "https://www.texasgulfbank.com/contact-texas-gulf-bank/"
     details_url: "https://www.texasgulfbank.com/savings-cds-iras-comparison-chart/#IRAs"
 
+  - id: "money-market"
+    name: "Personal Money Market"
+    tagline: "Tiered rates that reward bigger balances"
+    best_for: "$500+ you want working harder while staying accessible"
+    monthly_fee: "$10 or $0"
+    fee_note: "Waived with a $5,000 average daily balance"
+    min_opening: "$500"
+    interest: true
+    highlights:
+      - "Tiered rates — up to 1.66% APY on the top tier"
+      - "Your entire balance earns the tier rate, not just part of it"
+      - "Funds stay accessible — no term lock-up"
+      - "Free online banking & mobile deposit"
+    details:
+      - "Tiered rates apply to your entire daily balance: 0.55% APY from $0.01, stepping up through $40K / $100K / $500K tiers to 1.66% APY at $1,000,000 and above. See current rates below."
+      - "Transfers to third parties by point-of-sale (including mobile wallet debit payments) are prohibited. A $10.00 fee applies to each debit beyond 10 per monthly statement cycle (electronic payments, transfers between your TGB accounts, and ATM withdrawals excluded)."
+      - "Rates are variable and may change after the account is opened. Fees may reduce earnings."
+    open_url: "https://app.loanspq.com/apply.aspx?enc=Kw21Wblm1yxpjJabdoZaD_1XCeB6DUzWcPY_g38Z9Jqr0clsjQUYVmTraoEngafVkCgQedLZhb-S5_xgQhN9fA"
+    details_url: "https://www.texasgulfbank.com/personal-comparison-chart/#Gulf-Stream-Money-Market-Addtl-Info"
+
 compare_rows:
   - label: "Minimum opening deposit"
-    values: ["$100", "$2,500", "$1,000 variable / $2,000 fixed"]
+    values: ["$100", "$2,500", "$1,000 variable / $2,000 fixed", "$500"]
   - label: "Monthly service charge"
-    values: ["$3 if avg daily balance under $200 that month", "$0", "$0"]
+    values: ["$3 if avg daily balance under $200 that month", "$0", "$0", "$10 or $0*"]
   - label: "Minimum daily balance to earn interest"
-    values: ["$100", "$2,500", "No minimum"]
+    values: ["$100", "$2,500", "No minimum", "$5,000 to waive the fee; tiers set the rate"]
   - label: "Interest rate type"
-    values: ["Variable", "Fixed for the term", "Variable or fixed"]
+    values: ["Variable", "Fixed for the term", "Variable or fixed", "Variable, tiered"]
   - label: "Interest compounding"
-    values: ["Quarterly", "Monthly", "Quarterly"]
+    values: ["Quarterly", "Monthly", "Quarterly", "Monthly"]
   - label: "Statement cycle"
-    values: ["Quarterly", "N/A", "N/A"]
+    values: ["Quarterly", "N/A", "N/A", "Monthly"]
   - label: "Access to funds"
-    values: ["Withdraw anytime (limits apply)", "At maturity — early-withdrawal penalty applies", "At maturity — early-withdrawal penalty may apply"]
+    values: ["Withdraw anytime (limits apply)", "At maturity — early-withdrawal penalty applies", "At maturity — early-withdrawal penalty may apply", "Withdraw anytime (limits apply)"]
 
 # Secondary products shown as compact cards, not full panels
 secondary:

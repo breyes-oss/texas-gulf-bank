@@ -1,0 +1,195 @@
+---
+import { getEntry } from "astro:content";
+import Layout from "../layouts/Layout.astro";
+import RateTable from "../components/RateTable.astro";
+
+const entry = await getEntry("products", "personal-savings");
+const mm = entry?.data.products.find((p) => p.id === "money-market");
+if (!mm) throw new Error("Money Market product missing from products/personal-savings.yaml");
+---
+
+<Layout
+  title="Personal Money Market Account — Tiered Rates | Texas Gulf Bank"
+  description="Earn tiered interest up to 1.66% APY with a Texas Gulf Bank Personal Money Market account. $500 to open, no term lock-up, your entire balance earns the tier rate. See current tiers."
+>
+  <!-- Hero -->
+  <section class="bg-gradient-to-r from-brand-navy via-brand-navy-mid to-brand-aqua text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+      <p class="text-sm font-bold uppercase tracking-[0.14em] text-brand-gold">Savings & CDs</p>
+      <h1 class="mt-2 font-display text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.05] tracking-tight text-balance max-w-3xl">
+        Personal Money Market
+      </h1>
+      <p class="mt-5 text-lg text-white/85 max-w-2xl text-balance leading-relaxed">
+        The sweet spot between savings and investing: tiered rates that grow as your balance
+        does — with no lock-up period and your entire balance earning the tier rate.
+      </p>
+      <div class="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-6">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-wide text-white/70">Rates up to</p>
+          <p class="font-display text-4xl font-black text-brand-gold">1.66% <span class="text-base font-semibold">APY</span></p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+          <a href={mm.open_url} class="inline-flex items-center justify-center gap-2 bg-brand-gold text-brand-navy px-7 py-3.5 rounded-lg text-base font-bold hover:bg-white transition-colors">
+            Open a Money Market account
+          </a>
+          <a href="#rates" class="inline-flex items-center justify-center gap-2 border border-white/35 text-white px-7 py-3.5 rounded-lg text-base font-semibold hover:bg-white/10 transition-colors">
+            See all rate tiers
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="py-14 lg:py-20 bg-brand-warm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="font-display text-3xl sm:text-4xl font-black text-brand-text tracking-tight text-balance max-w-2xl leading-[1.1]">
+        How the tiers work.
+      </h2>
+      <p class="mt-4 text-lg text-brand-muted max-w-2xl leading-relaxed">
+        Every dollar in your account earns the rate for its tier — the whole balance moves
+        up together. Cross a threshold and your entire balance earns more.
+      </p>
+
+      <div class="mt-10 grid md:grid-cols-3 gap-6">
+        {[
+          { n: "1", t: "Open with $500", d: "A low door compared to most money market accounts — and no monthly fee if you keep a $5,000 average daily balance." },
+          { n: "2", t: "Grow across five tiers", d: "From 0.55% APY on day one to 1.66% APY at $1M+. Each tier applies to your entire daily balance." },
+          { n: "3", t: "Stay flexible", d: "No term, no maturity date. Withdraw when you need to (transaction limits apply) — your rate keeps working." },
+        ].map((step) => (
+          <div class="bg-white border border-brand-navy/10 rounded-lg p-6">
+            <span class="inline-flex w-9 h-9 rounded-full bg-brand-gold-pale border border-brand-gold/40 items-center justify-center font-display font-black text-brand-gold-dark">{step.n}</span>
+            <h3 class="mt-4 font-display text-lg font-bold text-brand-navy">{step.t}</h3>
+            <p class="mt-2 text-sm text-brand-muted leading-relaxed">{step.d}</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="mt-10 bg-white border border-brand-navy/10 rounded-lg p-6 sm:p-8">
+        <h3 class="font-display text-xl font-bold text-brand-navy">{mm.name} at a glance</h3>
+        <dl class="mt-4 grid sm:grid-cols-3 gap-6 text-sm">
+          <div>
+            <dt class="font-semibold text-brand-gold-dark uppercase text-xs tracking-wide">Monthly fee</dt>
+            <dd class="mt-1 text-brand-text">{mm.monthly_fee} — {mm.fee_note?.toLowerCase()}</dd>
+          </div>
+          <div>
+            <dt class="font-semibold text-brand-gold-dark uppercase text-xs tracking-wide">Minimum opening deposit</dt>
+            <dd class="mt-1 text-brand-text">{mm.min_opening}</dd>
+          </div>
+          <div>
+            <dt class="font-semibold text-brand-gold-dark uppercase text-xs tracking-wide">Interest</dt>
+            <dd class="mt-1 text-brand-text">Variable, tiered — paid on your entire daily balance</dd>
+          </div>
+        </dl>
+        <button type="button" data-mm-details class="mt-5 text-sm font-semibold text-brand-navy-light underline underline-offset-2 hover:text-brand-gold-dark transition-colors">
+          Account details
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Current rates -->
+  <section id="rates" class="py-14 lg:py-20 bg-white scroll-mt-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="font-display text-3xl sm:text-4xl font-black text-brand-text tracking-tight text-balance max-w-2xl leading-[1.1]">
+        Today's money market tiers.
+      </h2>
+      <div class="mt-8 max-w-2xl">
+        <RateTable section="money-market" />
+      </div>
+      <p class="mt-8 text-sm text-brand-muted max-w-2xl leading-relaxed">
+        Comparing savings options? See how the Money Market tiers stack up against our other accounts on the
+        <a href="/personal-savings#compare" class="font-semibold text-brand-navy-light underline underline-offset-2">savings comparison table</a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="bg-brand-navy py-16 lg:py-20">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="font-display text-3xl sm:text-4xl font-black text-white tracking-tight text-balance leading-[1.1]">
+        Put your balance in a higher tier.
+      </h2>
+      <p class="mt-4 text-lg text-white/80 max-w-xl mx-auto text-balance">
+        Open online in minutes, or talk to a local banker about which tier fits your goals.
+      </p>
+      <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href={mm.open_url} class="inline-flex items-center justify-center gap-2 bg-brand-gold text-brand-navy px-8 py-3.5 rounded-lg text-base font-bold hover:bg-white transition-colors">
+          Open an account online
+        </a>
+        <a href="/locations/" class="inline-flex items-center justify-center gap-2 border border-white/30 text-white px-8 py-3.5 rounded-lg text-base font-semibold hover:bg-white/10 transition-colors">
+          Find a banking center
+        </a>
+      </div>
+      <p class="mt-6 text-sm text-white/70">Questions? <a href="tel:8004677216" class="font-bold text-brand-gold underline underline-offset-2">800.467.7216</a></p>
+    </div>
+  </section>
+</Layout>
+
+<!-- Disclosure modal -->
+<div id="disclosure-modal" class="fixed inset-0 z-[100] hidden" role="dialog" aria-modal="true" aria-labelledby="disclosure-title">
+  <div class="absolute inset-0 bg-brand-navy/70 backdrop-blur-sm" data-disclosure-close></div>
+  <div class="relative max-w-2xl mx-auto mt-[6vh] mb-10 bg-white rounded-xl shadow-2xl max-h-[86vh] flex flex-col">
+    <div class="flex items-start justify-between gap-4 px-6 pt-6 pb-4 border-b border-brand-navy/10">
+      <div>
+        <p class="text-xs font-bold uppercase tracking-wide text-brand-gold-dark">Account details</p>
+        <h2 id="disclosure-title" class="mt-1 font-display text-xl sm:text-2xl font-black text-brand-navy" data-disclosure-name>Account</h2>
+      </div>
+      <button type="button" data-disclosure-close aria-label="Close account details" class="shrink-0 w-9 h-9 rounded-full border border-brand-navy/15 text-brand-text hover:bg-brand-cream transition-colors flex items-center justify-center">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="px-6 py-5 overflow-y-auto text-sm text-brand-text leading-relaxed space-y-5" data-disclosure-body></div>
+    <div class="px-6 py-4 border-t border-brand-navy/10 flex flex-wrap gap-3 justify-end">
+      <a href="tel:8004677216" class="inline-flex items-center gap-2 border border-brand-navy/15 px-4 py-2 rounded-lg text-sm font-semibold text-brand-text hover:bg-brand-cream transition-colors">Call 800.467.7216</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  const MM = JSON.parse(document.getElementById("__MM_JSON__")?.textContent || "{}");
+  const modal = document.getElementById("disclosure-modal");
+  const nameEl = modal?.querySelector("[data-disclosure-name]");
+  const bodyEl = modal?.querySelector("[data-disclosure-body]");
+  let lastFocus = null;
+
+  function esc(s) {
+    return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+
+  document.querySelector("[data-mm-details]")?.addEventListener("click", () => {
+    if (!modal || !MM.name) return;
+    lastFocus = document.activeElement;
+    if (nameEl) nameEl.textContent = MM.name;
+    if (bodyEl) {
+      let html = `<table class="w-full text-sm border-collapse"><tbody>`;
+      html += `<tr class="border-b border-brand-navy/10"><th scope="row" class="text-left py-2.5 pr-4 font-semibold align-top whitespace-nowrap">Monthly service charge</th><td class="py-2.5">${esc(MM.monthly_fee)} — ${esc(MM.fee_note || "")}</td></tr>`;
+      html += `<tr class="border-b border-brand-navy/10"><th scope="row" class="text-left py-2.5 pr-4 font-semibold align-top whitespace-nowrap">Minimum opening deposit</th><td class="py-2.5">${esc(MM.min_opening)}</td></tr>`;
+      html += `</tbody></table><div><p class="font-semibold text-brand-gold-dark text-xs uppercase tracking-wide">Additional information</p><ul class="mt-2 list-disc pl-4 space-y-1.5">`;
+      for (const dt of MM.details || []) html += `<li>${esc(dt)}</li>`;
+      html += `</ul></div>`;
+      html += `<div class="bg-brand-cream border border-brand-navy/10 rounded-lg p-4 text-xs text-brand-muted leading-relaxed">
+        <p class="font-semibold text-brand-text">Good to know</p>
+        <p class="mt-1.5">A complete schedule of fees that may apply to your account is available in the <a class="underline underline-offset-2 font-semibold text-brand-navy-light" href="https://www.texasgulfbank.com/personal-comparison-chart/" target="_blank" rel="noopener">Personal Checking Comparison Chart</a>.</p>
+        <p class="mt-2">Contact Texas Gulf Bank at 1-800-467-7216 to obtain a Truth-In-Savings / Reg DD disclosure of terms, conditions, fees, and rate information.</p>
+      </div>`;
+      bodyEl.innerHTML = html;
+      modal.classList.remove("hidden");
+      document.body.style.overflow = "hidden";
+      modal.querySelector("button[data-disclosure-close]")?.focus();
+    }
+  });
+
+  function closeDisclosure() {
+    if (!modal) return;
+    modal.classList.add("hidden");
+    document.body.style.overflow = "";
+    if (lastFocus) lastFocus.focus();
+  }
+  modal?.querySelectorAll("[data-disclosure-close]").forEach((el) => el.addEventListener("click", closeDisclosure));
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && modal && !modal.classList.contains("hidden")) closeDisclosure();
+  });
+</script>
+
+<script is:inline type="application/json" id="__MM_JSON__" set:html={JSON.stringify(mm)}></script>
