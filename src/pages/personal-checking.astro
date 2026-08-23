@@ -85,7 +85,15 @@ const all = d.products;
 
               {p.id === "gulf-advantage" && (
                 <div class="mt-6">
-                  <RateTable section="gulf-advantage" />
+                  <div class="flex items-baseline gap-2 mb-3">
+                    <span class="text-sm text-brand-muted">Earn</span>
+                    <span class="font-display text-3xl font-black text-brand-blue">up to 0.80%</span>
+                    <span class="text-sm text-brand-muted">APY*</span>
+                  </div>
+                  <RateTable section="gulf-advantage" showHeader={false} compact />
+                  <p class="mt-2 text-xs text-brand-muted">
+                    <a href="/rates-and-fees" class="font-semibold text-brand-navy-light underline underline-offset-2 hover:text-brand-gold-dark transition-colors">View all current rates →</a>
+                  </p>
                 </div>
               )}
             </div>

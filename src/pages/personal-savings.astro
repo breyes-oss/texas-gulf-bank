@@ -16,6 +16,14 @@ const RATE_SECTIONS = {
   "ira": "ira-fixed",
   "money-market": "money-market",
 };
+
+// Top advertised APY per product (drives the "up to" line)
+const RATE_UP_TO = {
+  "personal-savings": "0.40%",
+  "certificate-of-deposit": "3.45%",
+  "ira": "3.45%",
+  "money-market": "1.66%",
+};
 ---
 
 <Layout
@@ -81,9 +89,17 @@ const RATE_SECTIONS = {
                 ))}
               </ul>
 
-              {/* This product's live rate table, inline */}
+              {/* "Up to" rate headline + inline tier table */}
               <div class="mt-6">
-                <RateTable section={RATE_SECTIONS[p.id]} />
+                <div class="flex items-baseline gap-2 mb-3">
+                  <span class="text-sm text-brand-muted">Earn</span>
+                  <span class="font-display text-3xl font-black text-brand-blue">up to {RATE_UP_TO[p.id]}</span>
+                  <span class="text-sm text-brand-muted">APY*</span>
+                </div>
+                <RateTable section={RATE_SECTIONS[p.id]} showHeader={false} compact />
+                <p class="mt-2 text-xs text-brand-muted">
+                  <a href="/rates-and-fees" class="font-semibold text-brand-navy-light underline underline-offset-2 hover:text-brand-gold-dark transition-colors">View all current rates →</a>
+                </p>
               </div>
             </div>
 
