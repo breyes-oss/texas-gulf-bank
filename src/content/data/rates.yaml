@@ -13,8 +13,8 @@ items:
     detail: "Requirements apply"
     value: "0.80%"
   - name: "Money Market"
-    detail: "$1M+ tier"
-    value: "1.66%"
+    detail: "From $500 to open"
+    value: "up to 1.66%"
 
 # Full rate sheet sections — rendered by RateTable sections mode
 sections:
