@@ -107,14 +107,19 @@ const RATE_UP_TO = {
                 </p>
               )}
 
-              <ul class="mt-5 space-y-2.5">
-                {p.highlights.map((h) => (
-                  <li class="flex gap-2.5 text-sm text-brand-text leading-relaxed">
-                    <svg class="w-4 h-4 mt-0.5 shrink-0 text-brand-rate" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-                    {h}
-                  </li>
-                ))}
-              </ul>
+              <details class="group mt-5">
+                <summary class="lg:hidden cursor-pointer list-none text-sm font-semibold text-brand-navy-light hover:text-brand-gold-dark transition-colors">
+                  What's included <span class="group-open:hidden">▾</span><span class="hidden group-open:inline">▴</span>
+                </summary>
+                <ul class="hidden group-open:block lg:block mt-3 lg:mt-0 space-y-2.5">
+                  {p.highlights.map((h) => (
+                    <li class="flex gap-2.5 text-sm text-brand-text leading-relaxed">
+                      <svg class="w-4 h-4 mt-0.5 shrink-0 text-brand-rate" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                      {h}
+                    </li>
+                  ))}
+                </ul>
+              </details>
 
             </div>
 
