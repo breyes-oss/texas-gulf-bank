@@ -60,13 +60,16 @@ const all = d.products;
               <p class="mt-1.5 text-sm text-brand-muted italic">{p.tagline}</p>
 
               <div class="mt-5 flex items-baseline gap-2">
-                <span class="font-display text-3xl font-black text-brand-blue">{p.monthly_fee}</span>
+                <span class:list={["font-display text-3xl font-black", p.monthly_fee.startsWith("$0") ? "text-brand-rate" : "text-brand-blue"]}>{p.monthly_fee}</span>
                 <span class="text-sm text-brand-muted">/ month</span>
               </div>
               {p.fee_note && <p class="mt-1 text-xs text-brand-muted leading-relaxed">{p.fee_note}</p>}
 
               {p.best_for && (
-                <p class="mt-4 text-sm text-brand-text"><span class="font-semibold">Best for:</span> {p.best_for}</p>
+                <p class="mt-4 text-sm text-brand-text flex gap-2">
+                  <svg class="w-4 h-4 mt-0.5 shrink-0 text-brand-rate" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                  <span><span class="font-semibold">Right for:</span> {p.best_for}</span>
+                </p>
               )}
 
               <ul class="mt-5 space-y-2.5">
