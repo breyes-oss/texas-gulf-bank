@@ -3,17 +3,17 @@ published: "As published on the Savings / CDs / IRAs Comparison Chart"
 products:
   - id: "personal-savings"
     name: "Personal Savings"
-    tagline: "Accessible savings with a competitive rate"
-    best_for: "An emergency fund or first savings account"
+    tagline: "Your money stays within reach"
+    best_for: "Emergency funds and everyday saving — start with $100"
     monthly_fee: "$3 or $0"
-    fee_note: "Waived any quarter your average daily balance stays at or above $200"
+    fee_note: "The fee is waived any quarter your balance stays at or above $200"
     min_opening: "$100"
     interest: true
     highlights:
-      - "Interest compounded and paid quarterly"
-      - "Funds stay accessible — no lock-up period"
-      - "Free online banking & mobile deposit"
-      - "Only $100 to open"
+      - "Withdraw whenever life happens — no penalties for using your own money"
+      - "Interest paid every quarter, automatically"
+      - "Free online banking and mobile deposit"
+      - "Open with as little as $100"
     qualify: []
     details:
       - "You must maintain a minimum balance of $100.00 in the account each day to obtain the disclosed annual percentage yield. Interest is compounded and credited every quarter."
@@ -24,17 +24,17 @@ products:
 
   - id: "certificate-of-deposit"
     name: "Certificate of Deposit"
-    tagline: "Lock in a fixed rate, watch it grow"
-    best_for: "Money you won't need until a set date"
+    tagline: "Pick a date. Lock in the rate."
+    best_for: "Money with a job but no deadline — tuition in three years, a down payment in five"
     monthly_fee: "$0"
-    fee_note: "No monthly service charge"
+    fee_note: "No monthly service charge, ever"
     min_opening: "$2,500"
     interest: true
     highlights:
-      - "Fixed rate locked for your full term"
-      - "Interest compounded and credited monthly"
-      - "Terms to fit your timeline"
-      - "10-day grace period at maturity"
+      - "Your rate is locked for the entire term — market dips can't touch it"
+      - "Choose from terms of 30 days to 5 years"
+      - "Interest compounds monthly"
+      - "10-day grace window when your term ends — rethink, renew, or withdraw"
     qualify: []
     details:
       - "A fixed rate is locked for the full term. Upon maturity and renewal, the rate is set to be competitive with current market rates at that time."
@@ -46,17 +46,17 @@ products:
 
   - id: "ira"
     name: "Individual Retirement Account"
-    tagline: "Retirement savings with tax advantages"
-    best_for: "Long-term retirement savings — up to $7,000/year ($8,000 age 50+)"
+    tagline: "Future you says thanks"
+    best_for: "Retirement savings with real tax advantages — on top of any workplace plan"
     monthly_fee: "$0"
     fee_note: "No monthly service charge"
     min_opening: "$1,000 variable / $2,000 fixed"
     interest: true
     highlights:
-      - "Variable or fixed rate options"
-      - "Contribute up to $7,000 annually ($8,000 if 50+)"
-      - "Unlimited additional deposits ($50 minimum)"
-      - "Spouse can contribute to their own IRA too"
+      - "Contribute up to $7,000 a year ($8,000 once you turn 50)"
+      - "Choose a variable rate for flexibility or fixed for certainty"
+      - "Add to it anytime — deposits of $50 or more, as often as you like"
+      - "Your spouse can open their own and do the same"
     qualify: []
     details:
       - "Contribution limits: up to $7,000.00 each per year for individuals under 50, up to $8,000.00 for age 50 and over (tax year 2025) — even if you already participate in an employer-sponsored plan."
@@ -68,16 +68,16 @@ products:
 
   - id: "money-market"
     name: "Personal Money Market"
-    tagline: "Tiered rates that reward bigger balances"
-    best_for: "$500+ you want working harder while staying accessible"
+    tagline: "Bigger balance, better rate. That's the deal."
+    best_for: "$500+ sitting in checking that should be earning more"
     monthly_fee: "$10 or $0"
     fee_note: "Waived with a $5,000 average daily balance"
     min_opening: "$500"
     interest: true
     highlights:
-      - "Tiered rates — up to 1.66% APY on the top tier"
-      - "Your entire balance earns the tier rate, not just part of it"
-      - "Funds stay accessible — no term lock-up"
+      - "Five rate tiers — climb from 0.55% all the way to 1.66% APY"
+      - "When you cross into a higher tier, your whole balance earns the better rate"
+      - "No lock-up — your money stays available"
       - "Free online banking & mobile deposit"
     details:
       - "Tiered rates apply to your entire daily balance: 0.55% APY from $0.01, stepping up through $40K / $100K / $500K tiers to 1.66% APY at $1,000,000 and above. See current rates below."
@@ -106,26 +106,26 @@ compare_rows:
 secondary:
   - id: "gulf-rewards-savings"
     name: "Gulf Rewards Savings"
-    tagline: "For Gulf Rewards Checking customers"
+    tagline: "The perk our best customers don't know they have"
     points:
-      - "No monthly service charge, ever"
-      - "Higher rate than Personal Savings"
-      - "Only $100 to open"
-      - "One combined statement with your Gulf Rewards Checking"
+      - "No monthly service charge. Not ever."
+      - "A better rate than Personal Savings — just for being a Gulf Rewards Checking customer"
+      - "Open it with $100"
+      - "Everything on one easy-to-read statement"
     details:
       - "Available exclusively to Gulf Rewards Checking customers. Interest is compounded and credited monthly; maintain a $100.00 minimum daily balance to earn the disclosed APY."
     details_url: "https://www.texasgulfbank.com/savings-cds-iras-comparison-chart/#gulf-rewards"
   - id: "hsa"
     name: "Health Savings Account"
-    tagline: "Tax-advantaged savings for medical expenses"
+    tagline: "Triple tax advantage for medical expenses"
     points:
-      - "Tax-deductible contributions"
-      - "Tax-free withdrawals for qualified medical expenses"
-      - "Unused funds roll over year to year"
-      - "Tiered rates ($1,000 and $5,000 tiers)"
+      - "Contributions are tax-deductible"
+      - "Withdrawals for qualified medical expenses are tax-free"
+      - "Unused funds roll over year to year — it's yours to keep"
+      - "Tiered rates at $1,000 and $5,000 balances"
     details:
       - "Requires a high-deductible health plan. Interest is compounded and credited monthly; tiered rates apply at $1,000.00 and $5,000.00 minimum daily balances. A $3.00 monthly charge applies if your average daily balance falls below $1,000."
       - "The IRS has specific eligibility rules for opening and maintaining an HSA and for qualified medical expenses. Consult your tax advisor for how IRS rules affect you."
     details_url: "https://www.texasgulfbank.com/savings-cds-iras-comparison-chart/#health-savings"
 
-disclaimer_short: "Early withdrawal penalties may apply to CDs and IRAs. Interest rates are variable unless stated as fixed and may change at any time. Contact Texas Gulf Bank at 1-800-467-7216 for a Truth-In-Savings / Reg DD disclosure of terms, conditions, fees, and rate information."
+disclaimer_short: "Early withdrawal penalties may apply to CDs and IRAs. *Advertised APYs reflect the highest available rate tier and may require qualifying balances or activity. Variable rates may change after account opening. Contact Texas Gulf Bank at 1-800-467-7216 for a Truth-In-Savings / Reg DD disclosure of terms, conditions, fees, and rate information."
