@@ -11,7 +11,8 @@ has_atm: true
 has_drive_thru: true
 atm_types: []
 services:
-  - ATM
+  - "ATM"
+  - "Drive-Thru"
 languages: []
 lat: 29.1804086
 lng: -95.4326932

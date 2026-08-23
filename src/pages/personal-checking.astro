@@ -111,7 +111,7 @@ const all = d.products;
 
             <div class="px-6 sm:px-7 pb-6 pt-2 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-brand-navy/5 pt-4">
               <a href={p.open_url} class="inline-flex items-center justify-center gap-2 bg-brand-navy text-white px-5 py-2.5 rounded-lg text-sm font-bold hover:bg-brand-navy-light transition-colors">
-                Open this account
+                {p.open_label || "Open this account"}
               </a>
               <button
                 type="button"
@@ -164,7 +164,7 @@ const all = d.products;
               {all.map((p) => (
                 <td class="px-5 py-4">
                   <a href={p.open_url} class="inline-flex items-center justify-center bg-brand-gold text-brand-navy px-4 py-2 rounded-lg text-xs font-bold hover:bg-brand-gold-light transition-colors whitespace-nowrap">
-                    Open
+                    {p.open_label ? "Contact a banker" : "Open"}
                   </a>
                 </td>
               ))}
@@ -235,7 +235,10 @@ const all = d.products;
     if (!p || !modal) return;
     lastFocus = document.activeElement;
     if (nameEl) nameEl.textContent = p.name;
-    if (openUrlEl) openUrlEl.setAttribute("href", p.open_url || "#");
+    if (openUrlEl) {
+      openUrlEl.setAttribute("href", p.open_url || "#");
+      openUrlEl.textContent = p.open_label || "Open this account";
+    }
     if (bodyEl) {
       const rows = [
         ["Monthly maintenance fee", p.monthly_fee + (p.fee_note ? ` — ${p.fee_note}` : "")],

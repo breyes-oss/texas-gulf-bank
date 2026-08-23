@@ -45,6 +45,7 @@ products:
       - "An excess debit fee of $0.25 applies to each debit transaction beyond 25 per monthly statement cycle (electronic funds transfers excluded). The fee does not apply if your average daily balance is $700.00 or more for the cycle."
       - "For individuals age 62 or older, the $0.25 excess debit fee and the monthly maintenance fee are both waived regardless of balance."
     open_url: "https://www.texasgulfbank.com/contact-texas-gulf-bank/"
+    open_label: "Visit a banker to open"
     details_url: "https://www.texasgulfbank.com/personal-comparison-chart/#Portside-Checking-Additional-Information"
 
   - id: "gulf-rewards"
@@ -64,6 +65,7 @@ products:
     details:
       - "The $3,000 combined balance is calculated using the current ledger balance across all your personal TGB accounts (including CDs and IRAs) as of the end date of your Gulf Rewards Checking statement cycle."
     open_url: "https://www.texasgulfbank.com/contact-texas-gulf-bank/"
+    open_label: "Visit a banker to open"
     details_url: "https://www.texasgulfbank.com/personal-comparison-chart/"
 
   - id: "vip-high-yield"
