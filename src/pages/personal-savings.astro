@@ -53,6 +53,26 @@ const RATE_UP_TO = {
           Compare them side by side
         </a>
       </div>
+
+      <!-- 3-question picker -->
+      <div id="picker" class="mt-10 max-w-xl bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-5 sm:p-6">
+        <p class="text-sm font-bold uppercase tracking-wide text-brand-gold">When will you need the money?</p>
+        <div class="mt-4 grid sm:grid-cols-3 gap-2.5">
+          <button type="button" data-picker-answer="personal-savings" class="text-left bg-white/10 hover:bg-white/25 border border-white/25 rounded-lg px-4 py-3 transition-colors">
+            <span class="block font-display font-bold text-white">Soon</span>
+            <span class="block text-xs text-white/75 mt-0.5">Any day now</span>
+          </button>
+          <button type="button" data-picker-answer="money-market" class="text-left bg-white/10 hover:bg-white/25 border border-white/25 rounded-lg px-4 py-3 transition-colors">
+            <span class="block font-display font-bold text-white">Don't know</span>
+            <span class="block text-xs text-white/75 mt-0.5">$500+ to park</span>
+          </button>
+          <button type="button" data-picker-answer="certificate-of-deposit" class="text-left bg-white/10 hover:bg-white/25 border border-white/25 rounded-lg px-4 py-3 transition-colors">
+            <span class="block font-display font-bold text-white">Years from now</span>
+            <span class="block text-xs text-white/75 mt-0.5">A set date</span>
+          </button>
+        </div>
+        <p id="picker-result" class="hidden mt-4 text-sm text-white/90"></p>
+      </div>
     </div>
   </section>
 
@@ -64,7 +84,7 @@ const RATE_UP_TO = {
       </h2>
       <div class="mt-10 grid lg:grid-cols-3 gap-6">
         {featured.map((p, i) => (
-          <article class:list={["bg-white border border-brand-navy/10 rounded-lg overflow-hidden flex flex-col", i === 1 && "ring-2 ring-brand-gold"]}>
+          <article id={`panel-${p.id}`} class:list={["bg-white border border-brand-navy/10 rounded-lg overflow-hidden flex flex-col scroll-mt-24", i === 1 && "ring-2 ring-brand-gold"]}>
             <div class="p-6 sm:p-7 flex-1">
               <div class="flex items-center justify-between gap-3">
                 <h3 class="font-display text-xl font-bold text-brand-navy">{p.name}</h3>
@@ -96,15 +116,15 @@ const RATE_UP_TO = {
                 ))}
               </ul>
 
-              {/* Rates button -> modal with this product's full rate table */}
+              {/* One merged trigger: rates + details in a single tabbed modal */}
               <div class="mt-5">
                 <button
                   type="button"
-                  data-rates-trigger={RATE_SECTIONS[p.id]}
+                  data-details-trigger={p.id}
                   class="inline-flex items-center gap-2 border border-brand-navy/15 text-brand-navy px-4 py-2 rounded-lg text-sm font-semibold hover:bg-brand-cream transition-colors"
                 >
                   <svg class="w-4 h-4 text-brand-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-                  See current rates
+                  Rates & details
                 </button>
               </div>
             </div>
@@ -113,13 +133,6 @@ const RATE_UP_TO = {
               <a href={p.open_url} class="inline-flex items-center justify-center gap-2 bg-brand-navy text-white px-5 py-2.5 rounded-lg text-sm font-bold hover:bg-brand-navy-light transition-colors">
                 {p.id === "ira" ? "Talk to a banker" : "Open this account"}
               </a>
-              <button
-                type="button"
-                data-disclosure-trigger={p.id}
-                class="text-sm font-semibold text-brand-navy-light underline underline-offset-2 hover:text-brand-gold-dark transition-colors"
-              >
-                Account details
-              </button>
             </div>
           </article>
         ))}
@@ -234,172 +247,194 @@ const RATE_UP_TO = {
   </section>
 </Layout>
 
-<!-- Disclosure modal (shared pattern with personal-checking) -->
+<!-- Merged modal: Rates & details with tabs -->
 <div id="disclosure-modal" class="fixed inset-0 z-[100] hidden" role="dialog" aria-modal="true" aria-labelledby="disclosure-title">
   <div class="absolute inset-0 bg-brand-navy/70 backdrop-blur-sm" data-disclosure-close></div>
   <div class="relative max-w-2xl mx-auto mt-[6vh] mb-10 bg-white rounded-xl shadow-2xl max-h-[86vh] flex flex-col">
     <div class="flex items-start justify-between gap-4 px-6 pt-6 pb-4 border-b border-brand-navy/10">
       <div>
-        <p class="text-xs font-bold uppercase tracking-wide text-brand-gold-dark">Account details</p>
+        <p class="text-xs font-bold uppercase tracking-wide text-brand-gold-dark">Rates & details</p>
         <h2 id="disclosure-title" class="mt-1 font-display text-xl sm:text-2xl font-black text-brand-navy" data-disclosure-name>Account</h2>
       </div>
-      <button type="button" data-disclosure-close aria-label="Close account details" class="shrink-0 w-9 h-9 rounded-full border border-brand-navy/15 text-brand-text hover:bg-brand-cream transition-colors flex items-center justify-center">
+      <button type="button" data-disclosure-close aria-label="Close rates and details" class="shrink-0 w-9 h-9 rounded-full border border-brand-navy/15 text-brand-text hover:bg-brand-cream transition-colors flex items-center justify-center">
         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
       </button>
     </div>
-    <div class="px-6 py-5 overflow-y-auto text-sm text-brand-text leading-relaxed space-y-5" data-disclosure-body></div>
-    <div class="px-6 py-4 border-t border-brand-navy/10 flex flex-wrap gap-3 justify-end">
-      <a href="tel:8004677216" class="inline-flex items-center gap-2 border border-brand-navy/15 px-4 py-2 rounded-lg text-sm font-semibold text-brand-text hover:bg-brand-cream transition-colors">Call 800.467.7216</a>
+    <div class="px-6 pt-4 flex gap-2" role="tablist">
+      <button type="button" role="tab" data-tab="rates" aria-selected="true" class="px-4 py-2 rounded-lg text-sm font-bold bg-brand-navy text-white">Rates</button>
+      <button type="button" role="tab" data-tab="details" aria-selected="false" class="px-4 py-2 rounded-lg text-sm font-semibold border border-brand-navy/15 text-brand-text hover:bg-brand-cream">Account details</button>
+    </div>
+    <div class="px-6 py-5 overflow-y-auto text-sm text-brand-text leading-relaxed space-y-5" data-disclosure-body role="tabpanel"></div>
+    <div class="px-6 py-4 border-t border-brand-navy/10 flex flex-wrap gap-3 justify-between items-center">
+      <p class="text-xs text-brand-muted">APYs published {d.published}.</p>
+      <div class="flex gap-3">
+        <a href="/rates-and-fees" class="text-sm font-semibold text-brand-navy-light underline underline-offset-2 hover:text-brand-gold-dark transition-colors">View all rates →</a>
+        <a href="tel:8004677216" class="text-sm font-semibold text-brand-navy-light underline underline-offset-2 hover:text-brand-gold-dark transition-colors">Call 800.467.7216</a>
+      </div>
     </div>
   </div>
 </div>
 
 <script>
   const ALL_ACCOUNTS = JSON.parse(document.getElementById("__ACCOUNTS_JSON__")?.textContent || "[]");
+  const RATES_SECTIONS = JSON.parse(document.getElementById("__RATES_SECTIONS__")?.textContent || "[]");
   const modal = document.getElementById("disclosure-modal");
   const nameEl = modal?.querySelector("[data-disclosure-name]");
   const bodyEl = modal?.querySelector("[data-disclosure-body]");
+  const tabButtons = modal ? Array.from(modal.querySelectorAll("[data-tab]")) : [];
   let lastFocus = null;
+  let current = null; // { product, rateSectionId, tab }
 
   function esc(s) {
     return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   }
 
-  function openDisclosure(id) {
-    const p = ALL_ACCOUNTS.find((x) => x.id === id);
+  function rateTableHtml(s) {
+    let html = `<div class="overflow-x-auto"><table class="w-full text-sm"><thead><tr class="bg-brand-navy text-white">`;
+    s.columns.forEach((c, i) => {
+      html += `<th scope="col" class="px-4 py-3 ${i === 0 ? "text-left" : "text-right"} font-display font-bold">${esc(c)}</th>`;
+    });
+    html += `</tr></thead><tbody>`;
+    for (const row of s.rows) {
+      html += `<tr class="border-b border-brand-navy/10 last:border-b-0">`;
+      row.forEach((cell, i) => {
+        html += `<td class="px-4 py-2.5 ${i === 0 ? "font-medium text-brand-text" : "text-right font-display font-semibold text-brand-blue"}">${esc(cell)}</td>`;
+      });
+      html += `</tr>`;
+    }
+    html += `</tbody></table></div>`;
+    if (s.note) html += `<p class="mt-3 text-xs text-brand-muted leading-relaxed">${esc(s.note)}</p>`;
+    return html;
+  }
+
+  function contextLineHtml(rateSectionId) {
+    const lines = {
+      "savings": "Personal Savings 0.40% · Gulf Rewards Savings 0.40%",
+      "cd-fixed": "1-Year CD 3.45% · 18-Month CD 3.30% · 5-Year CD 2.75%",
+      "ira-fixed": "1-Year IRA 3.45% · Variable 18-Month IRA 3.30%",
+      "money-market": "Money Market tiers run 0.55% → 1.66% APY · Personal Savings pays 0.40%",
+    };
+    const line = lines[rateSectionId];
+    if (!line) return "";
+    return `<p class="mt-4 text-xs text-brand-muted bg-brand-cream border border-brand-navy/10 rounded-lg px-4 py-3"><span class="font-semibold text-brand-text">How this compares:</span> ${esc(line)}. <a href="/rates-and-fees" class="font-semibold text-brand-navy-light underline underline-offset-2">All rates →</a></p>`;
+  }
+
+  function detailsHtml(p) {
+    let html = "";
+    const rows = [
+      ["Monthly service charge", p.monthly_fee + (p.fee_note ? ` — ${p.fee_note}` : "")],
+      ["Minimum opening deposit", p.min_opening || "—"],
+    ];
+    html += `<table class="w-full text-sm border-collapse"><tbody>`;
+    for (const [k, v] of rows) {
+      if (!v) continue;
+      html += `<tr class="border-b border-brand-navy/10"><th scope="row" class="text-left py-2.5 pr-4 font-semibold align-top whitespace-nowrap">${k}</th><td class="py-2.5">${esc(v)}</td></tr>`;
+    }
+    html += `</tbody></table>`;
+    if (p.qualify && p.qualify.length > 0 && p.qualify_label) {
+      html += `<div><p class="font-semibold text-brand-gold-dark text-xs uppercase tracking-wide">${esc(p.qualify_label)}</p><ul class="mt-2 list-disc pl-4 space-y-1">`;
+      for (const q of p.qualify) html += `<li>${esc(q)}</li>`;
+      html += `</ul></div>`;
+    }
+    const details = p.details || [];
+    if (details.length > 0) {
+      html += `<div><p class="font-semibold text-brand-gold-dark text-xs uppercase tracking-wide">Additional information</p><ul class="mt-2 list-disc pl-4 space-y-1.5">`;
+      for (const dt of details) html += `<li>${esc(dt)}</li>`;
+      html += `</ul></div>`;
+    }
+    html += `<div class="bg-brand-cream border border-brand-navy/10 rounded-lg p-4 text-xs text-brand-muted leading-relaxed">
+      <p class="font-semibold text-brand-text">Good to know</p>
+      <p class="mt-1.5">A complete schedule of fees that may apply to your account is available in the <a class="underline underline-offset-2 font-semibold text-brand-navy-light" href="https://www.texasgulfbank.com/savings-cds-iras-comparison-chart/" target="_blank" rel="noopener">Savings / CDs / IRAs Comparison Chart</a>.</p>
+      <p class="mt-2">Contact Texas Gulf Bank at 1-800-467-7216 to obtain a Truth-In-Savings / Reg DD disclosure of terms, conditions, fees, and rate information for any account.</p>
+    </div>`;
+    if (p.details_url) {
+      html += `<p><a href="${esc(p.details_url)}" target="_blank" rel="noopener" class="font-semibold text-brand-navy-light underline underline-offset-2">View full account details on texasgulfbank.com →</a></p>`;
+    }
+    return html;
+  }
+
+  function renderTab() {
+    if (!current || !bodyEl) return;
+    const { product, rateSectionId, tab } = current;
+    if (tab === "rates") {
+      const s = RATES_SECTIONS.find((x) => x.id === rateSectionId);
+      bodyEl.innerHTML = s ? rateTableHtml(s) + contextLineHtml(rateSectionId) : "<p>Rate information unavailable.</p>";
+    } else {
+      bodyEl.innerHTML = detailsHtml(product);
+    }
+  }
+
+  function setTab(tab) {
+    if (!current) return;
+    current.tab = tab;
+    tabButtons.forEach((b) => {
+      const active = b.getAttribute("data-tab") === tab;
+      b.setAttribute("aria-selected", String(active));
+      b.className = active
+        ? "px-4 py-2 rounded-lg text-sm font-bold bg-brand-navy text-white"
+        : "px-4 py-2 rounded-lg text-sm font-semibold border border-brand-navy/15 text-brand-text hover:bg-brand-cream";
+    });
+    renderTab();
+  }
+
+  function openModal(productId) {
+    const p = ALL_ACCOUNTS.find((x) => x.id === productId);
     if (!p || !modal) return;
     lastFocus = document.activeElement;
+    current = { product: p, rateSectionId: RATE_SECTION_MAP[productId], tab: "rates" };
     if (nameEl) nameEl.textContent = p.name;
-    if (bodyEl) {
-      let html = "";
-      const hasSummary = p.monthly_fee || p.min_opening;
-      if (hasSummary) {
-        const rows = [
-          ["Monthly service charge", p.monthly_fee + (p.fee_note ? ` — ${p.fee_note}` : "")],
-          ["Minimum opening deposit", p.min_opening || "—"],
-          ["Earns interest", p.interest ? "Yes" : "No"],
-        ];
-        html += `<table class="w-full text-sm border-collapse"><tbody>`;
-        for (const [k, v] of rows) {
-          if (!v) continue;
-          html += `<tr class="border-b border-brand-navy/10"><th scope="row" class="text-left py-2.5 pr-4 font-semibold align-top whitespace-nowrap">${k}</th><td class="py-2.5">${esc(v)}</td></tr>`;
-        }
-        html += `</tbody></table>`;
-      }
-      if (p.qualify && p.qualify.length > 0 && p.qualify_label) {
-        html += `<div><p class="font-semibold text-brand-gold-dark text-xs uppercase tracking-wide">${esc(p.qualify_label)}</p><ul class="mt-2 list-disc pl-4 space-y-1">`;
-        for (const q of p.qualify) html += `<li>${esc(q)}</li>`;
-        html += `</ul></div>`;
-      }
-      const details = p.details || [];
-      if (details.length > 0) {
-        html += `<div><p class="font-semibold text-brand-gold-dark text-xs uppercase tracking-wide">Additional information</p><ul class="mt-2 list-disc pl-4 space-y-1.5">`;
-        for (const dt of details) html += `<li>${esc(dt)}</li>`;
-        html += `</ul></div>`;
-      }
-      html += `<div class="bg-brand-cream border border-brand-navy/10 rounded-lg p-4 text-xs text-brand-muted leading-relaxed">
-        <p class="font-semibold text-brand-text">Good to know</p>
-        <p class="mt-1.5">A complete schedule of fees that may apply to your account is available in the <a class="underline underline-offset-2 font-semibold text-brand-navy-light" href="https://www.texasgulfbank.com/savings-cds-iras-comparison-chart/" target="_blank" rel="noopener">Savings / CDs / IRAs Comparison Chart</a>.</p>
-        <p class="mt-2">Contact Texas Gulf Bank at 1-800-467-7216 to obtain a Truth-In-Savings / Reg DD disclosure of terms, conditions, fees, and rate information for any account.</p>
-      </div>`;
-      if (p.details_url) {
-        html += `<p><a href="${esc(p.details_url)}" target="_blank" rel="noopener" class="font-semibold text-brand-navy-light underline underline-offset-2">View full account details on texasgulfbank.com →</a></p>`;
-      }
-      bodyEl.innerHTML = html;
-    }
+    setTab("rates");
     modal.classList.remove("hidden");
     document.body.style.overflow = "hidden";
     modal.querySelector("button[data-disclosure-close]")?.focus();
   }
 
-  function closeDisclosure() {
+  function closeModal() {
     if (!modal) return;
     modal.classList.add("hidden");
     document.body.style.overflow = "";
     if (lastFocus) lastFocus.focus();
   }
 
-  document.querySelectorAll("[data-disclosure-trigger]").forEach((btn) => {
-    btn.addEventListener("click", () => openDisclosure(btn.getAttribute("data-disclosure-trigger")));
+  const RATE_SECTION_MAP = {
+    "personal-savings": "savings",
+    "certificate-of-deposit": "cd-fixed",
+    "ira": "ira-fixed",
+    "money-market": "money-market",
+    "gulf-rewards-savings": "savings",
+    "hsa": "hsa",
+  };
+
+  document.querySelectorAll("[data-details-trigger]").forEach((btn) => {
+    btn.addEventListener("click", () => openModal(btn.getAttribute("data-details-trigger")));
   });
-  modal?.querySelectorAll("[data-disclosure-close]").forEach((el) => el.addEventListener("click", closeDisclosure));
+  tabButtons.forEach((b) => b.addEventListener("click", () => setTab(b.getAttribute("data-tab"))));
+  modal?.querySelectorAll("[data-disclosure-close]").forEach((el) => el.addEventListener("click", closeModal));
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && modal && !modal.classList.contains("hidden")) closeDisclosure();
+    if (e.key === "Escape" && modal && !modal.classList.contains("hidden")) closeModal();
   });
-</script>
 
-<!-- Rates modal: one product's full rate table on demand -->
-<div id="rates-modal" class="fixed inset-0 z-[100] hidden" role="dialog" aria-modal="true" aria-labelledby="rates-title">
-  <div class="absolute inset-0 bg-brand-navy/70 backdrop-blur-sm" data-rates-close></div>
-  <div class="relative max-w-xl mx-auto mt-[8vh] mb-10 bg-white rounded-xl shadow-2xl max-h-[84vh] flex flex-col">
-    <div class="flex items-start justify-between gap-4 px-6 pt-6 pb-4 border-b border-brand-navy/10">
-      <div>
-        <p class="text-xs font-bold uppercase tracking-wide text-brand-gold-dark">Current rates</p>
-        <h2 id="rates-title" class="mt-1 font-display text-xl sm:text-2xl font-black text-brand-navy" data-rates-name>Account</h2>
-      </div>
-      <button type="button" data-rates-close aria-label="Close rates" class="shrink-0 w-9 h-9 rounded-full border border-brand-navy/15 text-brand-text hover:bg-brand-cream transition-colors flex items-center justify-center">
-        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-      </button>
-    </div>
-    <div class="px-6 py-5 overflow-y-auto" data-rates-body></div>
-    <div class="px-6 py-4 border-t border-brand-navy/10 flex flex-wrap gap-3 justify-between items-center">
-      <p class="text-xs text-brand-muted">APYs published {d.published}.</p>
-      <a href="/rates-and-fees" class="text-sm font-semibold text-brand-navy-light underline underline-offset-2 hover:text-brand-gold-dark transition-colors">View all rates →</a>
-    </div>
-  </div>
-</div>
-
-<script>
-  const RATES_SECTIONS = JSON.parse(document.getElementById("__RATES_SECTIONS__")?.textContent || "[]");
-  const rModal = document.getElementById("rates-modal");
-  const rName = rModal?.querySelector("[data-rates-name]");
-  const rBody = rModal?.querySelector("[data-rates-body]");
-  let rLastFocus = null;
-
-  function escHtml(s) {
-    return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-  }
-
-  function openRates(sectionId) {
-    const s = RATES_SECTIONS.find((x) => x.id === sectionId);
-    if (!s || !rModal) return;
-    rLastFocus = document.activeElement;
-    if (rName) rName.textContent = s.title;
-    if (rBody) {
-      let html = `<div class="overflow-x-auto"><table class="w-full text-sm"><thead><tr class="bg-brand-navy text-white">`;
-      s.columns.forEach((c, i) => {
-        html += `<th scope="col" class="px-4 py-3 ${i === 0 ? "text-left" : "text-right"} font-display font-bold">${escHtml(c)}</th>`;
-      });
-      html += `</tr></thead><tbody>`;
-      for (const row of s.rows) {
-        html += `<tr class="border-b border-brand-navy/10 last:border-b-0">`;
-        row.forEach((cell, i) => {
-          html += `<td class="px-4 py-2.5 ${i === 0 ? "font-medium text-brand-text" : "text-right font-display font-semibold text-brand-blue"}">${escHtml(cell)}</td>`;
-        });
-        html += `</tr>`;
+  /* 3-question picker: answer -> highlight + scroll to matching panel */
+  const PICKER_MESSAGES = {
+    "personal-savings": "Any day now — keep it where you can reach it. Personal Savings is built for exactly that.",
+    "money-market": "Not sure yet is fine — a Money Market pays more than savings while you decide, and there's no lock-up.",
+    "certificate-of-deposit": "A set date is the CD's whole job — your rate locks in and can't dip for the entire term.",
+  };
+  document.querySelectorAll("[data-picker-answer]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const id = btn.getAttribute("data-picker-answer");
+      const result = document.getElementById("picker-result");
+      if (result) {
+        result.textContent = PICKER_MESSAGES[id] || "";
+        result.classList.remove("hidden");
       }
-      html += `</tbody></table></div>`;
-      if (s.note) html += `<p class="mt-3 text-xs text-brand-muted leading-relaxed">${escHtml(s.note)}</p>`;
-      rBody.innerHTML = html;
-    }
-    rModal.classList.remove("hidden");
-    document.body.style.overflow = "hidden";
-    rModal.querySelector("button[data-rates-close]")?.focus();
-  }
-
-  function closeRates() {
-    if (!rModal) return;
-    rModal.classList.add("hidden");
-    document.body.style.overflow = "";
-    if (rLastFocus) rLastFocus.focus();
-  }
-
-  document.querySelectorAll("[data-rates-trigger]").forEach((btn) => {
-    btn.addEventListener("click", () => openRates(btn.getAttribute("data-rates-trigger")));
-  });
-  rModal?.querySelectorAll("[data-rates-close]").forEach((el) => el.addEventListener("click", closeRates));
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && rModal && !rModal.classList.contains("hidden")) closeRates();
+      const panel = document.getElementById(`panel-${id}`);
+      panel?.scrollIntoView({ behavior: "smooth", block: "center" });
+      if (panel) {
+        panel.classList.add("ring-2", "ring-brand-gold");
+        setTimeout(() => panel.classList.remove("ring-2", "ring-brand-gold"), 4000);
+      }
+    });
   });
 </script>
 
