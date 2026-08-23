@@ -116,23 +116,19 @@ const RATE_UP_TO = {
                 ))}
               </ul>
 
-              {/* One merged trigger: rates + details in a single tabbed modal */}
-              <div class="mt-5">
-                <button
-                  type="button"
-                  data-details-trigger={p.id}
-                  class="inline-flex items-center gap-2 border border-brand-navy/15 text-brand-navy px-4 py-2 rounded-lg text-sm font-semibold hover:bg-brand-cream transition-colors"
-                >
-                  <svg class="w-4 h-4 text-brand-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-                  Rates & details
-                </button>
-              </div>
             </div>
 
             <div class="px-6 sm:px-7 pb-6 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-brand-navy/5 pt-4 mt-4">
               <a href={p.open_url} class="inline-flex items-center justify-center gap-2 bg-brand-navy text-white px-5 py-2.5 rounded-lg text-sm font-bold hover:bg-brand-navy-light transition-colors">
                 {p.id === "ira" ? "Talk to a banker" : "Open this account"}
               </a>
+              <button
+                type="button"
+                data-details-trigger={p.id}
+                class="inline-flex items-center gap-2 text-brand-navy-light underline underline-offset-2 hover:text-brand-gold-dark transition-colors text-sm font-semibold"
+              >
+                Rates & details
+              </button>
             </div>
           </article>
         ))}
@@ -290,7 +286,7 @@ const RATE_UP_TO = {
   }
 
   function rateTableHtml(s) {
-    let html = `<div class="overflow-x-auto"><table class="w-full text-sm"><thead><tr class="bg-brand-navy text-white">`;
+    let html = `<div class="overflow-x-auto"><table class="w-full max-w-md text-sm"><colgroup><col class="w-1/2"><col class="w-1/4"><col class="w-1/4"></colgroup><thead><tr class="bg-brand-navy text-white">`;
     s.columns.forEach((c, i) => {
       html += `<th scope="col" class="px-4 py-3 ${i === 0 ? "text-left" : "text-right"} font-display font-bold">${esc(c)}</th>`;
     });
