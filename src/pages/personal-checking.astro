@@ -82,6 +82,12 @@ const all = d.products;
                   </ul>
                 </div>
               )}
+
+              {p.id === "gulf-advantage" && (
+                <div class="mt-6">
+                  <RateTable section="gulf-advantage" />
+                </div>
+              )}
             </div>
 
             <div class="px-6 sm:px-7 pb-6 pt-2 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-brand-navy/5 pt-4">
@@ -157,11 +163,6 @@ const all = d.products;
         </table>
       </div>
       {d.disclaimer_short && <p class="mt-4 text-xs text-brand-muted max-w-3xl">{d.disclaimer_short}</p>}
-
-      <!-- Gulf Advantage tiered rate (live from rates.yaml) -->
-      <div class="mt-10 max-w-2xl">
-        <RateTable section="gulf-advantage" />
-      </div>
     </div>
   </section>
 

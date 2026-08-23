@@ -7,7 +7,15 @@ const entry = await getEntry("products", "personal-savings");
 const d = entry?.data;
 if (!d) throw new Error("Missing products/personal-savings.yaml");
 
-const featured = d.products; // Personal Savings, CD, IRA
+const featured = d.products; // Personal Savings, CD, IRA, Money Market
+
+// Rate-sheet section shown inside each product's panel (from rates.yaml)
+const RATE_SECTIONS = {
+  "personal-savings": "savings",
+  "certificate-of-deposit": "cd-fixed",
+  "ira": "ira-fixed",
+  "money-market": "money-market",
+};
 ---
 
 <Layout
@@ -72,6 +80,11 @@ const featured = d.products; // Personal Savings, CD, IRA
                   </li>
                 ))}
               </ul>
+
+              {/* This product's live rate table, inline */}
+              <div class="mt-6">
+                <RateTable section={RATE_SECTIONS[p.id]} />
+              </div>
             </div>
 
             <div class="px-6 sm:px-7 pb-6 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-brand-navy/5 pt-4 mt-4">
@@ -143,24 +156,6 @@ const featured = d.products; // Personal Savings, CD, IRA
         </table>
       </div>
       {d.disclaimer_short && <p class="mt-4 text-xs text-brand-muted max-w-3xl">{d.disclaimer_short}</p>}
-    </div>
-  </section>
-
-  <!-- Current rates (live from rates.yaml) -->
-  <section id="rates" class="py-14 lg:py-20 bg-brand-cream scroll-mt-24">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="font-display text-3xl sm:text-4xl font-black text-brand-text tracking-tight text-balance leading-[1.1] max-w-2xl">
-        Today's savings rates.
-      </h2>
-      <div class="mt-8 grid lg:grid-cols-2 gap-x-12 gap-y-8 max-w-5xl">
-        <RateTable section="cd-fixed" />
-        <RateTable section="money-market" />
-        <RateTable section="ira-fixed" />
-        <RateTable section="savings" />
-      </div>
-      <div class="mt-10">
-        <RateTable showHeader={false} />
-      </div>
     </div>
   </section>
 
