@@ -7,6 +7,10 @@ const entry = await getEntry("products", "personal-checking");
 const d = entry?.data;
 if (!d) throw new Error("Missing products/personal-checking.yaml");
 
+// Full rate sheet (sections) for the rates modal — same source as RateTable
+const ratesEntry = await getEntry("data", "rates");
+const ratesData = ratesEntry?.data;
+
 const featured = d.products.filter((p) => p.id !== "vip-high-yield");
 const all = d.products;
 ---
@@ -84,16 +88,15 @@ const all = d.products;
               )}
 
               {p.id === "gulf-advantage" && (
-                <div class="mt-6">
-                  <div class="flex items-baseline gap-2 mb-3">
-                    <span class="text-sm text-brand-muted">Earn</span>
-                    <span class="font-display text-3xl font-black text-brand-blue">up to 0.80%</span>
-                    <span class="text-sm text-brand-muted">APY*</span>
-                  </div>
-                  <RateTable section="gulf-advantage" showHeader={false} compact />
-                  <p class="mt-2 text-xs text-brand-muted">
-                    <a href="/rates-and-fees" class="font-semibold text-brand-navy-light underline underline-offset-2 hover:text-brand-gold-dark transition-colors">View all current rates →</a>
-                  </p>
+                <div class="mt-5">
+                  <button
+                    type="button"
+                    data-rates-trigger="gulf-advantage"
+                    class="inline-flex items-center gap-2 border border-brand-navy/15 text-brand-navy px-4 py-2 rounded-lg text-sm font-semibold hover:bg-brand-cream transition-colors"
+                  >
+                    <svg class="w-4 h-4 text-brand-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                    See current rates
+                  </button>
                 </div>
               )}
             </div>
@@ -288,3 +291,79 @@ const all = d.products;
 </script>
 
 <script is:inline type="application/json" id="__PRODUCTS_JSON__" set:html={JSON.stringify(d.products)}></script>
+<script is:inline type="application/json" id="__RATES_SECTIONS__" set:html={JSON.stringify(ratesData.sections)}></script>
+
+<!-- Rates modal -->
+<div id="rates-modal" class="fixed inset-0 z-[100] hidden" role="dialog" aria-modal="true" aria-labelledby="rates-title">
+  <div class="absolute inset-0 bg-brand-navy/70 backdrop-blur-sm" data-rates-close></div>
+  <div class="relative max-w-xl mx-auto mt-[8vh] mb-10 bg-white rounded-xl shadow-2xl max-h-[84vh] flex flex-col">
+    <div class="flex items-start justify-between gap-4 px-6 pt-6 pb-4 border-b border-brand-navy/10">
+      <div>
+        <p class="text-xs font-bold uppercase tracking-wide text-brand-gold-dark">Current rates</p>
+        <h2 id="rates-title" class="mt-1 font-display text-xl sm:text-2xl font-black text-brand-navy" data-rates-name>Account</h2>
+      </div>
+      <button type="button" data-rates-close aria-label="Close rates" class="shrink-0 w-9 h-9 rounded-full border border-brand-navy/15 text-brand-text hover:bg-brand-cream transition-colors flex items-center justify-center">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="px-6 py-5 overflow-y-auto" data-rates-body></div>
+    <div class="px-6 py-4 border-t border-brand-navy/10 flex flex-wrap gap-3 justify-between items-center">
+      <p class="text-xs text-brand-muted">APYs published {ratesData.published}.</p>
+      <a href="/rates-and-fees" class="text-sm font-semibold text-brand-navy-light underline underline-offset-2 hover:text-brand-gold-dark transition-colors">View all rates →</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  const RATES_SECTIONS = JSON.parse(document.getElementById("__RATES_SECTIONS__")?.textContent || "[]");
+  const rModal = document.getElementById("rates-modal");
+  const rName = rModal?.querySelector("[data-rates-name]");
+  const rBody = rModal?.querySelector("[data-rates-body]");
+  let rLastFocus = null;
+
+  function escHtml(s) {
+    return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+
+  function openRates(sectionId) {
+    const s = RATES_SECTIONS.find((x) => x.id === sectionId);
+    if (!s || !rModal) return;
+    rLastFocus = document.activeElement;
+    if (rName) rName.textContent = s.title;
+    if (rBody) {
+      let html = `<div class="overflow-x-auto"><table class="w-full text-sm"><thead><tr class="bg-brand-navy text-white">`;
+      s.columns.forEach((c, i) => {
+        html += `<th scope="col" class="px-4 py-3 ${i === 0 ? "text-left" : "text-right"} font-display font-bold">${escHtml(c)}</th>`;
+      });
+      html += `</tr></thead><tbody>`;
+      for (const row of s.rows) {
+        html += `<tr class="border-b border-brand-navy/10 last:border-b-0">`;
+        row.forEach((cell, i) => {
+          html += `<td class="px-4 py-2.5 ${i === 0 ? "font-medium text-brand-text" : "text-right font-display font-semibold text-brand-blue"}">${escHtml(cell)}</td>`;
+        });
+        html += `</tr>`;
+      }
+      html += `</tbody></table></div>`;
+      if (s.note) html += `<p class="mt-3 text-xs text-brand-muted leading-relaxed">${escHtml(s.note)}</p>`;
+      rBody.innerHTML = html;
+    }
+    rModal.classList.remove("hidden");
+    document.body.style.overflow = "hidden";
+    rModal.querySelector("button[data-rates-close]")?.focus();
+  }
+
+  function closeRates() {
+    if (!rModal) return;
+    rModal.classList.add("hidden");
+    document.body.style.overflow = "";
+    if (rLastFocus) rLastFocus.focus();
+  }
+
+  document.querySelectorAll("[data-rates-trigger]").forEach((btn) => {
+    btn.addEventListener("click", () => openRates(btn.getAttribute("data-rates-trigger")));
+  });
+  rModal?.querySelectorAll("[data-rates-close]").forEach((el) => el.addEventListener("click", closeRates));
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && rModal && !rModal.classList.contains("hidden")) closeRates();
+  });
+</script>
