@@ -1,0 +1,2144 @@
+{
+  "$schema": "https://emdashcms.com/seed.schema.json",
+  "version": "1",
+  "defaultLocale": "en",
+  "meta": {
+    "name": "Texas Gulf Bank",
+    "description": "Texas Gulf Bank website content",
+    "author": "Texas Gulf Bank"
+  },
+  "settings": {
+    "title": "Texas Gulf Bank",
+    "tagline": "Community banking on the Texas Gulf Coast"
+  },
+  "collections": [
+    {
+      "slug": "blog",
+      "label": "Blog Posts",
+      "labelSingular": "Blog Post",
+      "description": "News and updates from Texas Gulf Bank",
+      "icon": "newspaper",
+      "supports": [
+        "drafts",
+        "revisions",
+        "scheduling",
+        "search",
+        "seo"
+      ],
+      "urlPattern": "/blog/{slug}",
+      "routable": true,
+      "titleField": "title",
+      "admin": {
+        "listColumns": [
+          "date",
+          "category"
+        ]
+      },
+      "fields": [
+        {
+          "slug": "title",
+          "label": "Title",
+          "type": "string",
+          "required": true,
+          "searchable": true
+        },
+        {
+          "slug": "date",
+          "label": "Publish Date",
+          "type": "string",
+          "required": true,
+          "indexed": true
+        },
+        {
+          "slug": "image",
+          "label": "Featured Image",
+          "type": "string"
+        },
+        {
+          "slug": "category",
+          "label": "Category",
+          "type": "select",
+          "required": true,
+          "options": [
+            "Business",
+            "Community",
+            "Security",
+            "Personal"
+          ]
+        },
+        {
+          "slug": "excerpt",
+          "label": "Excerpt",
+          "type": "text",
+          "searchable": true
+        },
+        {
+          "slug": "show_cta",
+          "label": "Show end-of-article CTA",
+          "type": "boolean",
+          "defaultValue": true
+        },
+        {
+          "slug": "cta",
+          "label": "End-of-article CTA",
+          "type": "json"
+        },
+        {
+          "slug": "body",
+          "label": "Body (Markdown)",
+          "type": "text",
+          "required": true
+        }
+      ]
+    },
+    {
+      "slug": "locations",
+      "label": "Locations",
+      "labelSingular": "Location",
+      "description": "Banking centers and branches",
+      "icon": "map-pin",
+      "supports": [
+        "drafts",
+        "revisions",
+        "search",
+        "seo"
+      ],
+      "urlPattern": "/locations/{slug}",
+      "routable": true,
+      "titleField": "title",
+      "admin": {
+        "listColumns": [
+          "name",
+          "city"
+        ]
+      },
+      "fields": [
+        {
+          "slug": "title",
+          "label": "Title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "slug": "name",
+          "label": "Name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "slug": "region",
+          "label": "Region",
+          "type": "string",
+          "required": true
+        },
+        {
+          "slug": "street",
+          "label": "Street",
+          "type": "string",
+          "required": true
+        },
+        {
+          "slug": "suite",
+          "label": "Suite",
+          "type": "string"
+        },
+        {
+          "slug": "city",
+          "label": "City",
+          "type": "string",
+          "required": true
+        },
+        {
+          "slug": "state",
+          "label": "State",
+          "type": "string",
+          "defaultValue": "TX"
+        },
+        {
+          "slug": "zip",
+          "label": "ZIP",
+          "type": "string",
+          "required": true
+        },
+        {
+          "slug": "phone",
+          "label": "Phone",
+          "type": "string",
+          "required": true
+        },
+        {
+          "slug": "has_atm",
+          "label": "Has ATM",
+          "type": "boolean",
+          "defaultValue": true
+        },
+        {
+          "slug": "has_drive_thru",
+          "label": "Has Drive-Thru",
+          "type": "boolean",
+          "defaultValue": true
+        },
+        {
+          "slug": "atm_types",
+          "label": "ATM Types",
+          "type": "json"
+        },
+        {
+          "slug": "services",
+          "label": "Services",
+          "type": "json"
+        },
+        {
+          "slug": "languages",
+          "label": "Languages",
+          "type": "json"
+        },
+        {
+          "slug": "lat",
+          "label": "Latitude",
+          "type": "number",
+          "required": true
+        },
+        {
+          "slug": "lng",
+          "label": "Longitude",
+          "type": "number",
+          "required": true
+        },
+        {
+          "slug": "photo",
+          "label": "Photo",
+          "type": "string"
+        },
+        {
+          "slug": "hours",
+          "label": "Hours",
+          "type": "json"
+        },
+        {
+          "slug": "notes",
+          "label": "Notes",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "slug": "products",
+      "label": "Products",
+      "labelSingular": "Product Page",
+      "description": "Product comparison pages",
+      "icon": "cards",
+      "supports": [
+        "drafts",
+        "revisions",
+        "search",
+        "seo"
+      ],
+      "routable": false,
+      "titleField": "title",
+      "fields": [
+        {
+          "slug": "title",
+          "label": "Title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "slug": "published",
+          "label": "Published Note",
+          "type": "string"
+        },
+        {
+          "slug": "products",
+          "label": "Products",
+          "type": "json",
+          "required": true
+        },
+        {
+          "slug": "compare_rows",
+          "label": "Compare Rows",
+          "type": "json"
+        },
+        {
+          "slug": "disclaimer_short",
+          "label": "Short Disclaimer",
+          "type": "text"
+        },
+        {
+          "slug": "secondary",
+          "label": "Secondary Products",
+          "type": "json"
+        }
+      ]
+    },
+    {
+      "slug": "pages",
+      "label": "Pages",
+      "labelSingular": "Page",
+      "description": "Page content blocks",
+      "icon": "file-text",
+      "supports": [
+        "drafts",
+        "revisions",
+        "search",
+        "seo"
+      ],
+      "routable": false,
+      "titleField": "title",
+      "fields": [
+        {
+          "slug": "title",
+          "label": "Title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "slug": "hero_tagline",
+          "label": "Hero Tagline",
+          "type": "string"
+        },
+        {
+          "slug": "hero_headline",
+          "label": "Hero Headline",
+          "type": "string"
+        },
+        {
+          "slug": "hero_headline_accent",
+          "label": "Hero Headline Accent",
+          "type": "string"
+        },
+        {
+          "slug": "hero_subtext",
+          "label": "Hero Subtext",
+          "type": "text"
+        },
+        {
+          "slug": "hero_primary_cta",
+          "label": "Hero Primary CTA",
+          "type": "string"
+        },
+        {
+          "slug": "hero_secondary_cta",
+          "label": "Hero Secondary CTA",
+          "type": "string"
+        },
+        {
+          "slug": "story_headline",
+          "label": "Story Headline",
+          "type": "string"
+        },
+        {
+          "slug": "story_headline_accent",
+          "label": "Story Headline Accent",
+          "type": "string"
+        },
+        {
+          "slug": "story_body_1",
+          "label": "Story Body 1",
+          "type": "text"
+        },
+        {
+          "slug": "story_body_2",
+          "label": "Story Body 2",
+          "type": "text"
+        },
+        {
+          "slug": "story_stat_1_number",
+          "label": "Stat 1 Number",
+          "type": "string"
+        },
+        {
+          "slug": "story_stat_1_label",
+          "label": "Stat 1 Label",
+          "type": "string"
+        },
+        {
+          "slug": "story_stat_2_number",
+          "label": "Stat 2 Number",
+          "type": "string"
+        },
+        {
+          "slug": "story_stat_2_label",
+          "label": "Stat 2 Label",
+          "type": "string"
+        },
+        {
+          "slug": "story_stat_3_number",
+          "label": "Stat 3 Number",
+          "type": "string"
+        },
+        {
+          "slug": "story_stat_3_label",
+          "label": "Stat 3 Label",
+          "type": "string"
+        },
+        {
+          "slug": "cta_headline",
+          "label": "CTA Headline",
+          "type": "string"
+        },
+        {
+          "slug": "cta_headline_accent",
+          "label": "CTA Headline Accent",
+          "type": "string"
+        },
+        {
+          "slug": "cta_subtext",
+          "label": "CTA Subtext",
+          "type": "text"
+        },
+        {
+          "slug": "cta_primary_button",
+          "label": "CTA Primary Button",
+          "type": "string"
+        },
+        {
+          "slug": "cta_phone",
+          "label": "CTA Phone",
+          "type": "string"
+        },
+        {
+          "slug": "features_headline",
+          "label": "Features Headline",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "slug": "data",
+      "label": "Rate Data",
+      "labelSingular": "Rate Sheet",
+      "description": "Featured rates and rate tables",
+      "icon": "chart-line",
+      "supports": [
+        "drafts",
+        "revisions",
+        "search"
+      ],
+      "routable": false,
+      "titleField": "title",
+      "fields": [
+        {
+          "slug": "title",
+          "label": "Title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "slug": "published",
+          "label": "Published Note",
+          "type": "string"
+        },
+        {
+          "slug": "disclaimer",
+          "label": "Disclaimer",
+          "type": "text"
+        },
+        {
+          "slug": "full_rates_url",
+          "label": "Full Rates URL",
+          "type": "url"
+        },
+        {
+          "slug": "items",
+          "label": "Featured Items",
+          "type": "json",
+          "required": true
+        },
+        {
+          "slug": "sections",
+          "label": "Rate Sections",
+          "type": "json"
+        },
+        {
+          "slug": "sections_footnote",
+          "label": "Sections Footnote",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "slug": "fees",
+      "label": "Fee Schedules",
+      "labelSingular": "Fee Schedule",
+      "description": "Fee schedule pages",
+      "icon": "receipt",
+      "supports": [
+        "drafts",
+        "revisions",
+        "search"
+      ],
+      "routable": false,
+      "titleField": "title",
+      "fields": [
+        {
+          "slug": "title",
+          "label": "Title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "slug": "published",
+          "label": "Published Note",
+          "type": "string"
+        },
+        {
+          "slug": "disclaimer",
+          "label": "Disclaimer",
+          "type": "text"
+        },
+        {
+          "slug": "full_schedule_url",
+          "label": "Full Schedule URL",
+          "type": "url"
+        },
+        {
+          "slug": "sections",
+          "label": "Fee Sections",
+          "type": "json",
+          "required": true
+        }
+      ]
+    }
+  ],
+  "content": {
+    "blog": [
+      {
+        "id": "blog-bank-impersonation-scams",
+        "slug": "bank-impersonation-scams",
+        "status": "published",
+        "data": {
+          "title": "How To Spot Bank Impersonation Scams Targeting Texas Gulf Bank Customers",
+          "date": "June 17, 2026",
+          "image": "/blog/scams.jpg",
+          "category": "Security",
+          "excerpt": "You're in the middle of your day when a text pops up: \"Texas Gulf Bank fraud alert — did you authorize a $2,400 transfer?\" It isn't us. Here's how to stay safe.",
+          "show_cta": true,
+          "cta": {},
+          "body": "\nYou're in the middle of your day when a text pops up:\n\n*\"Texas Gulf Bank fraud alert — did you authorize a $2,400 transfer? Reply or call now to stop it.\"*\n\nThe number shows our name. The link looks close. The message feels urgent.\n\n**It isn't us.**\n\nThis kind of message is part of a growing trend of bank impersonation scams, which are becoming more frequent across the Southeast Texas Gulf Coast region.\n\nWhat happens is that fraudsters pose as bank employees through calls, texts, emails, and fake websites to steal your personal information, access your accounts, or get you to send money to a third party.\n\nThe good news: a few simple habits can help protect you from almost all of these scams.\n\n### How Texas Gulf Bank Will Contact You\n\n**We will never:**\n- Send a link asking you to log in to online or mobile banking\n- Ask for your username, password, token code, wire PIN, or one-time passcode in an unsolicited call, text, or email\n\nIf a call, text, or email asks you to click a link or hand over login details \"to verify activity,\" treat it as a scam — even if it uses our name or looks similar to our website.\n\n**To sign in safely, always:**\n- Type texasgulfbank.com directly into your browser\n- Use our official mobile banking app\n\n### How To Stay Ahead of Bank Impersonation Scams\n\n#### 1. Don't Trust Caller ID\nA name or number on your screen is not proof of who is calling. If someone calls claiming to be from Texas Gulf Bank and something doesn't feel right, hang up and call us back using the number on the back of your card or from our official website.\n\n#### 2. Go Directly to Our Website or App\nTo access online banking, always type our URL directly into your web browser or use our mobile app. Avoid logging in through links in texts or emails.\n\n#### 3. Never Share Login Details or Security Codes\nKeep usernames, passwords, token codes, wire PINs, and one-time passcodes to yourself. Texas Gulf Bank will never ask for this information in an unsolicited call, text, or email.\n\n#### 4. Take a Moment Before Acting\nIf a message makes you feel rushed, pause. Read it carefully. Then contact us through a trusted number if you're unsure.\n\n#### 5. Turn On Two-Factor Authentication\nWhere available, enable two-factor authentication for an extra layer of protection.\n\n### How To Report Suspicious Messages\n\nIf you receive a call, text, or email that claims to be from Texas Gulf Bank and you're not sure it's real, call us at **1-800-467-7216** or stop by any Texas Gulf Bank banking center.\n\n{{cta title=\"Think something looks suspicious?\" body=\"Call us right away or stop by a branch. Our team can help you confirm whether a message is legitimate.\" primaryLabel=\"Call 800.467.7216\" primaryHref=\"tel:8004677216\" secondaryLabel=\"Find a Branch\" secondaryHref=\"/locations/\"}}\n"
+        }
+      },
+      {
+        "id": "blog-commercial-lending-real-estate",
+        "slug": "commercial-lending-real-estate",
+        "status": "published",
+        "data": {
+          "title": "Commercial Lending for Real Estate Projects: What to Expect When Applying",
+          "date": "April 29, 2026",
+          "image": "/blog/commercial-lending.jpg",
+          "category": "Business",
+          "excerpt": "Deciding to purchase, expand, or build a commercial property is a significant step. Here's what to expect from the commercial lending process.",
+          "show_cta": true,
+          "cta": {},
+          "body": "\nDeciding to purchase, expand, or build a commercial property for your business is a significant step. It often comes at a point where your current space no longer supports your operations — or where you see a clear opportunity to grow.\n\nYour company may be asking: _Are we choosing the right location? Can our business support this investment? What should we expect from a lender?_\n\nThese are important questions, and having clear answers about commercial lending for real estate can make the process of applying for financing more manageable.\n\n### 5 Factors That Shape the Commercial Lending Experience\n\n#### 1. How Owner-Occupied Real Estate Supports Long-Term Business Growth\n\nOwner-occupied commercial real estate can support your business by aligning your facility with operational needs, positioning your business closer to customers, providing stability compared to rising lease costs, and allowing you to build equity.\n\n#### 2. What Lenders Evaluate When You Apply\n\nKey considerations include cash flow, financial performance, business stability, ownership and leadership experience, and market conditions.\n\n#### 3. How Local Market Knowledge Shapes Your Financing Experience\n\nA lender with local market knowledge can help navigate economic conditions, property considerations, and practical timelines influenced by local development conditions.\n\n#### 4. How Loan Structure Aligns With Your Business Operations\n\nFinancing is typically structured to reflect how your business operates today while allowing for future growth. An experienced lender can help structure financing that supports specific business needs.\n\n#### 5. What to Expect During the Application Process\n\nThe process generally includes an initial discussion, documentation review, evaluation by the in-house team, and a decision. With a clear understanding of each stage, you can approach the application process with greater confidence.\n\n{{cta}}\n\n### Build Your Company's Future With the Right Financing Approach\n\nAt Texas Gulf Bank, our team works with businesses to provide guidance, insights, and financing solutions designed to support growth. [Contact us today](https://www.texasgulfbank.com/contact-texas-gulf-bank/) to have a conversation about commercial lending options for your business.\n\n{{rates}}\n"
+        }
+      },
+      {
+        "id": "blog-construction-equipment-financing",
+        "slug": "construction-equipment-financing",
+        "status": "published",
+        "data": {
+          "title": "Our Financing for Construction Equipment Makes Upgrades More Manageable",
+          "date": "April 23, 2026",
+          "image": "/blog/construction-equipment.jpg",
+          "category": "Business",
+          "excerpt": "When your construction equipment starts slowing down the job, you feel it immediately. Financing for construction equipment may help you upgrade without straining cash flow.",
+          "show_cta": true,
+          "cta": {},
+          "body": "\nWhen your construction equipment starts slowing down the job, you feel it immediately. Projects take longer, crews get frustrated, and maintenance costs creep up.\n\nIn construction, your equipment is a core part of how your business performs. If it is no longer keeping up, continuing to push through another project with outdated machinery may be costing you more than you realize.\n\nUsing outdated equipment, you may be experiencing slower job completion times, frequent repairs, increased strain on crews, difficulty meeting timelines, or inability to meet current safety expectations.\n\n### Why Upgrading Equipment Can Strengthen Your Business\n\nWith updated equipment, your company may benefit from more efficient project execution, reduced downtime, improved job site safety, greater confidence when bidding on larger projects, and better long-term cost control.\n\n### Benefits of Pursuing Equipment Financing\n\n- **Preserve Cash:** Spread the cost over time and retain working capital for payroll, materials, and day-to-day expenses.\n- **Match Payments to Project Revenue:** Structure financing to align with project timelines and revenue cycles.\n- **Access Newer Equipment:** Finance newer machinery with advanced technology and safety features.\n- **Support Long-Term Growth:** Bid on larger projects and respond to new opportunities with the right equipment in place.\n\n### What the Process Looks Like at Texas Gulf Bank\n\nOur local lending team will be with you every step of the way: discuss your equipment needs, review financing options, submit documentation, receive a lending decision through our in-house team, and move forward with acquisition.\n\n[Contact our local lenders today](https://www.texasgulfbank.com/contact-texas-gulf-bank/) to get started on the lending process.\n"
+        }
+      },
+      {
+        "id": "blog-construction-loans-texas",
+        "slug": "construction-loans-texas",
+        "status": "published",
+        "data": {
+          "title": "Commercial Real Estate Construction Loans Explained for Texas Companies",
+          "date": "April 8, 2026",
+          "image": "/blog/construction-loans.jpg",
+          "category": "Business",
+          "excerpt": "Growing companies often need more space. Commercial real estate construction loans are designed to support businesses during critical growth stages.",
+          "show_cta": true,
+          "cta": {},
+          "body": "\nAcross the Southeast Texas Gulf Coast region, growing companies often need more space to support day-to-day activity. Whether expanding operations, building a new facility, or moving from a leased building into an owner-occupied property, you may need financial solutions to support construction.\n\n### What Are Commercial Real Estate Construction Loans?\n\nCommercial real estate construction loans are a type of short-term financing used to fund the development, renovation, or expansion of commercial properties. These loans are specifically structured to support the unique phases of construction.\n\nInstead of receiving the full loan amount upfront, funds are distributed over time as your project progresses through a draw schedule.\n\n### How Commercial Construction Loans Work\n\n- **Planning and Approval:** A lender evaluates the full scope of the project, including costs, timelines, and feasibility.\n- **Funding Through a Draw Schedule:** As construction milestones are completed, portions of the loan are released to cover labor, materials, and other expenses.\n- **Interest-Only Payments During Construction:** During the build phase, you make interest-only payments to help manage cash flow.\n- **Transition to Long-Term Financing:** Once construction is complete, the loan may convert into a term loan or permanent financing.\n\n### What Lenders Look For\n\nLenders consider your business's financial strength and cash flow, the overall feasibility and timeline of your construction projects, the experience of your builders and contractors, and the long-term value of the completed property.\n\n### Planning for Construction in Texas\n\nBuilding along the Southeast Texas Gulf Coast comes with its own considerations. When preparing, build flexibility into your timeline and budget, account for potential delays in materials or permitting, and work with lenders who understand regional conditions.\n\n### Find a Local Partner\n\nAt Texas Gulf Bank, we take a relationship-based approach. Whether you are building a new property, expanding an existing property, or planning renovation projects, [start a conversation with one of our local lenders](https://www.texasgulfbank.com/contact-texas-gulf-bank/) to discuss financing options.\n"
+        }
+      },
+      {
+        "id": "blog-jessica-cash-chief-credit-officer",
+        "slug": "jessica-cash-chief-credit-officer",
+        "status": "published",
+        "data": {
+          "title": "Texas Gulf Bank Promotes Jessica Cash to Chief Credit Officer",
+          "date": "June 18, 2026",
+          "image": "/blog/jessica-cash.jpg",
+          "category": "Community",
+          "excerpt": "When Texas Gulf Bank set out to fill its Chief Credit Officer role, the search reached banks across the country. After a thorough process, the answer turned out to be just down the hall.",
+          "show_cta": true,
+          "cta": {},
+          "body": "\n## Jessica Cash Named Chief Credit Officer of Texas Gulf Bank.\n\nWhen Texas Gulf Bank set out to fill its Chief Credit Officer role, the search reached banks across the country and drew strong interest from highly qualified candidates. After a thorough and comprehensive process, the answer turned out to be just down the hall.\n\nTexas Gulf Bank (the \"Bank\") today announced that its Board of Directors has unanimously promoted **Jessica Cash** to Chief Credit Officer, effective immediately. Cash steps into the role after most recently serving as Senior Vice President, Credit Manager, capping a decade-long rise through the Bank's credit function.\n\nSteve Thompson, Chief Executive Officer of Texas Gulf Bank said, \"We could have saved ourselves some time by just walking down the hall. The process only confirmed what we already knew. Jessica is an outstanding leader and a steward of our credit culture, and this promotion is well deserved.\"\n\nSince joining Texas Gulf Bank in 2022, Cash has overseen credit department operations, exercised delegated approval authority on complex and policy-exception credits, and led the design and implementation of the Bank's loan origination system to strengthen underwriting consistency and operational scale. She has also supported the Bank's CECL framework and Board-level reporting, and built a credit analyst training program that has helped develop a consistent, scalable talent pipeline.\n\nHer path to the role spans more than a decade in community banking. Before Texas Gulf Bank, Cash held credit leadership and training roles at Allegiance Bank and served as an Associate National Bank Examiner with the Office of the Comptroller of the Currency, where she assessed asset quality, financial performance, and regulatory compliance. She holds a B.B.A. in Banking and Financial Institutions from Sam Houston State University, where she graduated Magna Cum Laude, and is currently completing her studies at the Southwest Graduate School of Banking at SMU, where she serves as Vice President of Education for her class with the Bank's sponsorship and support.\n\nIn her new role, Cash will lead the Bank's credit strategy and risk governance as the organization continues to grow, aligning credit standards and risk appetite with its long-term objectives and expansion across the greater Houston region.\n\n\"I'm honored to step into this role and grateful for the trust the Board and leadership team have placed in me,\" Cash said. \"Texas Gulf Bank has invested in my growth from the beginning, and I look forward to continuing to build a strong credit culture that supports our clients, our team, and the communities we serve.\"\n\n### About Texas Gulf Bank\n\nFounded in 1913 as Freeport National Bank, Texas Gulf Bank adopted its current name following the introduction of branch banking in Texas. Today, the Bank operates 10 banking centers across Harris, Galveston, Brazoria, and Montgomery Counties. As of December 31, 2025, the Bank reported approximately $695 million in total assets, $488 million in loans, and $612 million in deposits. The Bank's Wealth Management and Trust Group reported approximately $1.4 billion in assets under administration.\n"
+        }
+      },
+      {
+        "id": "blog-working-capital-loans",
+        "slug": "working-capital-loans",
+        "status": "published",
+        "data": {
+          "title": "Business Working Capital Loans to Help You Navigate Seasonal Revenue Cycles",
+          "date": "April 15, 2026",
+          "image": "/blog/working-capital.jpg",
+          "category": "Business",
+          "excerpt": "Seasonal revenue cycles are a reality for many businesses. Working capital loans help bridge the gap so you can operate consistently year-round.",
+          "show_cta": true,
+          "cta": {
+            "title": "Ready to talk working capital?",
+            "body": "Meet with a local loan officer who understands Gulf Coast business cycles and can help structure financing around your cash flow.",
+            "primaryLabel": "Contact a banker",
+            "primaryHref": "https://www.texasgulfbank.com/contact-texas-gulf-bank/",
+            "secondaryLabel": "Find a Branch",
+            "secondaryHref": "/locations/"
+          },
+          "body": "\nSeasonal revenue cycles are a reality for many businesses in the Southeast Texas Gulf Coast region. You may experience strong periods of demand followed by slower months, or your revenue may depend on project timelines and client payment schedules.\n\nAt the same time, your core expenses — payroll, vendor payments, insurance, and other operating costs — continue regardless.\n\nBusiness working capital loans are designed to help bridge that gap, giving your company the flexibility to operate consistently while staying focused on growth.\n\n### How Seasonal Revenue Cycles Impact Cash Flow\n\nDuring slower periods, your business may still need to maintain payroll, cover rent and utilities, and pay suppliers. During peak periods, you may need to invest ahead of revenue. Working capital loans help manage these timing gaps.\n\n### How Different Industries Benefit\n\n- **Construction:** Support payroll between draws, cover upfront material costs, and manage delays without slowing operations.\n- **Manufacturing:** Purchase materials, maintain production schedules, and manage the gap between delivery and customer payment.\n- **Professional Services:** Bridge gaps between invoicing and collections while receivables are outstanding.\n\n### Competitive deposit options while you grow\n\nSome owners prefer to keep operating reserves in a high-visibility deposit product while they plan the next financing step. Current featured rates:\n\n{{rates}}\n\n### How to Prepare to Apply\n\nStart by reviewing your current financial position. Define how you plan to use the funds. When applying, have your financial statements, tax returns, accounts receivable reports, and cash flow documentation ready.\n\n### What to Expect at Texas Gulf Bank\n\nThe process begins with a conversation with one of our local lenders. We aim to understand your business and cash-flow challenges. Once documentation is submitted, our in-house lending team reviews your application and makes a timely decision.\n\n[Contact us today](https://www.texasgulfbank.com/contact-texas-gulf-bank/) to get started on the loan process.\n"
+        }
+      }
+    ],
+    "locations": [
+      {
+        "id": "loc-angleton",
+        "slug": "angleton",
+        "status": "published",
+        "data": {
+          "title": "Angleton Banking Center",
+          "name": "Angleton",
+          "region": "Brazoria County",
+          "street": "1717 North Velasco",
+          "suite": "",
+          "city": "Angleton",
+          "state": "TX",
+          "zip": "77515",
+          "phone": "979-849-2372",
+          "has_atm": true,
+          "has_drive_thru": true,
+          "atm_types": [],
+          "services": [
+            "ATM",
+            "Drive-Thru"
+          ],
+          "languages": [],
+          "lat": 29.1804086,
+          "lng": -95.4326932,
+          "photo": "/locations/angleton.jpg",
+          "hours": {
+            "lobby": [
+              {
+                "days": "Mon - Fri",
+                "open": "9 AM",
+                "close": "5 PM",
+                "open24": "09:00",
+                "close24": "17:00"
+              },
+              {
+                "days": "Sat",
+                "open": "9 AM",
+                "close": "12 PM",
+                "open24": "09:00",
+                "close24": "12:00"
+              }
+            ],
+            "drive_thru": [
+              {
+                "days": "Mon - Fri",
+                "open": "8 AM",
+                "close": "5 PM",
+                "open24": "08:00",
+                "close24": "17:00"
+              },
+              {
+                "days": "Sat",
+                "open": "9 AM",
+                "close": "12 PM",
+                "open24": "09:00",
+                "close24": "12:00"
+              }
+            ]
+          },
+          "notes": ""
+        }
+      },
+      {
+        "id": "loc-citycentre",
+        "slug": "citycentre",
+        "status": "published",
+        "data": {
+          "title": "CityCentre Banking Center",
+          "name": "CityCentre",
+          "region": "Harris County",
+          "street": "900 Town & Country Lane",
+          "suite": "Suite 100",
+          "city": "Houston",
+          "state": "TX",
+          "zip": "77024",
+          "phone": "281-888-3898",
+          "has_atm": true,
+          "has_drive_thru": true,
+          "atm_types": [
+            "Drive-Thru ATM"
+          ],
+          "services": [
+            "ATM",
+            "Drive-Thru"
+          ],
+          "languages": [],
+          "lat": 29.7825364,
+          "lng": -95.5586516,
+          "photo": "/locations/citycentre.jpg",
+          "hours": {
+            "lobby": [
+              {
+                "days": "Mon - Fri",
+                "open": "9 AM",
+                "close": "4 PM",
+                "open24": "09:00",
+                "close24": "16:00"
+              }
+            ],
+            "drive_thru": [
+              {
+                "days": "Mon - Fri",
+                "open": "8 AM",
+                "close": "5 PM",
+                "open24": "08:00",
+                "close24": "17:00"
+              }
+            ]
+          },
+          "notes": ""
+        }
+      },
+      {
+        "id": "loc-clute",
+        "slug": "clute",
+        "status": "published",
+        "data": {
+          "title": "Clute Banking Center",
+          "name": "Clute",
+          "region": "Brazoria County",
+          "street": "1030 Dixie Drive",
+          "suite": "",
+          "city": "Clute",
+          "state": "TX",
+          "zip": "77531",
+          "phone": "979-297-7211",
+          "has_atm": true,
+          "has_drive_thru": true,
+          "atm_types": [
+            "Drive-Thru ATM"
+          ],
+          "services": [
+            "ATM",
+            "Drive-Thru"
+          ],
+          "languages": [],
+          "lat": 29.0113203,
+          "lng": -95.420677,
+          "photo": "/locations/clute.jpg",
+          "hours": {
+            "lobby": [
+              {
+                "days": "Mon - Fri",
+                "open": "9 AM",
+                "close": "5 PM",
+                "open24": "09:00",
+                "close24": "17:00"
+              },
+              {
+                "days": "Sat",
+                "open": "9 AM",
+                "close": "12 PM",
+                "open24": "09:00",
+                "close24": "12:00"
+              }
+            ],
+            "drive_thru": [
+              {
+                "days": "Mon - Fri",
+                "open": "8 AM",
+                "close": "5 PM",
+                "open24": "08:00",
+                "close24": "17:00"
+              },
+              {
+                "days": "Sat",
+                "open": "9 AM",
+                "close": "12 PM",
+                "open24": "09:00",
+                "close24": "12:00"
+              }
+            ]
+          },
+          "notes": ""
+        }
+      },
+      {
+        "id": "loc-freeport",
+        "slug": "freeport",
+        "status": "published",
+        "data": {
+          "title": "Freeport Banking Center",
+          "name": "Freeport",
+          "region": "Brazoria County",
+          "street": "1400 Brazosport Boulevard",
+          "suite": "",
+          "city": "Freeport",
+          "state": "TX",
+          "zip": "77541",
+          "phone": "979-233-3536",
+          "has_atm": true,
+          "has_drive_thru": true,
+          "atm_types": [
+            "Drive-Thru ATM"
+          ],
+          "services": [
+            "ATM",
+            "Drive-Thru"
+          ],
+          "languages": [],
+          "lat": 28.9734713,
+          "lng": -95.3716635,
+          "photo": "/locations/freeport.jpg",
+          "hours": {
+            "lobby": [
+              {
+                "days": "Mon - Fri",
+                "open": "9 AM",
+                "close": "5 PM",
+                "open24": "09:00",
+                "close24": "17:00"
+              },
+              {
+                "days": "Sat",
+                "open": "9 AM",
+                "close": "12 PM",
+                "open24": "09:00",
+                "close24": "12:00"
+              }
+            ],
+            "drive_thru": [
+              {
+                "days": "Mon - Fri",
+                "open": "8 AM",
+                "close": "5 PM",
+                "open24": "08:00",
+                "close24": "17:00"
+              },
+              {
+                "days": "Sat",
+                "open": "9 AM",
+                "close": "12 PM",
+                "open24": "09:00",
+                "close24": "12:00"
+              }
+            ]
+          },
+          "notes": ""
+        }
+      },
+      {
+        "id": "loc-friendswood",
+        "slug": "friendswood",
+        "status": "published",
+        "data": {
+          "title": "Friendswood Banking Center",
+          "name": "Friendswood",
+          "region": "Galveston County",
+          "street": "1003 South Friendswood Drive",
+          "suite": "",
+          "city": "Friendswood",
+          "state": "TX",
+          "zip": "77546",
+          "phone": "281-996-7481",
+          "has_atm": true,
+          "has_drive_thru": true,
+          "atm_types": [
+            "Drive-Thru ATM"
+          ],
+          "services": [
+            "ATM",
+            "Drive-Thru"
+          ],
+          "languages": [],
+          "lat": 29.5224701,
+          "lng": -95.1921659,
+          "photo": "/locations/friendswood.jpg",
+          "hours": {
+            "lobby": [
+              {
+                "days": "Mon - Fri",
+                "open": "9 AM",
+                "close": "5 PM",
+                "open24": "09:00",
+                "close24": "17:00"
+              }
+            ],
+            "drive_thru": [
+              {
+                "days": "Mon - Fri",
+                "open": "8 AM",
+                "close": "5 PM",
+                "open24": "08:00",
+                "close24": "17:00"
+              }
+            ]
+          },
+          "notes": ""
+        }
+      },
+      {
+        "id": "loc-lake-jackson",
+        "slug": "lake-jackson",
+        "status": "published",
+        "data": {
+          "title": "Lake Jackson Banking Center",
+          "name": "Lake Jackson",
+          "region": "Brazoria County",
+          "street": "203 This Way",
+          "suite": "",
+          "city": "Lake Jackson",
+          "state": "TX",
+          "zip": "77566",
+          "phone": "979-299-1308",
+          "has_atm": true,
+          "has_drive_thru": true,
+          "atm_types": [
+            "Drive-Thru ATM"
+          ],
+          "services": [
+            "ATM",
+            "Drive-Thru"
+          ],
+          "languages": [],
+          "lat": 29.0401039,
+          "lng": -95.4512557,
+          "photo": "/locations/lake-jackson.jpg",
+          "hours": {
+            "lobby": [
+              {
+                "days": "Mon - Fri",
+                "open": "9 AM",
+                "close": "5 PM",
+                "open24": "09:00",
+                "close24": "17:00"
+              },
+              {
+                "days": "Sat",
+                "open": "9 AM",
+                "close": "12 PM",
+                "open24": "09:00",
+                "close24": "12:00"
+              }
+            ],
+            "drive_thru": [
+              {
+                "days": "Mon - Fri",
+                "open": "8 AM",
+                "close": "5 PM",
+                "open24": "08:00",
+                "close24": "17:00"
+              },
+              {
+                "days": "Sat",
+                "open": "9 AM",
+                "close": "12 PM",
+                "open24": "09:00",
+                "close24": "12:00"
+              }
+            ]
+          },
+          "notes": ""
+        }
+      },
+      {
+        "id": "loc-river-oaks",
+        "slug": "river-oaks",
+        "status": "published",
+        "data": {
+          "title": "River Oaks Banking Center",
+          "name": "River Oaks",
+          "region": "Harris County",
+          "street": "2517 River Oaks Boulevard",
+          "suite": "",
+          "city": "Houston",
+          "state": "TX",
+          "zip": "77019",
+          "phone": "713-595-7451",
+          "has_atm": true,
+          "has_drive_thru": true,
+          "atm_types": [
+            "Drive-Thru ATM"
+          ],
+          "services": [
+            "ATM",
+            "Drive-Thru"
+          ],
+          "languages": [],
+          "lat": 29.7424586,
+          "lng": -95.4260679,
+          "photo": "",
+          "hours": {
+            "lobby": [
+              {
+                "days": "Mon - Fri",
+                "open": "9 AM",
+                "close": "4 PM",
+                "open24": "09:00",
+                "close24": "16:00"
+              }
+            ],
+            "drive_thru": [
+              {
+                "days": "Mon - Fri",
+                "open": "8 AM",
+                "close": "5 PM",
+                "open24": "08:00",
+                "close24": "17:00"
+              }
+            ]
+          },
+          "notes": ""
+        }
+      },
+      {
+        "id": "loc-voss",
+        "slug": "voss",
+        "status": "published",
+        "data": {
+          "title": "Voss Banking Center",
+          "name": "Voss",
+          "region": "Harris County",
+          "street": "1626 South Voss Road",
+          "suite": "",
+          "city": "Houston",
+          "state": "TX",
+          "zip": "77057",
+          "phone": "713-595-7400",
+          "has_atm": true,
+          "has_drive_thru": true,
+          "atm_types": [
+            "Drive-Thru ATM"
+          ],
+          "services": [
+            "ATM",
+            "Drive-Thru"
+          ],
+          "languages": [],
+          "lat": 29.750738,
+          "lng": -95.5016043,
+          "photo": "/locations/voss.jpg",
+          "hours": {
+            "lobby": [
+              {
+                "days": "Mon - Fri",
+                "open": "9 AM",
+                "close": "4 PM",
+                "open24": "09:00",
+                "close24": "16:00"
+              }
+            ],
+            "drive_thru": [
+              {
+                "days": "Mon - Fri",
+                "open": "8 AM",
+                "close": "5 PM",
+                "open24": "08:00",
+                "close24": "17:00"
+              }
+            ]
+          },
+          "notes": ""
+        }
+      },
+      {
+        "id": "loc-west-columbia",
+        "slug": "west-columbia",
+        "status": "published",
+        "data": {
+          "title": "West Columbia Banking Center",
+          "name": "West Columbia",
+          "region": "Brazoria County",
+          "street": "109 East Brazos Avenue",
+          "suite": "",
+          "city": "West Columbia",
+          "state": "TX",
+          "zip": "77486",
+          "phone": "979-345-1666",
+          "has_atm": true,
+          "has_drive_thru": true,
+          "atm_types": [
+            "Drive-Thru ATM"
+          ],
+          "services": [
+            "ATM",
+            "Drive-Thru"
+          ],
+          "languages": [],
+          "lat": 29.1441735,
+          "lng": -95.6473501,
+          "photo": "/locations/west-columbia.jpg",
+          "hours": {
+            "lobby": [
+              {
+                "days": "Mon - Fri",
+                "open": "9 AM",
+                "close": "5 PM",
+                "open24": "09:00",
+                "close24": "17:00"
+              }
+            ],
+            "drive_thru": [
+              {
+                "days": "Mon - Fri",
+                "open": "8 AM",
+                "close": "5 PM",
+                "open24": "08:00",
+                "close24": "17:00"
+              }
+            ]
+          },
+          "notes": ""
+        }
+      }
+    ],
+    "products": [
+      {
+        "id": "prod-personal-checking",
+        "slug": "personal-checking",
+        "status": "published",
+        "data": {
+          "title": "Personal Checking Accounts",
+          "published": "As published on the Personal Checking Comparison Chart",
+          "products": [
+            {
+              "id": "gulf-advantage",
+              "name": "Gulf Advantage Checking",
+              "tagline": "Free interest checking that rewards everyday use",
+              "best_for": "Everyday banking with direct deposit and a debit card",
+              "monthly_fee": "$0",
+              "fee_note": "No monthly maintenance fee, period",
+              "min_opening": "$50",
+              "interest": true,
+              "highlights": [
+                "Earns interest on balances up to $25,000",
+                "Nationwide ATM fee refunds up to $35/month",
+                "Free Visa® Debit Card",
+                "Free online banking, bill pay & mobile deposit"
+              ],
+              "qualify": [
+                "12+ debit card purchases post & clear per qualification cycle",
+                "1+ automatic payment or direct deposit posts per cycle",
+                "Enroll in free e-statements"
+              ],
+              "qualify_label": "To earn interest + ATM refunds each month:",
+              "details": [
+                "Gulf Advantage is a free interest-bearing checking account with a free Visa® Debit Card. If you don't meet the requirements one month, you still earn a lower interest rate — and can qualify again the next month.",
+                "When you qualify, ATM fees of $5.00 or less are automatically reimbursed (up to $5.00 per transaction). Fees over $5.00 are reimbursed when you present the ATM receipt at a branch. Maximum reimbursement: $35.00 per qualification cycle.",
+                "The qualification period is generally the statement cycle; the exact cut-off date varies month to month and is emailed to you ahead of time.",
+                "Limited to one Gulf Advantage account per Social Security number."
+              ],
+              "open_url": "https://app.loanspq.com/apply.aspx?enc=Kw21Wblm1yxpjJabdoZaD_1XCeB6DUzWcPY_g38Z9Jqr0clsjQUYVmTraoEngafVkCgQedLZhb-S5_xgQhN9fA",
+              "details_url": "https://www.texasgulfbank.com/personal-comparison-chart/#Gulf-Advantage-Additional-Information"
+            },
+            {
+              "id": "portside",
+              "name": "Portside Personal Checking",
+              "tagline": "Everyday checking with no strings attached",
+              "best_for": "Simple everyday checking — no debit counts, no direct deposit required",
+              "monthly_fee": "$7 or $0",
+              "fee_note": "Waived with a $700 average daily balance — or at any balance for age 62+",
+              "min_opening": "$100",
+              "interest": false,
+              "highlights": [
+                "Unlimited check writing",
+                "No transaction requirements to keep it free",
+                "Free Visa® Debit Card",
+                "Age 62+: monthly fee and debit fees waived, any balance"
+              ],
+              "qualify": [],
+              "details": [
+                "An excess debit fee of $0.25 applies to each debit transaction beyond 25 per monthly statement cycle (electronic funds transfers excluded). The fee does not apply if your average daily balance is $700.00 or more for the cycle.",
+                "For individuals age 62 or older, the $0.25 excess debit fee and the monthly maintenance fee are both waived regardless of balance."
+              ],
+              "open_url": "https://www.texasgulfbank.com/contact-texas-gulf-bank/",
+              "open_label": "Visit a banker to open",
+              "details_url": "https://www.texasgulfbank.com/personal-comparison-chart/#Portside-Checking-Additional-Information"
+            },
+            {
+              "id": "gulf-rewards",
+              "name": "Gulf Rewards Checking",
+              "tagline": "One relationship, one statement, real perks",
+              "best_for": "Families with several TGB accounts who want one combined statement",
+              "monthly_fee": "$10 or $0",
+              "fee_note": "Waived with $3,000 combined across all your personal TGB accounts",
+              "min_opening": "$100",
+              "interest": false,
+              "highlights": [
+                "One combined statement for every personal account",
+                "Free specialty mint wallet checks (1 box/order)",
+                "Free cashier's checks",
+                "10% off safe deposit box rental"
+              ],
+              "qualify": [],
+              "details": [
+                "The $3,000 combined balance is calculated using the current ledger balance across all your personal TGB accounts (including CDs and IRAs) as of the end date of your Gulf Rewards Checking statement cycle."
+              ],
+              "open_url": "https://www.texasgulfbank.com/contact-texas-gulf-bank/",
+              "open_label": "Visit a banker to open",
+              "details_url": "https://www.texasgulfbank.com/personal-comparison-chart/"
+            },
+            {
+              "id": "vip-high-yield",
+              "name": "VIP High Yield Checking",
+              "tagline": "Tiered rates that grow with your balance",
+              "best_for": "Higher balances that should earn more",
+              "monthly_fee": "$10 or $0",
+              "fee_note": "Waived with a $2,500 average daily balance",
+              "min_opening": "$1,000",
+              "interest": true,
+              "highlights": [
+                "Tiered interest — higher balance, higher rate",
+                "No transaction limitations",
+                "Free Visa® Debit Card",
+                "Interest paid monthly"
+              ],
+              "qualify": [],
+              "details": [
+                "No transaction limitations apply to this account. Interest rates are tiered — the higher your balance, the higher the rate earned."
+              ],
+              "open_url": "https://app.loanspq.com/apply.aspx?enc=Kw21Wblm1yxpjJabdoZaD_1XCeB6DUzWcPY_g38Z9Jqr0clsjQUYVmTraoEngafVkCgQedLZhb-S5_xgQhN9fA",
+              "details_url": "https://www.texasgulfbank.com/personal-comparison-chart/"
+            }
+          ],
+          "compare_rows": [
+            {
+              "label": "Minimum opening deposit",
+              "values": [
+                "$50",
+                "$100",
+                "$100",
+                "$1,000"
+              ]
+            },
+            {
+              "label": "Monthly maintenance fee",
+              "values": [
+                "$0",
+                "$7 or $0*",
+                "$10 or $0*",
+                "$10 or $0*"
+              ]
+            },
+            {
+              "label": "Balance to avoid the fee",
+              "values": [
+                "N/A — no monthly fee",
+                "$700 avg daily balance, or age 62+",
+                "$3,000 combined personal TGB balances",
+                "$2,500 avg daily balance"
+              ]
+            },
+            {
+              "label": "Earns interest",
+              "values": [
+                "Yes",
+                "No",
+                "No",
+                "Yes — tiered"
+              ]
+            },
+            {
+              "label": "Unlimited check writing",
+              "values": [
+                "Yes",
+                "Yes",
+                "Yes",
+                "Yes"
+              ]
+            },
+            {
+              "label": "Visa® Debit Card",
+              "values": [
+                "Yes",
+                "Yes",
+                "Yes",
+                "Yes"
+              ]
+            },
+            {
+              "label": "Free online banking + bill pay",
+              "values": [
+                "Yes",
+                "Yes",
+                "Yes",
+                "Yes"
+              ]
+            },
+            {
+              "label": "ATM fee refunds nationwide",
+              "values": [
+                "Up to $35/month when you qualify",
+                "—",
+                "—",
+                "—"
+              ]
+            }
+          ],
+          "disclaimer_short": "* Monthly maintenance fee is waived when the stated balance requirement is met. See Account Details for complete requirements.",
+          "secondary": null
+        }
+      },
+      {
+        "id": "prod-personal-savings",
+        "slug": "personal-savings",
+        "status": "published",
+        "data": {
+          "title": "Savings, CDs & IRAs",
+          "published": "As published on the Savings / CDs / IRAs Comparison Chart",
+          "products": [
+            {
+              "id": "personal-savings",
+              "name": "Personal Savings",
+              "tagline": "Your money stays within reach",
+              "best_for": "Emergency funds and everyday saving — start with $100",
+              "monthly_fee": "$3 or $0",
+              "fee_note": "The fee is waived any quarter your balance stays at or above $200",
+              "min_opening": "$100",
+              "interest": true,
+              "highlights": [
+                "Withdraw whenever life happens — no penalties for using your own money",
+                "Interest paid every quarter, automatically",
+                "Free online banking and mobile deposit",
+                "Open with as little as $100"
+              ],
+              "qualify": [],
+              "details": [
+                "You must maintain a minimum balance of $100.00 in the account each day to obtain the disclosed annual percentage yield. Interest is compounded and credited every quarter.",
+                "The $3.00 monthly service charge applies for each month of the quarterly statement cycle in which your average daily balance falls below $200.00.",
+                "Transfers to third parties by check, point-of-sale, or TGB online are prohibited. A $5.00 debit fee applies to each debit beyond 5 per month (electronic payments, transfers between your TGB accounts, and ATM withdrawals excluded). No other transaction limitations apply."
+              ],
+              "open_url": "https://app.loanspq.com/apply.aspx?enc=Kw21Wblm1yxpjJabdoZaD_1XCeB6DUzWcPY_g38Z9Jqr0clsjQUYVmTraoEngafVkCgQedLZhb-S5_xgQhN9fA",
+              "details_url": "https://www.texasgulfbank.com/savings-cds-iras-comparison-chart/#sand-dollar"
+            },
+            {
+              "id": "certificate-of-deposit",
+              "name": "Certificate of Deposit",
+              "tagline": "Pick a date. Lock in the rate.",
+              "best_for": "Money with a job but no deadline — tuition in three years, a down payment in five",
+              "monthly_fee": "$0",
+              "fee_note": "No monthly service charge, ever",
+              "min_opening": "$2,500",
+              "interest": true,
+              "highlights": [
+                "Your rate is locked for the entire term — market dips can't touch it",
+                "Choose from terms of 30 days to 5 years",
+                "Interest compounds monthly",
+                "10-day grace window when your term ends — rethink, renew, or withdraw"
+              ],
+              "qualify": [],
+              "details": [
+                "A fixed rate is locked for the full term. Upon maturity and renewal, the rate is set to be competitive with current market rates at that time.",
+                "No deposits may be made before maturity, and no withdrawals of principal before maturity — a penalty may apply for early withdrawal (equal to 7 days', 1 month's, 6 months', or 12 months' interest depending on the original term).",
+                "You can withdraw accrued interest before maturity without penalty.",
+                "At maturity you have a 10-calendar-day grace period to withdraw funds without penalty."
+              ],
+              "open_url": "https://app.loanspq.com/apply.aspx?enc=Kw21Wblm1yxpjJabdoZaD_1XCeB6DUzWcPY_g38Z9Jqr0clsjQUYVmTraoEngafVkCgQedLZhb-S5_xgQhN9fA",
+              "details_url": "https://www.texasgulfbank.com/savings-cds-iras-comparison-chart/#cert-deposit"
+            },
+            {
+              "id": "ira",
+              "name": "Individual Retirement Account",
+              "tagline": "Future you says thanks",
+              "best_for": "Retirement savings with real tax advantages — on top of any workplace plan",
+              "monthly_fee": "$0",
+              "fee_note": "No monthly service charge",
+              "min_opening": "$1,000 variable / $2,000 fixed",
+              "interest": true,
+              "highlights": [
+                "Contribute up to $7,000 a year ($8,000 once you turn 50)",
+                "Choose a variable rate for flexibility or fixed for certainty",
+                "Add to it anytime — deposits of $50 or more, as often as you like",
+                "Your spouse can open their own and do the same"
+              ],
+              "qualify": [],
+              "details": [
+                "Contribution limits: up to $7,000.00 each per year for individuals under 50, up to $8,000.00 for age 50 and over (tax year 2025) — even if you already participate in an employer-sponsored plan.",
+                "A penalty may be imposed for withdrawals before maturity. In addition, a separate IRS penalty may apply for withdrawals prior to age 59½.",
+                "Variable-rate IRAs accept unlimited additional deposits of $50.00 or more. Fixed-rate IRAs accept no deposits before maturity.",
+                "At maturity you have a 10-calendar-day grace period to withdraw funds without penalty. Consult your tax advisor about how an IRA fits your situation."
+              ],
+              "open_url": "https://www.texasgulfbank.com/contact-texas-gulf-bank/",
+              "details_url": "https://www.texasgulfbank.com/savings-cds-iras-comparison-chart/#IRAs"
+            },
+            {
+              "id": "money-market",
+              "name": "Personal Money Market",
+              "tagline": "Bigger balance, better rate. That's the deal.",
+              "best_for": "$500+ sitting in checking that should be earning more",
+              "monthly_fee": "$10 or $0",
+              "fee_note": "Waived with a $5,000 average daily balance",
+              "min_opening": "$500",
+              "interest": true,
+              "highlights": [
+                "Five rate tiers — climb from 0.55% all the way to 1.66% APY",
+                "When you cross into a higher tier, your whole balance earns the better rate",
+                "No lock-up — your money stays available",
+                "Free online banking & mobile deposit"
+              ],
+              "details": [
+                "Tiered rates apply to your entire daily balance: 0.55% APY from $0.01, stepping up through $40K / $100K / $500K tiers to 1.66% APY at $1,000,000 and above. See current rates below.",
+                "Transfers to third parties by point-of-sale (including mobile wallet debit payments) are prohibited. A $10.00 fee applies to each debit beyond 10 per monthly statement cycle (electronic payments, transfers between your TGB accounts, and ATM withdrawals excluded).",
+                "Rates are variable and may change after the account is opened. Fees may reduce earnings."
+              ],
+              "open_url": "https://app.loanspq.com/apply.aspx?enc=Kw21Wblm1yxpjJabdoZaD_1XCeB6DUzWcPY_g38Z9Jqr0clsjQUYVmTraoEngafVkCgQedLZhb-S5_xgQhN9fA",
+              "details_url": "https://www.texasgulfbank.com/personal-comparison-chart/#Gulf-Stream-Money-Market-Addtl-Info"
+            }
+          ],
+          "compare_rows": [
+            {
+              "label": "Minimum opening deposit",
+              "values": [
+                "$100",
+                "$2,500",
+                "$1,000 variable / $2,000 fixed",
+                "$500"
+              ]
+            },
+            {
+              "label": "Monthly service charge",
+              "values": [
+                "$3 if avg daily balance under $200 that month",
+                "$0",
+                "$0",
+                "$10 or $0*"
+              ]
+            },
+            {
+              "label": "Minimum daily balance to earn interest",
+              "values": [
+                "$100",
+                "$2,500",
+                "No minimum",
+                "$5,000 to waive the fee; tiers set the rate"
+              ]
+            },
+            {
+              "label": "Interest rate type",
+              "values": [
+                "Variable",
+                "Fixed for the term",
+                "Variable or fixed",
+                "Variable, tiered"
+              ]
+            },
+            {
+              "label": "Interest compounding",
+              "values": [
+                "Quarterly",
+                "Monthly",
+                "Quarterly",
+                "Monthly"
+              ]
+            },
+            {
+              "label": "Statement cycle",
+              "values": [
+                "Quarterly",
+                "N/A",
+                "N/A",
+                "Monthly"
+              ]
+            },
+            {
+              "label": "Access to funds",
+              "values": [
+                "Withdraw anytime (limits apply)",
+                "At maturity — early-withdrawal penalty applies",
+                "At maturity — early-withdrawal penalty may apply",
+                "Withdraw anytime (limits apply)"
+              ]
+            }
+          ],
+          "disclaimer_short": "Early withdrawal penalties may apply to CDs and IRAs. *Advertised APYs reflect the highest available rate tier and may require qualifying balances or activity. Variable rates may change after account opening. Contact Texas Gulf Bank at 1-800-467-7216 for a Truth-In-Savings / Reg DD disclosure of terms, conditions, fees, and rate information.",
+          "secondary": [
+            {
+              "id": "gulf-rewards-savings",
+              "name": "Gulf Rewards Savings",
+              "tagline": "The perk our best customers don't know they have",
+              "points": [
+                "No monthly service charge. Not ever.",
+                "A better rate than Personal Savings — just for being a Gulf Rewards Checking customer",
+                "Open it with $100",
+                "Everything on one easy-to-read statement"
+              ],
+              "details": [
+                "Available exclusively to Gulf Rewards Checking customers. Interest is compounded and credited monthly; maintain a $100.00 minimum daily balance to earn the disclosed APY."
+              ],
+              "details_url": "https://www.texasgulfbank.com/savings-cds-iras-comparison-chart/#gulf-rewards"
+            },
+            {
+              "id": "hsa",
+              "name": "Health Savings Account",
+              "tagline": "Triple tax advantage for medical expenses",
+              "points": [
+                "Contributions are tax-deductible",
+                "Withdrawals for qualified medical expenses are tax-free",
+                "Unused funds roll over year to year — it's yours to keep",
+                "Tiered rates at $1,000 and $5,000 balances"
+              ],
+              "details": [
+                "Requires a high-deductible health plan. Interest is compounded and credited monthly; tiered rates apply at $1,000.00 and $5,000.00 minimum daily balances. A $3.00 monthly charge applies if your average daily balance falls below $1,000.",
+                "The IRS has specific eligibility rules for opening and maintaining an HSA and for qualified medical expenses. Consult your tax advisor for how IRS rules affect you."
+              ],
+              "details_url": "https://www.texasgulfbank.com/savings-cds-iras-comparison-chart/#health-savings"
+            }
+          ]
+        }
+      }
+    ],
+    "pages": [
+      {
+        "id": "page-home",
+        "slug": "home",
+        "status": "published",
+        "data": {
+          "title": "Home",
+          "hero_tagline": "100+ Years of Texas Banking",
+          "hero_headline": "Big-Bank Tools.",
+          "hero_headline_accent": "Neighbor-Bank Decisions.",
+          "hero_subtext": "For over a century, Texas Gulf Bank has answered to its customers — not a call center. Local people approve local loans, usually in days, not weeks.",
+          "hero_primary_cta": "Explore Accounts",
+          "hero_secondary_cta": "Find a Branch",
+          "story_headline": "Over a Century of",
+          "story_headline_accent": "Texas Banking",
+          "story_body_1": "Texas Gulf Bank is an independently owned and operated community bank with locations in Harris, Galveston, and Brazoria counties. For over 100 years, we've been a strong and financially secure member of the Texas Gulf Coast community.",
+          "story_body_2": "We pride ourselves on personal relationships — you'll always speak face-to-face with a local decision-maker. Our team members live and work in the same communities where our branches are located.",
+          "story_stat_1_number": "100+",
+          "story_stat_1_label": "Years Serving Texas",
+          "story_stat_2_number": "9",
+          "story_stat_2_label": "Community Branches",
+          "story_stat_3_number": "3",
+          "story_stat_3_label": "Coastal Counties",
+          "cta_headline": "Come in as a stranger.",
+          "cta_headline_accent": "Leave as a regular.",
+          "cta_subtext": "Nine banking centers from Angleton to Houston. Walk-ins welcome, phones answered by people, decisions made here — not in another state.",
+          "cta_primary_button": "Find a Branch Near You",
+          "cta_phone": "800.467.7216",
+          "features_headline": null
+        }
+      },
+      {
+        "id": "page-test",
+        "slug": "test",
+        "status": "published",
+        "data": {
+          "title": "Test",
+          "hero_tagline": null,
+          "hero_headline": "Test 1",
+          "hero_headline_accent": null,
+          "hero_subtext": "Testing",
+          "hero_primary_cta": null,
+          "hero_secondary_cta": null,
+          "story_headline": null,
+          "story_headline_accent": null,
+          "story_body_1": null,
+          "story_body_2": null,
+          "story_stat_1_number": null,
+          "story_stat_1_label": null,
+          "story_stat_2_number": null,
+          "story_stat_2_label": null,
+          "story_stat_3_number": null,
+          "story_stat_3_label": null,
+          "cta_headline": null,
+          "cta_headline_accent": null,
+          "cta_subtext": null,
+          "cta_primary_button": null,
+          "cta_phone": null,
+          "features_headline": "Test"
+        }
+      }
+    ],
+    "data": [
+      {
+        "id": "data-rates",
+        "slug": "rates",
+        "status": "published",
+        "data": {
+          "title": "Featured Rates",
+          "published": "August 17, 2026",
+          "disclaimer": "Rates may change. Fees may reduce earnings. CD early-withdrawal penalties may apply. See the complete rate sheet for terms and account requirements.",
+          "full_rates_url": "https://www.texasgulfbank.com/investment-rate-index-time-and-non-time-accounts/",
+          "items": [
+            {
+              "name": "12-Month CD",
+              "detail": "$2,500 minimum",
+              "value": "3.45%"
+            },
+            {
+              "name": "18-Month CD",
+              "detail": "$2,500 minimum",
+              "value": "3.30%"
+            },
+            {
+              "name": "Gulf Advantage Checking",
+              "detail": "Requirements apply",
+              "value": "0.80%"
+            },
+            {
+              "name": "Money Market",
+              "detail": "From $500 to open",
+              "value": "up to 1.66%"
+            }
+          ],
+          "sections": [
+            {
+              "id": "cd-fixed",
+              "title": "Certificates of Deposit — Fixed Rate",
+              "note": "$2,500 minimum to open and earn the stated APY. Interest compounded and credited monthly.",
+              "columns": [
+                "Term",
+                "Interest Rate",
+                "APY"
+              ],
+              "rows": [
+                [
+                  "30 Days",
+                  "1.25%",
+                  "1.26%"
+                ],
+                [
+                  "90 Days",
+                  "1.80%",
+                  "1.81%"
+                ],
+                [
+                  "180 Days",
+                  "3.20%",
+                  "3.25%"
+                ],
+                [
+                  "1 Year",
+                  "3.40%",
+                  "3.45%"
+                ],
+                [
+                  "18 Months",
+                  "3.25%",
+                  "3.30%"
+                ],
+                [
+                  "2 Years",
+                  "2.72%",
+                  "2.75%"
+                ],
+                [
+                  "3 Years",
+                  "2.72%",
+                  "2.75%"
+                ],
+                [
+                  "4 Years",
+                  "2.72%",
+                  "2.75%"
+                ],
+                [
+                  "5 Years",
+                  "2.72%",
+                  "2.75%"
+                ]
+              ]
+            },
+            {
+              "id": "ira-fixed",
+              "title": "Individual Retirement Accounts — Fixed Rate",
+              "note": "$2,000 minimum to open. Interest compounded and credited quarterly.",
+              "columns": [
+                "Term",
+                "Interest Rate",
+                "APY"
+              ],
+              "rows": [
+                [
+                  "1 Year",
+                  "3.41%",
+                  "3.45%"
+                ],
+                [
+                  "18 Months",
+                  "3.26%",
+                  "3.30%"
+                ],
+                [
+                  "2 Years",
+                  "2.72%",
+                  "2.75%"
+                ],
+                [
+                  "3 Years",
+                  "2.72%",
+                  "2.75%"
+                ],
+                [
+                  "4 Years",
+                  "2.72%",
+                  "2.75%"
+                ],
+                [
+                  "5 Years",
+                  "2.72%",
+                  "2.75%"
+                ]
+              ]
+            },
+            {
+              "id": "ira-variable",
+              "title": "Individual Retirement Accounts — Variable Rate",
+              "note": "$1,000 minimum to open. Rate may change after the account is opened. Compounded/credited quarterly.",
+              "columns": [
+                "Term",
+                "Interest Rate",
+                "APY"
+              ],
+              "rows": [
+                [
+                  "18 Months",
+                  "3.26%",
+                  "3.30%"
+                ]
+              ]
+            },
+            {
+              "id": "money-market",
+              "title": "Personal Money Market",
+              "note": "$500 minimum to open. Tiered rates apply to your entire daily balance. Rates may change after the account is opened.",
+              "columns": [
+                "Account Balance",
+                "Interest Rate",
+                "APY"
+              ],
+              "rows": [
+                [
+                  "$0.01 – $39,999.99",
+                  "0.55%",
+                  "0.55%"
+                ],
+                [
+                  "$40,000 – $99,999.99",
+                  "0.65%",
+                  "0.65%"
+                ],
+                [
+                  "$100,000 – $499,999.99",
+                  "0.85%",
+                  "0.85%"
+                ],
+                [
+                  "$500,000 – $999,999.99",
+                  "1.40%",
+                  "1.41%"
+                ],
+                [
+                  "$1,000,000+",
+                  "1.65%",
+                  "1.66%"
+                ]
+              ]
+            },
+            {
+              "id": "vip-checking",
+              "title": "VIP High Yield Checking",
+              "note": "$1,000 minimum to open. Tiered rates apply to your entire daily balance. Rates may change after the account is opened.",
+              "columns": [
+                "Account Balance",
+                "Interest Rate",
+                "APY"
+              ],
+              "rows": [
+                [
+                  "$0.01 – $74,999.99",
+                  "0.35%",
+                  "0.35%"
+                ],
+                [
+                  "$75,000 – $249,999.99",
+                  "0.55%",
+                  "0.55%"
+                ],
+                [
+                  "$250,000 – $499,999.99",
+                  "0.65%",
+                  "0.65%"
+                ],
+                [
+                  "$500,000 – $999,999.99",
+                  "1.20%",
+                  "1.21%"
+                ],
+                [
+                  "$1,000,000+",
+                  "1.45%",
+                  "1.46%"
+                ]
+              ]
+            },
+            {
+              "id": "savings",
+              "title": "Personal Savings & Gulf Rewards Savings",
+              "note": "$100 minimum to open and to earn the disclosed APY. Gulf Rewards Savings requires a Gulf Rewards Checking account. Rates may change after the account is opened.",
+              "columns": [
+                "Account",
+                "Interest Rate",
+                "APY"
+              ],
+              "rows": [
+                [
+                  "Personal Savings",
+                  "0.35%",
+                  "0.35%"
+                ],
+                [
+                  "Gulf Rewards Savings*",
+                  "0.40%",
+                  "0.40%"
+                ]
+              ]
+            },
+            {
+              "id": "gulf-advantage",
+              "title": "Gulf Advantage Checking",
+              "note": "One account allowed per Social Security number. Tiered rate applies to your entire daily balance. Requirements must be met for the higher tier. Rates may change after the account is opened.",
+              "columns": [
+                "Account Balance",
+                "Interest Rate",
+                "APY"
+              ],
+              "rows": [
+                [
+                  "$0.01 – $24,999.99 (requirements met)",
+                  "0.80%",
+                  "0.80%"
+                ],
+                [
+                  "$25,000 – $50,000 (requirements met)",
+                  "0.50%",
+                  "0.80% – 0.65%"
+                ],
+                [
+                  "$0.01+ (requirements not met)",
+                  "0.40%",
+                  "0.40%"
+                ]
+              ]
+            },
+            {
+              "id": "hsa",
+              "title": "Health Savings Account",
+              "note": "$50 minimum to open. Tiered rates apply to your entire daily balance.",
+              "columns": [
+                "Account Balance",
+                "Interest Rate",
+                "APY"
+              ],
+              "rows": [
+                [
+                  "$1,000 – $4,999.99",
+                  "0.30%",
+                  "0.30%"
+                ],
+                [
+                  "$5,000+",
+                  "0.35%",
+                  "0.35%"
+                ]
+              ]
+            }
+          ],
+          "sections_footnote": "* Only available to Gulf Rewards Checking customers. The interest rates and annual percentage yields on this sheet are accurate as of August 17, 2026. Fees may reduce earnings. Contact Texas Gulf Bank at 1.800.467.7216 for a Truth-In-Savings / Reg DD disclosure."
+        }
+      }
+    ],
+    "fees": [
+      {
+        "id": "fee-personal-fees",
+        "slug": "personal-fees",
+        "status": "published",
+        "data": {
+          "title": "Personal Fee Schedule",
+          "published": "As published on the website's Personal Checking Comparison Chart",
+          "disclaimer": "Fees may change at any time. Some fees and limitations vary by account type; the following fees may be assessed against your account. Not all products are available at every location. See the complete schedule and disclosures for terms and requirements.",
+          "full_schedule_url": "https://www.texasgulfbank.com/personal-comparison-chart/",
+          "sections": [
+            {
+              "name": "ATM & Debit Card",
+              "note": "ATM/Debit Card Monthly Fee does not apply to Gulf Advantage Checking, VIP High Yield Checking, or Gulf Rewards Checking.",
+              "items": [
+                {
+                  "name": "ATM/Debit Card Monthly Fee",
+                  "value": "$1.00 per month, per account"
+                },
+                {
+                  "name": "Replacement or Lost ATM / Debit Cards",
+                  "value": "$7.00 each"
+                },
+                {
+                  "name": "Change PIN (ATM or Debit card)",
+                  "value": "No fee"
+                },
+                {
+                  "name": "Withdrawal at any of our ATM locations",
+                  "value": "No fee"
+                },
+                {
+                  "name": "Balance inquiry at any of our ATM locations",
+                  "value": "No fee"
+                },
+                {
+                  "name": "Withdrawal or Balance Inquiry at ATM locations we do not own or operate",
+                  "value": "$2.00 each"
+                },
+                {
+                  "name": "Non-customer using TGB ATM machines (withdrawals or balance inquiries)",
+                  "value": "$3.00 each"
+                },
+                {
+                  "name": "Dollar limitations (ATM card)",
+                  "detail": "Saturday, Sunday & Monday are treated as one processing day. Cash withdrawals and point-of-sale transactions from all accounts per accountholder are combined for one $1,000.00 limitation.",
+                  "value": "$1,000.00 per processing day"
+                },
+                {
+                  "name": "Dollar limitations (Debit card)",
+                  "detail": "Saturday, Sunday & Monday are treated as one processing day. Cash withdrawals from ATMs $1,000.00 and point-of-sale $2,000.00. Transactions from all accounts per accountholder are combined for the $3,000.00 limitation.",
+                  "value": "$3,000.00 per processing day"
+                }
+              ]
+            },
+            {
+              "name": "Overdrafts & Non-Sufficient Funds",
+              "note": "Fees may be imposed by any of the following means: check, in-person withdrawal or transfer, or by electronic means, excluding ATM or one-time debit card transactions.",
+              "items": [
+                {
+                  "name": "Overdraft Paid Item Fee",
+                  "value": "$30.00 each"
+                },
+                {
+                  "name": "Non-Sufficient Funds (NSF) Return Item Fee",
+                  "value": "$30.00 each"
+                },
+                {
+                  "name": "Maximum Overdraft Paid Item / NSF Return Item fees",
+                  "value": "$120.00 per day (both categories combined)"
+                },
+                {
+                  "name": "Courtesy Threshold",
+                  "detail": "No fee for de minimis transaction amounts ($5.00 or less).",
+                  "value": "No fee"
+                },
+                {
+                  "name": "No Representment Fee",
+                  "detail": "Only a single NSF Return Item Fee &/or Overdraft Paid Item Fee for multiple presentations of the same item.",
+                  "value": "Policy"
+                }
+              ]
+            },
+            {
+              "name": "Bookkeeping & Other Fees",
+              "items": [
+                {
+                  "name": "Check printing",
+                  "value": "Depends on style & quantity of check ordered"
+                },
+                {
+                  "name": "Temporary checks",
+                  "value": "$.50 each (limit 12)"
+                },
+                {
+                  "name": "Cashier's Checks (Customer)",
+                  "value": "$7.00 each"
+                },
+                {
+                  "name": "Money Orders (Customer)",
+                  "value": "$3.00 each"
+                },
+                {
+                  "name": "Online Banking",
+                  "value": "No charge"
+                },
+                {
+                  "name": "Online Banking with Bill Pay",
+                  "value": "No charge"
+                },
+                {
+                  "name": "Outgoing Bank-to-Bank Transfers",
+                  "value": "$3.00 each"
+                },
+                {
+                  "name": "Garnishments",
+                  "value": "$50.00 + attorney's fees"
+                },
+                {
+                  "name": "Subpoenas",
+                  "value": "$50.00 + attorney's fees"
+                },
+                {
+                  "name": "Levies",
+                  "value": "$50.00 + attorney's fees"
+                },
+                {
+                  "name": "Account Activity Printout",
+                  "value": "$3.00 each"
+                },
+                {
+                  "name": "Special Statement Cutoff",
+                  "value": "$5.00 each"
+                },
+                {
+                  "name": "Account Research",
+                  "value": "$30.00 per hour, minimum 1/2 hour"
+                },
+                {
+                  "name": "Account Balancing Assistance",
+                  "value": "$30.00 per hour, minimum 1/2 hour"
+                },
+                {
+                  "name": "Account Monthly Monitoring Fee",
+                  "value": "$50.00 per account per month"
+                },
+                {
+                  "name": "Balance Inquiry (no charge for Q-Line Automated Phone Banking)",
+                  "value": "$2.00 each"
+                },
+                {
+                  "name": "Activity Inquiry (no charge for Q-Line Automated Phone Banking)",
+                  "value": "$3.00 each"
+                },
+                {
+                  "name": "Telephone Transfer to and from Accounts (no charge for Q-Line Automated Phone Banking)",
+                  "value": "$5.00 each"
+                },
+                {
+                  "name": "Foreign Currency Order",
+                  "value": "$10.00 per order + Correspondent Bank Fees"
+                },
+                {
+                  "name": "Stop Payments (all items)",
+                  "value": "$30.00 each"
+                },
+                {
+                  "name": "Non-time Account Closed within 30 Days of Opening",
+                  "value": "$15.00 each"
+                }
+              ]
+            },
+            {
+              "name": "Wire Transfers",
+              "items": [
+                {
+                  "name": "Domestic wire — Customer incoming",
+                  "value": "$10.00 each"
+                },
+                {
+                  "name": "Domestic wire — Customer outgoing",
+                  "value": "$25.00 each"
+                },
+                {
+                  "name": "Foreign wire — Customer incoming",
+                  "value": "$10.00 each"
+                },
+                {
+                  "name": "Foreign wire — Customer outgoing",
+                  "value": "$45.00"
+                }
+              ]
+            },
+            {
+              "name": "Collections",
+              "items": [
+                {
+                  "name": "Incoming customer",
+                  "value": "$10.00 each"
+                },
+                {
+                  "name": "Outgoing customer",
+                  "value": "$12.00 each"
+                }
+              ]
+            },
+            {
+              "name": "Additional Service Fees",
+              "items": [
+                {
+                  "name": "Dealer Drafts (incoming or outgoing)",
+                  "value": "$10.00 each"
+                },
+                {
+                  "name": "Lost Coupon Book",
+                  "value": "$10.00 each"
+                },
+                {
+                  "name": "Amortization Schedule",
+                  "value": "$10.00 each"
+                },
+                {
+                  "name": "Zipper Bags (small)",
+                  "value": "$10.00 each"
+                },
+                {
+                  "name": "Zipper Bags (large)",
+                  "value": "$15.00 each"
+                },
+                {
+                  "name": "Lock Bags (night depository)",
+                  "value": "$40.00 each"
+                },
+                {
+                  "name": "Strapped Currency",
+                  "value": "$.40 per strap"
+                },
+                {
+                  "name": "Rolled Coin",
+                  "value": "$.30 per roll"
+                },
+                {
+                  "name": "Non-Client Check Cashing Fee (Commercial Checks > $500)",
+                  "value": "1% per check, $50.00 max fee"
+                },
+                {
+                  "name": "Deposit Corrections",
+                  "value": "$3.00 each"
+                },
+                {
+                  "name": "Photocopies (Customer)",
+                  "value": "$.25 each page"
+                },
+                {
+                  "name": "Photocopies (Non-Customer)",
+                  "value": "$.50 each page"
+                }
+              ]
+            },
+            {
+              "name": "Safe Deposit Box",
+              "note": "Annual rental — price varies by size and location.",
+              "items": [
+                {
+                  "name": "Key deposit",
+                  "value": "$25.00 per box"
+                },
+                {
+                  "name": "Box drilling",
+                  "value": "$50.00 + vendor's charges"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

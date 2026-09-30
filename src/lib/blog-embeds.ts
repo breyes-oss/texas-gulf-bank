@@ -126,3 +126,8 @@ export async function renderBlogSegments(
 export function escapeAttr(value: string): string {
   return escapeHtml(value);
 }
+
+/** Render a plain markdown body (no shortcodes) to HTML. */
+export async function renderMarkdown(markdown: string): Promise<string> {
+  return marked.parse(markdown, { gfm: true, breaks: false });
+}

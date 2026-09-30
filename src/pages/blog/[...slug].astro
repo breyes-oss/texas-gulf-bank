@@ -1,23 +1,23 @@
 ---
-import { getCollection, render } from "astro:content";
+import { getEmDashEntry } from "emdash";
 import Layout from "../../layouts/Layout.astro";
 import BlogCta from "../../components/BlogCta.astro";
 import RateTable from "../../components/RateTable.astro";
-import { renderBlogSegments } from "../../lib/blog-embeds";
+import { renderBlogSegments, renderMarkdown } from "../../lib/blog-embeds";
 
-export async function getStaticPaths() {
-  const blogPosts = await getCollection("blog");
-  return blogPosts.map((post) => ({
-    params: { slug: post.id },
-    props: { post },
-  }));
+const slug = Astro.params.slug;
+const { entry: post, error } = await getEmDashEntry("blog", slug);
+
+if (error) {
+  console.error("Failed to load post:", error);
+  return new Response("Unable to load post", { status: 500 });
 }
 
-const { post } = Astro.props;
-const body = post.body ?? "";
+if (!post) return Astro.redirect("/404");
+
+const body = post.data.body ?? "";
 const usesShortcodes = /\{\{\s*(rates|cta)\b/.test(body);
 
-let Content: any = null;
 let segments: Awaited<ReturnType<typeof renderBlogSegments>>["segments"] = [];
 let hasInlineCta = false;
 
@@ -25,11 +25,9 @@ if (usesShortcodes) {
   const rendered = await renderBlogSegments(body, { cta: post.data.cta });
   segments = rendered.segments;
   hasInlineCta = rendered.hasInlineCta;
-} else {
-  ({ Content } = await render(post));
 }
 
-const showEndCta = post.data.showCta !== false;
+const showEndCta = post.data.show_cta !== false;
 const cta = post.data.cta ?? {};
 const hasCustomEndCta = Boolean(
   cta.title || cta.body || cta.primaryLabel || cta.primaryHref || cta.secondaryLabel || cta.secondaryHref
@@ -98,11 +96,7 @@ const proseClass =
           return <div class={proseClass} set:html={segment.html} />;
         })
       ) : (
-        Content && (
-          <div class={proseClass}>
-            <Content />
-          </div>
-        )
+        <div class={proseClass} set:html={await renderMarkdown(body)} />
       )}
 
       {renderEndCta && (
@@ -117,5 +111,5 @@ const proseClass =
         />
       )}
     </div>
-  </article>
-</Layout>
+    </article>
+  </Layout>
