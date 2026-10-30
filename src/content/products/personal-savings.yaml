@@ -19,7 +19,6 @@ products:
       - "You must maintain a minimum balance of $100.00 in the account each day to obtain the disclosed annual percentage yield. Interest is compounded and credited every quarter."
       - "The $3.00 monthly service charge applies for each month of the quarterly statement cycle in which your average daily balance falls below $200.00."
       - "Transfers to third parties by check, point-of-sale, or TGB online are prohibited. A $5.00 debit fee applies to each debit beyond 5 per month (electronic payments, transfers between your TGB accounts, and ATM withdrawals excluded). No other transaction limitations apply."
-    open_url: "https://app.loanspq.com/apply.aspx?enc=Kw21Wblm1yxpjJabdoZaD_1XCeB6DUzWcPY_g38Z9Jqr0clsjQUYVmTraoEngafVkCgQedLZhb-S5_xgQhN9fA"
     details_url: "https://www.texasgulfbank.com/savings-cds-iras-comparison-chart/#sand-dollar"
 
   - id: "certificate-of-deposit"
@@ -41,7 +40,6 @@ products:
       - "No deposits may be made before maturity, and no withdrawals of principal before maturity — a penalty may apply for early withdrawal (equal to 7 days', 1 month's, 6 months', or 12 months' interest depending on the original term)."
       - "You can withdraw accrued interest before maturity without penalty."
       - "At maturity you have a 10-calendar-day grace period to withdraw funds without penalty."
-    open_url: "https://app.loanspq.com/apply.aspx?enc=Kw21Wblm1yxpjJabdoZaD_1XCeB6DUzWcPY_g38Z9Jqr0clsjQUYVmTraoEngafVkCgQedLZhb-S5_xgQhN9fA"
     details_url: "https://www.texasgulfbank.com/savings-cds-iras-comparison-chart/#cert-deposit"
 
   - id: "ira"
@@ -80,10 +78,9 @@ products:
       - "No lock-up — your money stays available"
       - "Free online banking & mobile deposit"
     details:
-      - "Tiered rates apply to your entire daily balance: 0.55% APY from $0.01, stepping up through $40K / $100K / $500K tiers to 1.66% APY at $1,000,000 and above. See current rates below."
+      - "Tiered rates apply to your entire daily balance: 0.55% APY from $0.01, stepping up through $40K / $100K / $500K tiers to 1.66% APY at $1,000,000 and above. See the placeholder rate tiers on this page."
       - "Transfers to third parties by point-of-sale (including mobile wallet debit payments) are prohibited. A $10.00 fee applies to each debit beyond 10 per monthly statement cycle (electronic payments, transfers between your TGB accounts, and ATM withdrawals excluded)."
       - "Rates are variable and may change after the account is opened. Fees may reduce earnings."
-    open_url: "https://app.loanspq.com/apply.aspx?enc=Kw21Wblm1yxpjJabdoZaD_1XCeB6DUzWcPY_g38Z9Jqr0clsjQUYVmTraoEngafVkCgQedLZhb-S5_xgQhN9fA"
     details_url: "https://www.texasgulfbank.com/personal-comparison-chart/#Gulf-Stream-Money-Market-Addtl-Info"
 
 compare_rows:
@@ -128,4 +125,4 @@ secondary:
       - "The IRS has specific eligibility rules for opening and maintaining an HSA and for qualified medical expenses. Consult your tax advisor for how IRS rules affect you."
     details_url: "https://www.texasgulfbank.com/savings-cds-iras-comparison-chart/#health-savings"
 
-disclaimer_short: "Early withdrawal penalties may apply to CDs and IRAs. *Advertised APYs reflect the highest available rate tier and may require qualifying balances or activity. Variable rates may change after account opening. Contact Texas Gulf Bank at 1-800-467-7216 for a Truth-In-Savings / Reg DD disclosure of terms, conditions, fees, and rate information."
+disclaimer_short: "Early withdrawal penalties may apply to CDs and IRAs. *Placeholder rates, not current offers. Displayed APYs are the highest tier in this sample and may require qualifying balances or activity. Variable rates may change after account opening. Contact Texas Gulf Bank at 1-800-467-7216 for a Truth-In-Savings / Reg DD disclosure of terms, conditions, fees, and rate information."

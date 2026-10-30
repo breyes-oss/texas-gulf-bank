@@ -3,6 +3,7 @@
 interface SubLink {
   label: string;
   href: string;
+  inert?: boolean;
 }
 
 interface NavItem {
@@ -32,7 +33,7 @@ const {
         { label: "Money Market", href: "/money-market" },
         { label: "Savings & CDs (texasgulfbank.com)", href: "https://www.texasgulfbank.com/personal-savings-cds-iras/" },
         { label: "Personal Loans", href: "https://www.texasgulfbank.com/loans/" },
-        { label: "Online Banking", href: "https://www.texasgulfbank.com/online-and-mobile-banking/" },
+        { label: "Online banking (not available in concept)", href: "", inert: true },
         { label: "Zelle®", href: "https://www.texasgulfbank.com/zelle/" },
         { label: "Rates & Fees", href: "/rates-and-fees" },
       ],
@@ -109,15 +110,21 @@ const {
               <div class="nav-dropdown absolute left-0 top-full pt-2 w-[300px] invisible" data-nav-dropdown>
                 <div class="nav-dropdown-panel bg-white border border-brand-navy/10 shadow-[0_12px_32px_rgba(25,41,75,0.12)] overflow-hidden py-2">
                   {item.children.map((child) => (
-                    <a
-                      href={child.href}
-                      class="menu-link group/link block px-5 py-3 text-sm text-brand-text hover:text-brand-navy hover:bg-brand-cream transition-colors"
-                    >
-                      <span class="relative">
+                    child.inert ? (
+                      <span class="block px-5 py-3 text-sm font-medium text-brand-muted">
                         {child.label}
-                        <span class="menu-link-underline"></span>
                       </span>
-                    </a>
+                    ) : (
+                      <a
+                        href={child.href}
+                        class="menu-link group/link block px-5 py-3 text-sm text-brand-text hover:text-brand-navy hover:bg-brand-cream transition-colors"
+                      >
+                        <span class="relative">
+                          {child.label}
+                          <span class="menu-link-underline"></span>
+                        </span>
+                      </a>
+                    )
                   ))}
                 </div>
               </div>
@@ -126,33 +133,21 @@ const {
         ))}
       </nav>
 
-      <!-- CTA + Mobile Toggle -->
-      {showCta && (
-        <div class="flex items-center gap-3">
-          <a
-            href="https://www.netteller.com/login2008/Authentication/Views/Login.aspx?returnUrl=%2Ftexasgulfbank"
-            class="hidden sm:inline-flex items-center gap-2 bg-brand-gold text-brand-navy px-5 py-2.5 rounded-lg text-sm font-bold hover:bg-brand-gold-light transition-colors shadow-sm"
-          >
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
-            Online Banking
-          </a>
-          {showHamburger && (
-            <button
-              class="menu-toggle lg:hidden p-2 rounded-lg transition-colors"
-              aria-label="Menu"
-              aria-expanded="false"
-              aria-controls="mobile-menu"
-              data-menu-toggle
-            >
-              <svg class="icon-burger w-6 h-6 text-brand-text" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-              <svg class="icon-close w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 6l12 12M6 18L18 6" />
-              </svg>
-            </button>
-          )}
-        </div>
+      {showHamburger && (
+        <button
+          class="menu-toggle lg:hidden p-2 rounded-lg transition-colors"
+          aria-label="Menu"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+          data-menu-toggle
+        >
+          <svg class="icon-burger w-6 h-6 text-brand-text" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <svg class="icon-close w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 6l12 12M6 18L18 6" />
+          </svg>
+        </button>
       )}
     </div>
   </div>
@@ -170,24 +165,24 @@ const {
             <h3 class="menu-section-title font-display">{item.label}</h3>
             <ul class="menu-links">
               {item.children?.map((child) => (
-                <li><a href={child.href}>{child.label}</a></li>
+                <li>
+                  {child.inert ? (
+                    <span class="block py-1.5 text-white/70">{child.label}</span>
+                  ) : (
+                    <a href={child.href}>{child.label}</a>
+                  )}
+                </li>
               ))}
             </ul>
           </div>
         ))}
       </nav>
 
-      <!-- Bottom: Online Banking CTA (header CTA is hidden on phones) + trust line -->
-      <div class="mobile-menu-bottom">
-        <a
-          href="https://www.netteller.com/login2008/Authentication/Views/Login.aspx?returnUrl=%2Ftexasgulfbank"
-          class="inline-flex items-center justify-center gap-2 bg-brand-gold text-brand-navy px-6 py-3 rounded-lg text-sm font-bold hover:bg-brand-aqua transition-colors shadow-sm w-full sm:w-auto"
-        >
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
-          Online Banking
-        </a>
-        <p class="text-xs text-white/60">Member FDIC · Equal Housing Lender</p>
-      </div>
+      {showCta && (
+        <div class="mobile-menu-bottom">
+          <p class="text-sm font-semibold text-white/90">Online banking (not available in concept)</p>
+        </div>
+      )}
     </div>
   </div>
 </header>

@@ -21,8 +21,8 @@ const pathways = [
     eyebrow: "Bank from anywhere",
     title: "Digital Banking",
     description: "Deposit a check from the truck. Pay a bill from the deer lease. Full banking, wherever Wednesday finds you.",
-    cta: "Explore digital banking",
-    href: "https://www.texasgulfbank.com/online-and-mobile-banking/",
+    cta: "Online banking (not available in concept)",
+    href: "",
     icon: "phone"
   }
 ];
@@ -35,14 +35,22 @@ const pathways = [
     </h2>
 
     <div class="mt-10 grid grid-cols-1 lg:grid-cols-3 gap-px bg-brand-navy/10 border border-brand-navy/10">
-      {pathways.map((item, i) => (
-        <a href={item.href} class={`group bg-white p-8 lg:p-10 flex flex-col transition-colors hover:bg-brand-navy animate-fade-in delay-${i + 1}`}>
-          <span class="text-sm font-semibold text-brand-gold-dark group-hover:text-brand-gold-light transition-colors">{item.eyebrow}</span>
-          <h3 class="font-display text-xl font-semibold text-brand-text mt-6 group-hover:text-white transition-colors">{item.title}</h3>
-          <p class="text-brand-muted leading-relaxed mt-3 group-hover:text-white/75 transition-colors">{item.description}</p>
-          <span class="mt-auto pt-8 text-brand-navy-light font-semibold group-hover:text-brand-gold-light transition-colors">{item.cta}</span>
-        </a>
-      ))}
+      {pathways.map((item, i) => {
+        const cardClass = `group bg-white p-8 lg:p-10 flex flex-col transition-colors animate-fade-in delay-${i + 1}`;
+        const inner = (
+          <>
+            <span class="text-sm font-semibold text-brand-gold-dark group-hover:text-brand-gold-light transition-colors">{item.eyebrow}</span>
+            <h3 class="font-display text-xl font-semibold text-brand-text mt-6 group-hover:text-white transition-colors">{item.title}</h3>
+            <p class="text-brand-muted leading-relaxed mt-3 group-hover:text-white/75 transition-colors">{item.description}</p>
+            <span class="mt-auto pt-8 text-brand-navy-light font-semibold group-hover:text-brand-gold-light transition-colors">{item.cta}</span>
+          </>
+        );
+        return item.href ? (
+          <a href={item.href} class:list={[cardClass, "hover:bg-brand-navy"]}>{inner}</a>
+        ) : (
+          <div class={cardClass}>{inner}</div>
+        );
+      })}
     </div>
 
   </div>

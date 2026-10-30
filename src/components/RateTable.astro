@@ -21,12 +21,13 @@ const sectionData = section ? rates.sections?.find((s) => s.id === section) : un
 ---
 
 <div class:list={["rate-table", className]}>
+  <p class="placeholder-callout" role="note">Placeholder rates, not current offers.</p>
   {showHeader && (
     <div class:list={[compact ? "mb-4" : "mb-6"]}>
-      <p class="text-xs font-semibold uppercase tracking-[0.16em] text-brand-gold-dark">Current Rates</p>
+      <p class="text-xs font-semibold uppercase tracking-[0.16em] text-brand-gold-dark">Placeholder rates</p>
       {rates.published && (
         <p class:list={[compact ? "mt-1 text-xs text-brand-muted" : "mt-2 text-sm text-brand-muted"]}>
-          {sectionData ? `${sectionData.title} — rates published ${rates.published}.` : `Featured annual percentage yields published ${rates.published}.`}
+          {sectionData ? `${sectionData.title} — dated ${rates.published}. Not current offers.` : `Dated ${rates.published}. Not current offers.`}
         </p>
       )}
     </div>

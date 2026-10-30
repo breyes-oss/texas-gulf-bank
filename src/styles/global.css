@@ -75,6 +75,19 @@ body.menu-open {
   border-radius: 2px;
 }
 
+/* Placeholder rates and fees — high contrast, not a dismissible notice */
+.placeholder-callout {
+  margin: 0 0 1rem;
+  border: 2px solid var(--color-brand-navy);
+  background: var(--color-brand-gold-pale);
+  color: var(--color-brand-navy);
+  border-radius: 0.5rem;
+  padding: 0.8rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
 /* ── Utility Classes ── */
 .text-balance {
   text-wrap: balance;
