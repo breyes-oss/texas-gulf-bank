@@ -7,11 +7,21 @@ interface Props {
   class?: string;
   /** Render only the rates.yaml section with this id (e.g. "money-market", "cd-fixed") */
   section?: string;
+  /** Published EmDash rate sheet. File-backed rates are used when this is omitted. */
+  data?: {
+    title: string;
+    published?: string;
+    disclaimer?: string;
+    full_rates_url?: string;
+    items: { name: string; detail?: string; value: string }[];
+    sections: { id: string; title: string; note?: string; columns: string[]; rows: string[][] }[];
+    sections_footnote?: string;
+  };
 }
 
-const { compact = false, showHeader = true, class: className = "", section } = Astro.props;
-const entry = await getEntry("data", "rates");
-const rates = entry?.data;
+const { compact = false, showHeader = true, class: className = "", section, data } = Astro.props;
+const entry = data ? null : await getEntry("data", "rates");
+const rates = data ?? entry?.data;
 
 if (!rates) {
   throw new Error("Missing rates data at src/content/data/rates.yaml");

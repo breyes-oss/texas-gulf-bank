@@ -1,8 +1,11 @@
 ---
-import { getCollection } from "astro:content";
-import Layout from "../../layouts/Layout.astro";
+export const prerender = false;
 
-const locations = await getCollection("locations");
+import Layout from "../../layouts/Layout.astro";
+import { loadLocations, loadPage } from "../../lib/cms";
+
+const page = await loadPage("locations");
+const locations = await loadLocations();
 const sorted = [...locations].sort((a, b) => a.data.name.localeCompare(b.data.name));
 
 // Group by county for the card list (matches how locals search).
@@ -62,13 +65,17 @@ function todayRows(rows: { days: string; open: string; close: string }[]) {
   <section class="bg-gradient-to-r from-brand-navy via-brand-navy-mid to-brand-aqua text-white border-b border-brand-navy/10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
       <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.05] tracking-tight text-balance">
-        Texas Gulf Bank Locations
+        {page?.headline || "Texas Gulf Bank Locations"}
       </h1>
-      <p class="mt-5 text-lg text-white/85 max-w-2xl text-balance">
-        {sorted.length} ATM and banking centers across {[...new Set(sorted.map((l) => l.data.region.replace(/ County$/, "")))].sort().join(", ").replace(/, ([^,]+)$/, ", and $1")}&nbsp;
-        counties — with local bankers who know your community. Search below, or call
-        <a href="tel:8004677216" class="text-brand-gold font-bold underline underline-offset-2">800.467.7216</a>.
-      </p>
+      {page?.summary ? (
+        <p class="mt-5 text-lg text-white/85 max-w-2xl text-balance">{page.summary}</p>
+      ) : (
+        <p class="mt-5 text-lg text-white/85 max-w-2xl text-balance">
+          {sorted.length} ATM and banking centers across {[...new Set(sorted.map((l) => l.data.region.replace(/ County$/, "")))].sort().join(", ").replace(/, ([^,]+)$/, ", and $1")}&nbsp;
+          counties — with local bankers who know your community. Search below, or call
+          <a href="tel:8004677216" class="text-brand-gold font-bold underline underline-offset-2">800.467.7216</a>.
+        </p>
+      )}
     </div>
   </section>
 

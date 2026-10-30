@@ -1,0 +1,30 @@
+---
+export const prerender = false;
+
+import CmsPage from "../components/CmsPage.astro";
+import { loadPage, phoneHref } from "../lib/cms";
+
+const page = await loadPage("contact");
+const phone = page?.phone || "800.467.7216";
+const href = phoneHref(phone);
+---
+
+<CmsPage
+  title={page?.title || "[Placeholder] Contact"}
+  description="Placeholder contact page for this concept site. It does not collect personal or banking information."
+  headline={page?.headline || "[Placeholder] Contact"}
+  summary={page?.summary || "[Placeholder] This concept page does not collect personal or banking information."}
+  body={page?.body}
+>
+  <p class="mt-6 text-base font-semibold text-brand-navy">This page does not collect personal or banking information.</p>
+  <ul class="mt-4 space-y-3 text-base">
+    {href && (
+      <li>
+        <a class="font-semibold text-brand-navy-light underline underline-offset-2 hover:text-brand-gold-dark" href={href}>{phone}</a>
+      </li>
+    )}
+    <li>
+      <a class="font-semibold text-brand-navy-light underline underline-offset-2 hover:text-brand-gold-dark" href="/locations/">Banking center locations</a>
+    </li>
+  </ul>
+</CmsPage>

@@ -1,0 +1,19 @@
+---
+export const prerender = false;
+
+import CmsPage from "../components/CmsPage.astro";
+import { loadPage } from "../lib/cms";
+
+const page = await loadPage("about");
+const headline = page?.headline || "[Placeholder] About";
+const summary = page?.summary || "[Placeholder] Editable concept copy. This page does not add people, history, or regulatory claims.";
+const body = page?.body || "";
+---
+
+<CmsPage
+  title={page?.title || "[Placeholder] About"}
+  description="Placeholder about page for this concept site. Not the official Texas Gulf Bank website."
+  headline={headline}
+  summary={summary}
+  body={body}
+/>
