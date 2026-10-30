@@ -1,7 +1,7 @@
 /// <reference types="@cloudflare/workers-types" />
 import handler, { createScheduledHandler } from "@emdash-cms/cloudflare/worker";
 
-const scheduled = createScheduledHandler();
+const scheduled = createScheduledHandler({ generalCron: "*/5 * * * *" });
 
 const ROBOTS = "noindex, nofollow";
 const BANNER =

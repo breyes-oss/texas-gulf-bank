@@ -8,6 +8,7 @@ import Header from '../components/Header.astro';
 import ConceptBanner from '../components/ConceptBanner.astro';
 
 const { title, description } = Astro.props;
+const documentTitle = title.replace(/\s*(?:\|\s*|—\s+)Texas Gulf Bank\s*$/i, "").trim();
 ---
 <!doctype html>
 <html lang="en">
@@ -17,7 +18,7 @@ const { title, description } = Astro.props;
     <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="generator" content={Astro.generator} />
     <meta name="robots" content="noindex, nofollow" />
-    <title>{title} | Texas Gulf Bank</title>
+    <title>{documentTitle} | Texas Gulf Bank</title>
     <meta name="description" content={description} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

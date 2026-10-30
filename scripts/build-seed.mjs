@@ -215,6 +215,7 @@ const home = { title: mark("Home"), headline: mark("Home") };
 for (const key of homeKeys) {
   if (homeYaml[key] != null && homeYaml[key] !== "") home[key] = mark(String(homeYaml[key]));
 }
+home.hero_primary_cta = "Explore checking";
 
 const pages = [
   { id: "home", status: "published", data: home },
@@ -245,7 +246,7 @@ const pages = [
     data: {
       title: mark("Locations"),
       headline: mark("Texas Gulf Bank Locations"),
-      summary: mark("Banking centers already listed on this concept site. Search by city, ZIP, or location name, or call 800.467.7216."),
+      summary: mark("Banking centers already listed on this concept site. Addresses, hours, and phone numbers are unverified placeholders until confirmed."),
     },
   },
   {
