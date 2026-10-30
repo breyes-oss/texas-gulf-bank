@@ -35,11 +35,6 @@ const sectionData = section ? rates.sections?.find((s) => s.id === section) : un
   {showHeader && (
     <div class:list={[compact ? "mb-4" : "mb-6"]}>
       <p class="text-xs font-semibold uppercase tracking-[0.16em] text-brand-gold-dark">Placeholder rates</p>
-      {rates.published && (
-        <p class:list={[compact ? "mt-1 text-xs text-brand-muted" : "mt-2 text-sm text-brand-muted"]}>
-          {sectionData ? `${sectionData.title} — dated ${rates.published}. Not current offers.` : `Dated ${rates.published}. Not current offers.`}
-        </p>
-      )}
     </div>
   )}
 
@@ -119,19 +114,12 @@ const sectionData = section ? rates.sections?.find((s) => s.id === section) : un
               {s.note && <p class="mt-2 text-xs text-brand-muted leading-relaxed">{s.note}</p>}
             </div>
           ))}
-          {rates.sections_footnote && (
-            <p class="text-xs text-brand-muted leading-relaxed">{rates.sections_footnote}</p>
-          )}
         </div>
       )}
     </>
   )}
 
-  {rates.disclaimer && (
-    <p class:list={["text-brand-muted leading-relaxed", compact ? "mt-3 text-[11px]" : "mt-5 text-xs"]}>
-      {rates.disclaimer}
-    </p>
-  )}
+  <p class:list={["text-brand-muted leading-relaxed", compact ? "mt-3 text-[11px]" : "mt-5 text-xs"]}>[Placeholder] Rates shown are examples only, not current offers.</p>
 
   {rates.full_rates_url && (
     <a

@@ -301,10 +301,9 @@ const rates = [
     status: "published",
     data: {
       title: mark(ratesYaml.title || "Featured Rates"),
-      published: ratesYaml.published ?? "",
-      disclaimer: mark(ratesYaml.disclaimer || "Rates may change."),
+      disclaimer: "[Placeholder] Rates shown are examples only, not current offers.",
       full_rates_url: ratesYaml.full_rates_url ?? "",
-      sections_footnote: ratesYaml.sections_footnote ? mark(String(ratesYaml.sections_footnote)) : "",
+      sections_footnote: "[Placeholder] Rates shown are examples only, not current offers.",
       items: (ratesYaml.items ?? []).map((item) => ({
         name: item.name ?? "",
         detail: item.detail ?? "",
