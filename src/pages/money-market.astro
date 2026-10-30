@@ -2,6 +2,8 @@
 import { getEntry } from "astro:content";
 import Layout from "../layouts/Layout.astro";
 import RateTable from "../components/RateTable.astro";
+import OpenAccountAction from "../components/OpenAccountAction.astro";
+import { omitAccountApplicationUrl } from "../lib/concept";
 
 const entry = await getEntry("products", "personal-savings");
 const mm = entry?.data.products.find((p) => p.id === "money-market");
@@ -10,7 +12,7 @@ if (!mm) throw new Error("Money Market product missing from products/personal-sa
 
 <Layout
   title="Personal Money Market Account — Tiered Rates | Texas Gulf Bank"
-  description="Earn tiered interest up to 1.66% APY with a Texas Gulf Bank Personal Money Market account. $500 to open, no term lock-up, your entire balance earns the tier rate. See current tiers."
+  description="Placeholder money market tiers on this concept site, including a displayed figure of up to 1.66% APY. Not current offers. Online account opening is not available."
 >
   <!-- Hero -->
   <section class="bg-gradient-to-r from-brand-navy via-brand-navy-mid to-brand-aqua text-white">
@@ -27,11 +29,10 @@ if (!mm) throw new Error("Money Market product missing from products/personal-sa
         <div>
           <p class="text-xs font-semibold uppercase tracking-wide text-white/70">Rates up to</p>
           <p class="font-display text-4xl font-black text-brand-gold">1.66% <span class="text-base font-semibold">APY</span></p>
+          <p class="mt-1 text-sm font-semibold text-white">Placeholder rates, not current offers.</p>
         </div>
         <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-          <a href={mm.open_url} class="inline-flex items-center justify-center gap-2 bg-brand-gold text-brand-navy px-7 py-3.5 rounded-lg text-base font-bold hover:bg-white transition-colors">
-            Open a Money Market account
-          </a>
+          <OpenAccountAction href={mm.open_url} tone="on-dark" label="Open a Money Market account" class="inline-flex items-center justify-center gap-2 bg-brand-gold text-brand-navy px-7 py-3.5 rounded-lg text-base font-bold hover:bg-white transition-colors" />
           <a href="#rates" class="inline-flex items-center justify-center gap-2 border border-white/35 text-white px-7 py-3.5 rounded-lg text-base font-semibold hover:bg-white/10 transition-colors">
             See all rate tiers
           </a>
@@ -88,11 +89,11 @@ if (!mm) throw new Error("Money Market product missing from products/personal-sa
     </div>
   </section>
 
-  <!-- Current rates -->
+  <!-- Placeholder rate tiers -->
   <section id="rates" class="py-14 lg:py-20 bg-white scroll-mt-24">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <h2 class="font-display text-3xl sm:text-4xl font-black text-brand-text tracking-tight text-balance max-w-2xl leading-[1.1]">
-        Today's money market tiers.
+        Money market tiers.
       </h2>
       <div class="mt-8 max-w-2xl">
         <RateTable section="money-market" />
@@ -111,12 +112,10 @@ if (!mm) throw new Error("Money Market product missing from products/personal-sa
         Put your balance in a higher tier.
       </h2>
       <p class="mt-4 text-lg text-white/80 max-w-xl mx-auto text-balance">
-        Open online in minutes, or talk to a local banker about which tier fits your goals.
+        Talk to a local banker about which tier fits your goals. Online account opening is not available on this concept site.
       </p>
       <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-        <a href={mm.open_url} class="inline-flex items-center justify-center gap-2 bg-brand-gold text-brand-navy px-8 py-3.5 rounded-lg text-base font-bold hover:bg-white transition-colors">
-          Open an account online
-        </a>
+        <OpenAccountAction href={mm.open_url} tone="on-dark" label="Open an account online" class="inline-flex items-center justify-center gap-2 bg-brand-gold text-brand-navy px-8 py-3.5 rounded-lg text-base font-bold hover:bg-white transition-colors" />
         <a href="/locations/" class="inline-flex items-center justify-center gap-2 border border-white/30 text-white px-8 py-3.5 rounded-lg text-base font-semibold hover:bg-white/10 transition-colors">
           Find a banking center
         </a>
@@ -192,4 +191,4 @@ if (!mm) throw new Error("Money Market product missing from products/personal-sa
   });
 </script>
 
-<script is:inline type="application/json" id="__MM_JSON__" set:html={JSON.stringify(mm)}></script>
+<script is:inline type="application/json" id="__MM_JSON__" set:html={JSON.stringify(omitAccountApplicationUrl(mm))}></script>

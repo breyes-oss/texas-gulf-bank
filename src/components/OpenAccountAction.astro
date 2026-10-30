@@ -1,0 +1,33 @@
+---
+import { isAccountApplicationUrl } from "../lib/concept";
+
+interface Props {
+  href?: string;
+  label?: string;
+  class?: string;
+  tone?: "on-light" | "on-dark";
+}
+
+const {
+  href,
+  label = "Open this account",
+  class: className = "",
+  tone = "on-light",
+} = Astro.props;
+
+const unavailable = !href || isAccountApplicationUrl(href);
+const textClass =
+  tone === "on-dark"
+    ? "text-sm font-semibold leading-snug text-white/90"
+    : "text-sm font-semibold leading-snug text-brand-muted";
+---
+
+{
+  unavailable ? (
+    <span class={textClass}>Online account opening (not available in concept)</span>
+  ) : (
+    <a href={href} class={className}>
+      {label}
+    </a>
+  )
+}

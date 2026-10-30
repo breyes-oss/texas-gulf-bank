@@ -2,6 +2,8 @@
 import { getEntry } from "astro:content";
 import Layout from "../layouts/Layout.astro";
 import RateTable from "../components/RateTable.astro";
+import OpenAccountAction from "../components/OpenAccountAction.astro";
+import { omitAccountApplicationUrl } from "../lib/concept";
 
 const entry = await getEntry("products", "personal-savings");
 const d = entry?.data;
@@ -32,7 +34,7 @@ const RATE_UP_TO = {
 
 <Layout
   title="Savings Accounts, CDs & IRAs — Texas Gulf Bank"
-  description="Compare Texas Gulf Bank savings options: accessible Personal Savings, fixed-rate Certificates of Deposit, and IRAs for retirement. Plus Gulf Rewards Savings and Health Savings Accounts. Open online or at any of our nine banking centers."
+  description="Compare savings, CD, and IRA options on this concept site. Online account opening is not available."
 >
   <!-- Hero -->
   <section class="bg-gradient-to-r from-brand-navy via-brand-navy-mid to-brand-aqua text-white">
@@ -42,8 +44,8 @@ const RATE_UP_TO = {
       </h1>
       <p class="mt-5 text-lg text-white/85 max-w-2xl text-balance leading-relaxed">
         Money you'll need soon belongs in savings. Money you can set aside for years
-        should be earning at its full potential. We'll help you figure out which is which —
-        then open the right account in minutes.
+        should be earning at its full potential. We'll help you figure out which is which.
+        Online account opening is not available on this concept site.
       </p>
       <div class="mt-8 flex flex-col sm:flex-row gap-3">
         <a href="#accounts" class="inline-flex items-center justify-center gap-2 bg-brand-gold text-brand-navy px-7 py-3.5 rounded-lg text-base font-bold hover:bg-white transition-colors">
@@ -82,6 +84,7 @@ const RATE_UP_TO = {
       <h2 class="font-display text-3xl sm:text-4xl font-black text-brand-text tracking-tight text-balance max-w-2xl leading-[1.1]">
         Match the account to your timeline.
       </h2>
+      <p class="placeholder-callout mt-6 max-w-3xl" role="note">Placeholder rates, not current offers.</p>
       <div class="mt-10 grid lg:grid-cols-3 gap-6">
         {featured.map((p, i) => (
           <article id={`panel-${p.id}`} class:list={["bg-white border border-brand-navy/10 rounded-lg overflow-hidden flex flex-col scroll-mt-24", i === 1 && "ring-2 ring-brand-gold"]}>
@@ -89,7 +92,7 @@ const RATE_UP_TO = {
               <div class="flex items-center justify-between gap-3">
                 <h3 class="font-display text-xl font-bold text-brand-navy">{p.name}</h3>
                 {i === 1 && (
-                  <span class="shrink-0 inline-flex rounded-full bg-brand-gold-pale border border-brand-gold/40 px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wide text-brand-gold-dark">Best rate</span>
+                  <span class="shrink-0 inline-flex rounded-full bg-brand-gold-pale border border-brand-gold/40 px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wide text-brand-gold-dark">Placeholder</span>
                 )}
               </div>
               <p class="mt-1.5 text-sm text-brand-muted italic">{p.tagline}</p>
@@ -124,9 +127,11 @@ const RATE_UP_TO = {
             </div>
 
             <div class="px-6 sm:px-7 pb-6 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-brand-navy/5 pt-4 mt-4">
-              <a href={p.open_url} class="inline-flex items-center justify-center gap-2 bg-brand-navy text-white px-5 py-2.5 rounded-lg text-sm font-bold hover:bg-brand-navy-light transition-colors">
-                {p.id === "ira" ? "Talk to a banker" : "Open this account"}
-              </a>
+              <OpenAccountAction
+                href={p.open_url}
+                label={p.id === "ira" ? "Talk to a banker" : "Open this account"}
+                class="inline-flex items-center justify-center gap-2 bg-brand-navy text-white px-5 py-2.5 rounded-lg text-sm font-bold hover:bg-brand-navy-light transition-colors"
+              />
               <button
                 type="button"
                 data-details-trigger={p.id}
@@ -147,7 +152,7 @@ const RATE_UP_TO = {
       <h2 class="font-display text-3xl sm:text-4xl font-black text-brand-text tracking-tight text-balance leading-[1.1] max-w-2xl">
         All four, side by side.
       </h2>
-      <p class="mt-3 text-brand-muted max-w-2xl">Same bank, same FDIC insurance — the difference is how long you can set the money aside. {d.published}.</p>
+      <p class="mt-3 text-brand-muted max-w-2xl">The difference is how long you can set the money aside. {d.published}.</p>
 
       <div class="mt-8 overflow-x-auto rounded-lg border border-brand-navy/10">
         <table class="w-full min-w-[720px] text-sm bg-white">
@@ -182,9 +187,11 @@ const RATE_UP_TO = {
               <td class="px-5 py-4"></td>
               {featured.map((p) => (
                 <td class="px-5 py-4">
-                  <a href={p.open_url} class="inline-flex items-center justify-center bg-brand-gold text-brand-navy px-4 py-2 rounded-lg text-xs font-bold hover:bg-brand-gold-light transition-colors whitespace-nowrap">
-                    {p.id === "ira" ? "Talk to a banker" : "Open"}
-                  </a>
+                  <OpenAccountAction
+                    href={p.open_url}
+                    label={p.id === "ira" ? "Talk to a banker" : "Open"}
+                    class="inline-flex items-center justify-center bg-brand-gold text-brand-navy px-4 py-2 rounded-lg text-xs font-bold hover:bg-brand-gold-light transition-colors whitespace-nowrap"
+                  />
                 </td>
               ))}
             </tr>
@@ -291,7 +298,7 @@ const RATE_UP_TO = {
   }
 
   function rateTableHtml(s) {
-    let html = `<div class="overflow-x-auto"><table class="w-full max-w-md text-sm"><colgroup><col class="w-1/2"><col class="w-1/4"><col class="w-1/4"></colgroup><thead><tr class="bg-brand-navy text-white">`;
+    let html = `<p class="placeholder-callout" role="note">Placeholder rates, not current offers.</p><div class="overflow-x-auto"><table class="w-full max-w-md text-sm"><colgroup><col class="w-1/2"><col class="w-1/4"><col class="w-1/4"></colgroup><thead><tr class="bg-brand-navy text-white">`;
     s.columns.forEach((c, i) => {
       html += `<th scope="col" class="px-4 py-3 ${i === 0 ? "text-left" : "text-right"} font-display font-bold">${esc(c)}</th>`;
     });
@@ -439,5 +446,5 @@ const RATE_UP_TO = {
   });
 </script>
 
-<script is:inline type="application/json" id="__ACCOUNTS_JSON__" set:html={JSON.stringify([...d.products, ...d.secondary])}></script>
+<script is:inline type="application/json" id="__ACCOUNTS_JSON__" set:html={JSON.stringify([...d.products, ...d.secondary].map(omitAccountApplicationUrl))}></script>
 <script is:inline type="application/json" id="__RATES_SECTIONS__" set:html={JSON.stringify(ratesData.sections)}></script>

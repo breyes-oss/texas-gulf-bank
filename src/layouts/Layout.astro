@@ -5,6 +5,7 @@ export interface Props {
 }
 import '../styles/global.css';
 import Header from '../components/Header.astro';
+import ConceptBanner from '../components/ConceptBanner.astro';
 
 const { title, description } = Astro.props;
 ---
@@ -15,7 +16,8 @@ const { title, description } = Astro.props;
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="generator" content={Astro.generator} />
-    <title>{title} | Texas Gulf Bank N.A.</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <title>{title} | Texas Gulf Bank</title>
     <meta name="description" content={description} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -25,15 +27,7 @@ const { title, description } = Astro.props;
   <body class="min-h-screen flex flex-col">
     <!-- Skip Navigation Link (WCAG 2.4.1) -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
-    <!-- Top Utility Bar: FDIC sign | Routing number (routing hidden on phones so FDIC spans the bar) -->
-    <div class="bg-brand-navy text-white text-xs">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4 h-12">
-        <span class="inline-flex items-center shrink-0 w-full sm:w-auto" title="FDIC-Insured - Backed by the full faith and credit of the U.S. Government">
-          <img src="/fdic-digital-sign-white.png" alt="FDIC-Insured - Backed by the full faith and credit of the U.S. Government" class="w-full sm:w-auto h-auto sm:h-8" loading="eager" />
-        </span>
-        <span class="shrink-0 hidden sm:inline">Routing Number: 113115484</span>
-      </div>
-    </div>
+    <ConceptBanner />
 
     <!-- Main Header (shrinks on scroll) -->
     <Header />
@@ -66,7 +60,7 @@ const { title, description } = Astro.props;
               <li><a href="/personal-savings" class="text-white/70 hover:text-white text-sm transition-colors">Savings & CDs</a></li>
               <li><a href="/money-market" class="text-white/70 hover:text-white text-sm transition-colors">Money Market</a></li>
               <li><a href="https://www.texasgulfbank.com/loans/" class="text-white/70 hover:text-white text-sm transition-colors">Personal Loans</a></li>
-              <li><a href="https://www.texasgulfbank.com/online-and-mobile-banking/" class="text-white/70 hover:text-white text-sm transition-colors">Online Banking</a></li>
+              <li><span class="text-white/70 text-sm">Online banking (not available in concept)</span></li>
               <li><a href="https://www.texasgulfbank.com/zelle/" class="text-white/70 hover:text-white text-sm transition-colors">Zelle®</a></li>
               <li><a href="/rates-and-fees" class="text-white/70 hover:text-white text-sm transition-colors">Rates &amp; Fees</a></li>
             </ul>
@@ -112,23 +106,13 @@ const { title, description } = Astro.props;
       <div class="border-t border-white/10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
           <div class="flex items-center gap-3 text-xs text-gray-400">
-            <span>© 2026 Texas Gulf Bank N.A.</span>
+            <span>Concept site. Not the official Texas Gulf Bank website.</span>
             <span class="hidden sm:inline">·</span>
             <a href="https://www.texasgulfbank.com/privacy-security/" class="hover:text-white transition-colors">Privacy Policy</a>
             <span class="hidden sm:inline">·</span>
             <a href="https://www.texasgulfbank.com/privacy-security/" class="hover:text-white transition-colors">Terms of Use</a>
             <span class="hidden sm:inline">·</span>
             <a href="https://www.texasgulfbank.com/website-accessibility/" class="hover:text-white transition-colors">Accessibility</a>
-          </div>
-          <div class="flex items-center gap-3">
-            <a href="https://www.texasgulfbank.com/website-accessibility/" class="inline-flex items-center gap-2 text-xs text-white/70 hover:text-white transition-colors">
-              <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-                <path d="M12 3L3 11h2v9h5.5v-5h3v5H19v-9h2L12 3z"/>
-                <path d="M8.5 8.2c0-.9.7-1.6 1.6-1.6h3.8c.9 0 1.6.7 1.6 1.6"/>
-                <circle cx="12" cy="10.2" r="1.1"/><path d="M10.2 12h3.6M12 12v2.5"/>
-              </svg>
-              <span>Equal Housing Lender</span>
-            </a>
           </div>
         </div>
       </div>
