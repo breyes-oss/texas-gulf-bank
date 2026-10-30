@@ -107,7 +107,7 @@ const {
             </a>
 
             {item.children?.length > 0 && (
-              <div class="nav-dropdown absolute left-0 top-full pt-2 w-[300px] invisible" data-nav-dropdown>
+              <div class="nav-dropdown absolute top-full pt-2 w-[300px] invisible" data-nav-dropdown>
                 <div class="nav-dropdown-panel bg-white border border-brand-navy/10 shadow-[0_12px_32px_rgba(25,41,75,0.12)] overflow-hidden py-2">
                   {item.children.map((child) => (
                     child.inert ? (
@@ -258,11 +258,19 @@ const {
 
   /* ── Desktop dropdown nav (SouthWest Bank style) ── */
   .nav-dropdown {
+    left: 0;
     transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out, visibility 0.3s ease-in-out;
     opacity: 0;
     transform: translateY(-12px);
     visibility: hidden;
     pointer-events: none;
+  }
+  /* Wealth and About sit against the right edge. A left-anchored 300px
+     panel there extends past the viewport and widens the page. */
+  .nav-item:last-child .nav-dropdown,
+  .nav-item:nth-last-child(2) .nav-dropdown {
+    left: auto;
+    right: 0;
   }
   .nav-item.is-open .nav-dropdown {
     opacity: 1;

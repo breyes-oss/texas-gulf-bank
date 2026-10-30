@@ -1,0 +1,4 @@
+# Sveltia CMS. Not part of this Worker: the admin shell covers the concept
+# banner, and its Pages Functions OAuth backend is not deployed.
+admin
+admin/**
