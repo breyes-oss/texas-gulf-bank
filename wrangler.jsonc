@@ -1,9 +1,7 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
-  // Static-assets Worker only: no `main` script and no Astro Cloudflare adapter.
-  // `functions/` is the Pages CMS OAuth backend. It stays at the repo root, outside
-  // `assets.directory`, so `wrangler deploy` does not upload or run it.
   "name": "texas-gulf-bank",
+  "main": "./src/worker.ts",
   "compatibility_date": "2026-10-30",
   "compatibility_flags": ["nodejs_compat"],
   "observability": {
@@ -17,8 +15,22 @@
       "head_sampling_rate": 0.01
     }
   },
-  "assets": {
-    "directory": "./dist",
-    "html_handling": "auto-trailing-slash"
+  // Astro's Cloudflare adapter fills assets.directory at build time.
+  // SESSION is the adapter's admin session KV binding (free-plan KV).
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "texas-gulf-bank",
+      "database_id": "730f91d6-7b7d-4c6e-b63e-7d3f23549cb0"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "MEDIA",
+      "bucket_name": "texas-gulf-bank-media"
+    }
+  ],
+  "triggers": {
+    "crons": ["*/5 * * * *"]
   }
 }

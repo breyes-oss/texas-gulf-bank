@@ -1,8 +1,11 @@
 ---
-import { getCollection } from "astro:content";
-import Layout from "../../layouts/Layout.astro";
+export const prerender = false;
 
-const locations = await getCollection("locations");
+import Layout from "../../layouts/Layout.astro";
+import { loadLocations, loadPage } from "../../lib/cms";
+
+const page = await loadPage("locations");
+const locations = await loadLocations();
 const sorted = [...locations].sort((a, b) => a.data.name.localeCompare(b.data.name));
 
 // Group by county for the card list (matches how locals search).
@@ -55,28 +58,27 @@ function todayRows(rows: { days: string; open: string; close: string }[]) {
 ---
 
 <Layout
-  title="Bank &amp; ATM Locations in Houston, Lake Jackson &amp; the Gulf Coast | Texas Gulf Bank"
+  title="Bank & ATM Locations in Houston, Lake Jackson & the Gulf Coast"
   description={`Find a Texas Gulf Bank Banking Center near you in Harris, Galveston, and Brazoria counties. ${sorted.length} branches with lobby and drive-thru hours, phone numbers, directions, and services.`}
 >
   <!-- Page header: signature navy→aqua gradient band (brand guide: heroes + key moments) -->
   <section class="bg-gradient-to-r from-brand-navy via-brand-navy-mid to-brand-aqua text-white border-b border-brand-navy/10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
       <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.05] tracking-tight text-balance">
-        Texas Gulf Bank Locations
+        {page?.headline?.startsWith("[Placeholder]") ? page.headline : "[Placeholder] Texas Gulf Bank Locations"}
       </h1>
-      <p class="mt-5 text-lg text-white/85 max-w-2xl text-balance">
-        {sorted.length} ATM and banking centers across {[...new Set(sorted.map((l) => l.data.region.replace(/ County$/, "")))].sort().join(", ").replace(/, ([^,]+)$/, ", and $1")}&nbsp;
-        counties — with local bankers who know your community. Search below, or call
-        <a href="tel:8004677216" class="text-brand-gold font-bold underline underline-offset-2">800.467.7216</a>.
-      </p>
+      <p class="placeholder-callout mt-5 max-w-3xl" role="note">Addresses, hours, and phone numbers on this page are unverified placeholders until confirmed.</p>
+      {page?.summary && (
+        <p class="mt-5 text-lg text-white/85 max-w-2xl text-balance">{page.summary}</p>
+      )}
     </div>
   </section>
 
   <!-- Search + filters -->
   <section class="py-8 border-b border-brand-navy/10 bg-brand-cream/60">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <form class="flex flex-col sm:flex-row gap-3" role="search" data-loc-search-form>
-        <label for="loc-search" class="sr-only">Search locations</label>
+      <div class="flex flex-col sm:flex-row gap-3" role="search">
+        <label for="loc-search" class="sr-only">Filter the locations already listed on this page</label>
         <input
           id="loc-search"
           type="search"
@@ -85,15 +87,7 @@ function todayRows(rows: { days: string; open: string; close: string }[]) {
           class="flex-1 rounded-lg border border-brand-navy/15 bg-white px-4 py-3 text-sm text-brand-text focus:outline-none focus:ring-2 focus:ring-brand-aqua"
           data-loc-search
         />
-        <button
-          type="button"
-          data-loc-geolocate
-          class="inline-flex items-center justify-center gap-2 rounded-lg border border-brand-navy/15 bg-white px-5 py-3 text-sm font-bold text-brand-navy hover:bg-brand-cream transition-colors"
-        >
-          <svg class="w-4 h-4 text-brand-aqua" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-          Use my location
-        </button>
-      </form>
+      </div>
 
       <fieldset class="mt-4 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm">
         <legend class="sr-only">Filter locations</legend>
@@ -107,8 +101,6 @@ function todayRows(rows: { days: string; open: string; close: string }[]) {
         </label>
         <span class="text-xs text-brand-muted" data-loc-count aria-live="polite">{sorted.length} of {sorted.length}</span>
       </fieldset>
-      <p class="hidden mt-2 text-sm text-brand-terra font-medium" data-loc-error aria-live="polite"></p>
-
       <!-- County jump chips -->
       {regions.length > 1 && (
         <nav class="mt-5 flex flex-wrap gap-2" aria-label="Jump to county" data-county-nav>
@@ -232,7 +224,7 @@ function todayRows(rows: { days: string; open: string; close: string }[]) {
             ))}
           </div>
           <p class="hidden mt-6 text-center text-brand-muted" data-loc-empty>
-            No locations match your search. Try a different city or ZIP, or call 800.467.7216.
+            No locations match that filter.
           </p>
         </div>
       </div>
@@ -241,7 +233,7 @@ function todayRows(rows: { days: string; open: string; close: string }[]) {
 </Layout>
 
 <script>
-  // ── Locations index: open-now badges, search, filters, geolocate sort + distances, map sync ──
+  // ── Locations index: open-now badges, on-page filter, map sync ──
   const LOCATIONS = JSON.parse(document.getElementById("__LOCATIONS_JSON__")?.textContent || "[]");
 
   function loadLeaflet() {
@@ -295,16 +287,6 @@ function todayRows(rows: { days: string; open: string; close: string }[]) {
     return false;
   }
 
-  function distanceKm(a: any, b: any) {
-    const R = 6371;
-    const dLat = ((b.lat - a.lat) * Math.PI) / 180;
-    const dLng = ((b.lng - a.lng) * Math.PI) / 180;
-    const s =
-      Math.sin(dLat / 2) ** 2 +
-      Math.cos((a.lat * Math.PI) / 180) * Math.cos((b.lat * Math.PI) / 180) * Math.sin(dLng / 2) ** 2;
-    return 2 * R * Math.asin(Math.sqrt(s));
-  }
-
   // ── Open-now badges on every card (server HTML is neutral until JS paints them) ──
   for (const loc of LOCATIONS) {
     const badge = document.querySelector(`[data-loc-open-badge="${loc.id}"]`);
@@ -336,20 +318,16 @@ function todayRows(rows: { days: string; open: string; close: string }[]) {
 
   const cards = [...document.querySelectorAll("[data-loc-card]")];
   const searchInput = document.querySelector("[data-loc-search]") as HTMLInputElement | null;
-  const form = document.querySelector("[data-loc-search-form]");
-  const geolocateBtn = document.querySelector("[data-loc-geolocate]");
   const emptyMsg = document.querySelector("[data-loc-empty]");
   const countEl = document.querySelector("[data-loc-count]");
-  const errorEl = document.querySelector("[data-loc-error]");
   const filterChecks = [...document.querySelectorAll("[data-loc-filter]")];
-  let userPos: { lat: number; lng: number } | null = null;
 
   function applyFilters() {
     const query = (searchInput?.value || "").trim().toLowerCase();
     const wantDrive = document.querySelector('[data-loc-filter="drive_thru"]')?.checked !== false;
     const wantOpen = document.querySelector('[data-loc-filter="open_now"]')?.checked === true;
 
-    let visible: { id: string; dist: number; card: HTMLElement }[] = [];
+    const visible: { id: string }[] = [];
     for (const card of cards as HTMLElement[]) {
       const id = card.dataset.locCard!;
       const loc = LOCATIONS.find((l: any) => l.id === id);
@@ -358,40 +336,10 @@ function todayRows(rows: { days: string; open: string; close: string }[]) {
       if (query && !hay.includes(query)) continue;
       if (!wantDrive && !loc.has_drive_thru) continue;
       if (wantOpen && !isOpenNow(loc)) continue;
-      visible.push({ id, dist: userPos ? distanceKm(userPos, loc) : Infinity, card });
-    }
-
-    if (userPos) visible.sort((a, b) => a.dist - b.dist);
-
-    // Distance labels when user location known
-    for (const v of visible) {
-      const existing = v.card.querySelector("[data-loc-distance]");
-      if (userPos) {
-        const mi = (v.dist * 0.621371).toFixed(1);
-        if (existing) existing.textContent = `${mi} mi away`;
-        else {
-          const span = document.createElement("span");
-          span.className = "ml-auto text-xs font-semibold text-brand-muted";
-          span.dataset.locDistance = "";
-          span.textContent = `${mi} mi away`;
-          v.card.querySelector(".p-5, .p-6")?.prepend(span);
-        }
-      }
+      visible.push({ id });
     }
 
     const visibleIds = new Set(visible.map((v) => v.id));
-
-    // Re-append visible cards in sorted order within their region groups
-    if (userPos) {
-      for (const group of document.querySelectorAll("[data-loc-region-list]")) {
-        const kids = [...group.children].filter((c) => visibleIds.has((c as HTMLElement).dataset.locCard!));
-        kids.sort((a, b) =>
-          visible.findIndex((v) => v.id === (a as HTMLElement).dataset.locCard) -
-          visible.findIndex((v) => v.id === (b as HTMLElement).dataset.locCard)
-        );
-        for (const kid of kids) group.appendChild(kid);
-      }
-    }
 
     // Hide empty region headers
     for (const regionWrap of document.querySelectorAll("[data-loc-region]")) {
@@ -404,11 +352,7 @@ function todayRows(rows: { days: string; open: string; close: string }[]) {
       card.style.display = visibleIds.has(card.dataset.locCard!) ? "" : "none";
     }
     emptyMsg?.classList.toggle("hidden", visible.length > 0);
-    if (countEl) {
-      countEl.textContent = userPos
-        ? `${visible.length} of ${cards.length} · sorted by distance`
-        : `${visible.length} of ${cards.length}`;
-    }
+    if (countEl) countEl.textContent = `${visible.length} of ${cards.length}`;
     if (window.__locMap) {
       window.__locMap.eachLayer((layer: any) => {
         if (layer.options?.locId) {
@@ -461,37 +405,6 @@ function todayRows(rows: { days: string; open: string; close: string }[]) {
 
   searchInput?.addEventListener("input", applyFilters);
   filterChecks.forEach((c) => c.addEventListener("change", applyFilters));
-  form?.addEventListener("submit", (e) => e.preventDefault());
-
-  geolocateBtn?.addEventListener("click", () => {
-    if (!navigator.geolocation) {
-      if (errorEl) errorEl.textContent = "Location isn't available in this browser — try searching by city or ZIP instead.";
-      return;
-    }
-    geolocateBtn.setAttribute("disabled", "");
-    geolocateBtn.textContent = "Locating…";
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        userPos = { lat: pos.coords.latitude, lng: pos.coords.longitude };
-        geolocateBtn.removeAttribute("disabled");
-        geolocateBtn.textContent = "Use my location";
-        errorEl?.classList.add("hidden");
-        if (window.__locMap) {
-          window.__locMap.setView([userPos.lat, userPos.lng], 10);
-        }
-        applyFilters();
-      },
-      () => {
-        geolocateBtn.removeAttribute("disabled");
-        geolocateBtn.textContent = "Use my location";
-        if (errorEl) {
-          errorEl.textContent = "We couldn't get your location — it may be blocked in your browser settings. Try searching by city or ZIP instead.";
-          errorEl.classList.remove("hidden");
-        }
-      },
-      { timeout: 8000 }
-    );
-  });
 
   applyFilters();
   initMap();

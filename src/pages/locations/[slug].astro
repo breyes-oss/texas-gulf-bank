@@ -1,18 +1,13 @@
 ---
-import { getCollection } from "astro:content";
+export const prerender = false;
+
 import Layout from "../../layouts/Layout.astro";
+import { loadLocations } from "../../lib/cms";
 
-export async function getStaticPaths() {
-  const locations = await getCollection("locations");
-  return locations.map((loc) => ({
-    params: { slug: loc.id },
-    props: { loc },
-  }));
-}
-
-const { loc } = Astro.props;
+const allLocations = await loadLocations();
+const loc = allLocations.find((entry) => entry.id === Astro.params.slug);
+if (!loc) return Astro.rewrite("/404");
 const d = loc.data;
-const allLocations = await getCollection("locations");
 
 const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
   `${d.street}${d.suite ? " " + d.suite : ""}, ${d.city}, ${d.state} ${d.zip}`
@@ -152,6 +147,7 @@ const jsonLd = {
       <p class="mt-1 text-lg">
         <a href={telHref} class="text-brand-navy-light font-bold hover:text-brand-gold-dark transition-colors">{d.phone}</a>
       </p>
+      <p class="placeholder-callout mt-4 max-w-3xl" role="note">Addresses, hours, and phone numbers on this page are unverified placeholders until confirmed.</p>
       <p class="mt-3">
         <span
           id="branch-open-badge"

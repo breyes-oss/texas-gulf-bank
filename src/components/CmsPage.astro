@@ -1,0 +1,32 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { paragraphs } from "../lib/cms";
+
+interface Props {
+  title: string;
+  description: string;
+  headline: string;
+  summary?: string;
+  body?: string;
+}
+
+const { title, description, headline, summary, body } = Astro.props;
+const blocks = paragraphs(body);
+---
+
+<Layout title={title} description={description}>
+  <section class="bg-brand-cream border-b border-brand-navy/10">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+      <h1 class="font-display text-4xl sm:text-5xl font-black text-brand-navy leading-[1.05] tracking-tight text-balance">
+        {headline}
+      </h1>
+      {summary && <p class="placeholder-callout mt-5" role="note">{summary}</p>}
+      {blocks.length > 0 && (
+        <div class="mt-6 space-y-4 text-base sm:text-lg text-brand-text leading-relaxed">
+          {blocks.map((block) => <p>{block}</p>)}
+        </div>
+      )}
+      <slot />
+    </div>
+  </section>
+</Layout>

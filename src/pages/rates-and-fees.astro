@@ -1,12 +1,16 @@
 ---
+export const prerender = false;
+
 import Layout from "../layouts/Layout.astro";
 import RateTable from "../components/RateTable.astro";
 import FeeSchedule from "../components/FeeSchedule.astro";
 import CtaSection from "../components/CtaSection.astro";
-import { getCollection, getEntry } from "astro:content";
+import { getEntry } from "astro:content";
+import { loadPage, loadRateSheet } from "../lib/cms";
 
-const pages = await getCollection("pages");
-const home = pages.find((p) => p.id === "home")?.data || {};
+const page = await loadPage("rates");
+const home = (await loadPage("home")) ?? {};
+const sheet = await loadRateSheet();
 
 const feesEntry = await getEntry("fees", "personal-fees");
 const fees = feesEntry?.data;
@@ -20,11 +24,11 @@ const fees = feesEntry?.data;
   <section class="bg-brand-cream border-b border-brand-navy/10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 lg:py-16">
       <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-black text-brand-navy leading-[1.05] tracking-tight text-balance">
-        Rates &amp; Fees
+        {page?.headline || "Rates & Fees"}
       </h1>
       <p class="placeholder-callout mt-5 max-w-3xl" role="note">Placeholder rates, not current offers.</p>
       <p class="mt-5 text-lg text-brand-muted max-w-2xl text-balance">
-        The layout below is a rate sheet and fee schedule. Every figure is a placeholder, not a current offer.
+        {page?.summary || "The layout below is a rate sheet and fee schedule. Every figure is a placeholder, not a current offer."}
       </p>
     </div>
   </section>
@@ -42,7 +46,7 @@ const fees = feesEntry?.data;
       </div>
 
       <div class="mt-8 max-w-3xl">
-        <RateTable />
+        {sheet ? <RateTable data={sheet} /> : <RateTable />}
       </div>
     </div>
   </section>

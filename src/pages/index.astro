@@ -1,17 +1,20 @@
 ---
-import { getCollection } from "astro:content";
+export const prerender = false;
+
 import Layout from "../layouts/Layout.astro";
 import HeroSection from "../components/HeroSection.astro";
 import FeatureCards from "../components/FeatureCards.astro";
 import StorySection from "../components/StorySection.astro";
 import RatesAndBlog from "../components/RatesAndBlog.astro";
 import CtaSection from "../components/CtaSection.astro";
+import { loadLocations, loadPage } from "../lib/cms";
 
-const pages = await getCollection("pages");
-const home = pages.find((p) => p.id === "home")?.data || {};
-const locations = await getCollection("locations");
-const branchCount = String(locations.length);
-const countyCount = String(new Set(locations.map((l) => l.data.region)).size);
+const home = (await loadPage("home")) ?? {};
+const locations = await loadLocations();
+const branchCount = locations.length ? String(locations.length) : undefined;
+const countyCount = locations.length
+  ? String(new Set(locations.map((location) => location.data.region)).size)
+  : undefined;
 ---
 
 <Layout title="Texas Gulf Bank — Your Local Community Bank" description="Concept redesign of a community bank site serving Harris, Galveston, and Brazoria counties. Not the official Texas Gulf Bank website.">

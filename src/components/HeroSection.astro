@@ -7,7 +7,7 @@ const { home } = Astro.props;
   <div class="max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-8 py-5 lg:py-7">
     <div class="relative min-h-[560px] sm:min-h-[600px] lg:min-h-[720px] overflow-hidden bg-brand-navy">
       <img
-        src="/hero-community.png"
+        src={home.hero_image_src || "/hero-community.png"}
         alt="Local business owners outside their Gulf Coast storefront"
         class="absolute inset-0 h-full w-full object-cover object-[42%_center]"
         width="1536"
@@ -29,8 +29,8 @@ const { home } = Astro.props;
           </p>
 
           <div class="mt-10 flex flex-col sm:flex-row gap-3">
-            <a href="/personal-checking" class="inline-flex items-center justify-center gap-2 bg-brand-gold text-brand-navy px-7 py-3.5 rounded-lg text-base font-bold hover:bg-brand-gold-light transition-colors">
-              {home.hero_primary_cta || "Open an Account"}
+            <a href="/personal-checking/" class="inline-flex items-center justify-center gap-2 bg-brand-gold text-brand-navy px-7 py-3.5 rounded-lg text-base font-bold hover:bg-brand-gold-light transition-colors">
+              Explore checking
             </a>
             <a href="/locations/" class="inline-flex items-center justify-center gap-2 bg-white/10 border border-white/35 text-white px-7 py-3.5 rounded-lg text-base font-semibold hover:bg-white hover:text-brand-navy transition-colors backdrop-blur-sm">
               {home.hero_secondary_cta || "Find a Branch"}
