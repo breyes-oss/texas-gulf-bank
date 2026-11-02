@@ -1,26 +1,126 @@
 ---
 export const prerender = false;
 
+import { getEntry } from "astro:content";
 import Layout from "../layouts/Layout.astro";
-import HeroSection from "../components/HeroSection.astro";
-import FeatureCards from "../components/FeatureCards.astro";
-import StorySection from "../components/StorySection.astro";
-import RatesAndBlog from "../components/RatesAndBlog.astro";
-import CtaSection from "../components/CtaSection.astro";
-import { loadLocations, loadPage } from "../lib/cms";
+import { loadLocations, loadPage, loadRateSheet, phoneHref } from "../lib/cms";
 
-const home = (await loadPage("home")) ?? {};
-const locations = await loadLocations();
-const branchCount = locations.length ? String(locations.length) : undefined;
-const countyCount = locations.length
-  ? String(new Set(locations.map((location) => location.data.region)).size)
-  : undefined;
+const PLACEHOLDER = "[Placeholder]";
+
+function text(value: unknown): string {
+  return typeof value === "string" ? value.trim() : "";
+}
+
+function withPlaceholder(value: string): string {
+  if (!value || value.includes(PLACEHOLDER)) return value;
+  return `${PLACEHOLDER} ${value}`;
+}
+
+function rateRows(items: { name?: string; value?: string }[] | undefined) {
+  return (items ?? [])
+    .map((item) => ({
+      name: text(item.name),
+      value: withPlaceholder(text(item.value)),
+    }))
+    .filter((item) => item.name && item.value);
+}
+
+const [page, locations, sheet] = await Promise.all([
+  loadPage("home"),
+  loadLocations(),
+  loadRateSheet(),
+]);
+
+const home = (page ?? {}) as Record<string, unknown>;
+const headline = text(home.hero_headline) || text(home.headline) || `${PLACEHOLDER} Home`;
+const intro = text(home.hero_subtext);
+const phone = text(home.cta_phone) || text(home.phone) || "800.467.7216";
+const phoneLink = phoneHref(phone);
+const documentTitle = text(home.title) || "Home";
+
+let rates = rateRows(sheet?.items);
+if (!rates.length) {
+  const fallback = await getEntry("data", "rates");
+  rates = rateRows(fallback?.data.items);
+}
+
+const branches = locations.filter((location) => location.data.name.trim());
+const linkClass =
+  "text-brand-navy underline underline-offset-4 decoration-brand-navy/40 hover:decoration-brand-navy";
 ---
 
-<Layout title="Texas Gulf Bank — Your Local Community Bank" description="Concept redesign of a community bank site serving Harris, Galveston, and Brazoria counties. Not the official Texas Gulf Bank website.">
-  <HeroSection home={home} />
-  <FeatureCards />
-  <StorySection home={home} branchCount={branchCount} countyCount={countyCount} />
-  <RatesAndBlog />
-  <CtaSection home={home} />
+<Layout title={documentTitle} description="Concept site, not the official Texas Gulf Bank website.">
+  <div class="max-w-2xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
+    <h1 class="font-display text-4xl sm:text-5xl font-semibold text-brand-navy leading-[1.12] tracking-tight text-balance">
+      {headline}
+    </h1>
+    {intro && <p class="mt-4 text-lg leading-relaxed text-brand-text">{intro}</p>}
+
+    <section class="mt-10 border-t border-brand-navy/10 pt-8" aria-labelledby="accounts-heading">
+      <h2 id="accounts-heading" class="font-display text-2xl font-semibold text-brand-navy">Accounts</h2>
+      <ul class="mt-4 space-y-2">
+        <li><a class={linkClass} href="/personal-checking">Personal checking</a></li>
+        <li><a class={linkClass} href="/personal-savings">Savings and CDs</a></li>
+        <li><a class={linkClass} href="/money-market">Money market</a></li>
+      </ul>
+    </section>
+
+    <section class="mt-10 border-t border-brand-navy/10 pt-8" aria-labelledby="rates-heading">
+      <h2 id="rates-heading" class="font-display text-2xl font-semibold text-brand-navy">Rates</h2>
+      <p class="placeholder-callout mt-4" role="note">Placeholder rates, not current offers.</p>
+      {rates.length > 0 && (
+        <table class="mt-2 w-full border-collapse text-base">
+          <thead>
+            <tr class="border-b border-brand-navy/15 text-sm text-brand-navy">
+              <th scope="col" class="py-2 pr-6 text-left font-semibold">Account</th>
+              <th scope="col" class="py-2 text-right font-semibold">APY</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rates.map((rate) => (
+              <tr class="border-b border-brand-navy/10">
+                <th scope="row" class="py-3 pr-6 text-left align-baseline font-normal text-brand-text">{rate.name}</th>
+                <td class="py-3 text-right align-baseline font-semibold text-brand-navy break-words">{rate.value}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+      <p class="mt-4 font-semibold text-brand-navy">[Placeholder] Rates shown are examples only, not current offers.</p>
+      <p class="mt-4">
+        <a class={linkClass} href="/rates-and-fees">Rates and fees</a>
+      </p>
+    </section>
+
+    <section class="mt-10 border-t border-brand-navy/10 pt-8" aria-labelledby="locations-heading">
+      <h2 id="locations-heading" class="font-display text-2xl font-semibold text-brand-navy">Locations</h2>
+      <ul class="mt-4 space-y-2">
+        {branches.length > 0 ? (
+          branches.map((location) => (
+            <li>
+              <a class={linkClass} href={`/locations/${location.id}/`}>{location.data.name}</a>
+            </li>
+          ))
+        ) : (
+          <li>
+            <a class={linkClass} href="/locations/">Locations</a>
+          </li>
+        )}
+      </ul>
+    </section>
+
+    <section class="mt-10 border-t border-brand-navy/10 pt-8" aria-labelledby="contact-heading">
+      <h2 id="contact-heading" class="font-display text-2xl font-semibold text-brand-navy">Contact</h2>
+      <ul class="mt-4 space-y-2">
+        {phoneLink && (
+          <li>
+            <a class={linkClass} href={phoneLink}>{phone}</a>
+          </li>
+        )}
+        <li>
+          <a class={linkClass} href="/contact">Contact</a>
+        </li>
+      </ul>
+    </section>
+  </div>
 </Layout>
