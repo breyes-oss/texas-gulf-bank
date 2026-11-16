@@ -88,29 +88,6 @@ collections:
       - { label: CTA Primary Button, name: cta_primary_button, widget: string, required: false }
       - { label: CTA Phone, name: cta_phone, widget: string, required: false }
 
-  - name: data
-    label: Site Data
-    label_singular: Data file
-    folder: src/content/data
-    create: false
-    delete: false
-    extension: yaml
-    format: yaml
-    identifier_field: title
-    fields:
-      - { label: Title, name: title, widget: string }
-      - { label: Published date label, name: published, widget: string, required: false, hint: "Shown as “Featured APYs published …”" }
-      - { label: Disclaimer, name: disclaimer, widget: text, required: false }
-      - { label: Full rates URL, name: full_rates_url, widget: string, required: false }
-      - label: Rate rows
-        name: items
-        widget: list
-        summary: "{{fields.name}} — {{fields.value}}"
-        fields:
-          - { label: Product name, name: name, widget: string }
-          - { label: Detail / minimum, name: detail, widget: string, required: false }
-          - { label: APY value, name: value, widget: string, hint: "Example: 3.45%" }
-
   - name: locations
     label: Locations
     label_singular: Location

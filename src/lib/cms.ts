@@ -1,8 +1,6 @@
 import { getCollection } from "astro:content";
 import { getEmDashCollection, getEmDashEntry } from "emdash";
 
-const PLACEHOLDER = "[Placeholder]";
-
 const LOCATION_PHOTOS = new Set([
   "angleton",
   "citycentre",
@@ -47,16 +45,6 @@ export interface LocationData {
 export interface LocationEntry {
   id: string;
   data: LocationData;
-}
-
-export interface RateSheet {
-  title: string;
-  published?: string;
-  disclaimer?: string;
-  full_rates_url?: string;
-  items: { name: string; detail?: string; value: string }[];
-  sections: { id: string; title: string; note?: string; columns: string[]; rows: string[][] }[];
-  sections_footnote?: string;
 }
 
 export interface CmsPage {
@@ -185,52 +173,6 @@ export async function loadPage(id: string): Promise<CmsPage | null> {
     return mapPage(entry?.data as Record<string, unknown> | undefined);
   } catch (error) {
     console.error(`[emdash] page ${id} unavailable`, error);
-    return null;
-  }
-}
-
-function parseRows(value: unknown): string[][] {
-  return String(value ?? "")
-    .split("\n")
-    .map((line) => line.split("|").map((cell) => cell.trim()))
-    .filter((row) => row.some(Boolean));
-}
-
-export function mapRateSheet(data: Record<string, unknown>): RateSheet {
-  const items = asRows(data.items).map((row) => ({
-    name: typeof row.name === "string" ? row.name : "",
-    detail: typeof row.detail === "string" ? row.detail : undefined,
-    value: typeof row.value === "string" ? row.value : "",
-  }));
-  const sections = asRows(data.sections).map((row) => ({
-    id: typeof row.id === "string" ? row.id : "",
-    title: typeof row.title === "string" ? row.title : "",
-    note: typeof row.note === "string" ? row.note : undefined,
-    columns: String(row.columns ?? "")
-      .split(",")
-      .map((column) => column.trim())
-      .filter(Boolean),
-    rows: parseRows(row.rows),
-  }));
-  return {
-    title: typeof data.title === "string" ? data.title : `${PLACEHOLDER} Rates`,
-    published: typeof data.published === "string" ? data.published : undefined,
-    disclaimer: typeof data.disclaimer === "string" ? data.disclaimer : undefined,
-    full_rates_url: typeof data.full_rates_url === "string" ? data.full_rates_url : undefined,
-    items,
-    sections,
-    sections_footnote: typeof data.sections_footnote === "string" ? data.sections_footnote : undefined,
-  };
-}
-
-export async function loadRateSheet(): Promise<RateSheet | null> {
-  try {
-    const { entry, error } = await getEmDashEntry("rates", "rates");
-    if (error) throw error;
-    if (!entry) return null;
-    return mapRateSheet(entry.data as Record<string, unknown>);
-  } catch (error) {
-    console.error("[emdash] rates unavailable", error);
     return null;
   }
 }

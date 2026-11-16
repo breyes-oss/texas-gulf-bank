@@ -1,5 +1,5 @@
 ---
-export const prerender = true;
+export const prerender = false;
 
 import { getCollection, render } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
@@ -7,15 +7,9 @@ import BlogCta from "../../components/BlogCta.astro";
 import RateTable from "../../components/RateTable.astro";
 import { renderBlogSegments } from "../../lib/blog-embeds";
 
-export async function getStaticPaths() {
-  const blogPosts = await getCollection("blog");
-  return blogPosts.map((post) => ({
-    params: { slug: post.id },
-    props: { post },
-  }));
-}
-
-const { post } = Astro.props;
+const slug = Array.isArray(Astro.params.slug) ? Astro.params.slug.join("/") : Astro.params.slug;
+const post = slug ? (await getCollection("blog")).find((entry) => entry.id === slug) : undefined;
+if (!post) return Astro.rewrite("/404");
 const body = post.body ?? "";
 const usesShortcodes = /\{\{\s*(rates|cta)\b/.test(body);
 
