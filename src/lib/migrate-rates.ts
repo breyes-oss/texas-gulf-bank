@@ -15,6 +15,8 @@ import {
   placeholderGroups,
 } from "./rate-groups.mjs";
 
+const CD_STAMP_FLAG = "tgb:rate-groups-v1-cd-stamp";
+
 /**
  * One-time reshape of the rates collection already stored in D1.
  *
@@ -112,7 +114,10 @@ function entryData(group: ReturnType<typeof placeholderGroups>[number]) {
 
 export async function migrateRates(db: Kysely<unknown>): Promise<boolean> {
   const options = new OptionsRepository(db as never);
-  if ((await options.get(MIGRATION_FLAG)) === true) return true;
+  if ((await options.get(MIGRATION_FLAG)) === true) {
+    await repairCdStamp(db, options);
+    return true;
+  }
 
   const registry = new SchemaRegistry(db as never);
   const collection = await registry.getCollection("rates");
@@ -185,6 +190,23 @@ export async function migrateRates(db: Kysely<unknown>): Promise<boolean> {
 
   await finish(registry, options);
   return true;
+}
+
+async function repairCdStamp(db: Kysely<unknown>, options: OptionsRepository): Promise<void> {
+  if ((await options.get(CD_STAMP_FLAG)) === true) return;
+  const legacy = await sql<{ updated_at: string | null }>`
+    SELECT updated_at FROM ec_rates WHERE id = 'rates'
+  `.execute(db);
+  const stamp = legacy.rows[0]?.updated_at;
+  if (typeof stamp === "string" && !Number.isNaN(new Date(stamp).getTime())) {
+    await sql`
+      UPDATE ec_rates
+      SET updated_at = ${stamp}
+      WHERE id = ${CD_GROUP_ID}
+    `.execute(db);
+    invalidateCollectionCache("rates");
+  }
+  await options.set(CD_STAMP_FLAG, true);
 }
 
 async function finish(registry: SchemaRegistry, options: OptionsRepository): Promise<void> {
