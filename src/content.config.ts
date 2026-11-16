@@ -57,37 +57,6 @@ const pages = defineCollection({
   }),
 });
 
-const data = defineCollection({
-  loader: glob({ pattern: "*.yaml", base: "./src/content/data" }),
-  schema: z.object({
-    title: z.string(),
-    published: z.string().optional(),
-    disclaimer: z.string().optional(),
-    full_rates_url: z.string().optional(),
-    items: z
-      .array(
-        z.object({
-          name: z.string(),
-          detail: z.string().optional(),
-          value: z.string(),
-        })
-      )
-      .min(1),
-    sections: z
-      .array(
-        z.object({
-          id: z.string(),
-          title: z.string(),
-          note: z.string().optional(),
-          columns: z.array(z.string()).default(["Term", "Interest Rate", "APY"]),
-          rows: z.array(z.array(z.string()).min(2)).min(1),
-        })
-      )
-      .default([]),
-    sections_footnote: z.string().optional(),
-  }),
-});
-
 const fees = defineCollection({
   loader: glob({ pattern: "*.yaml", base: "./src/content/fees" }),
   schema: z.object({
@@ -203,4 +172,4 @@ const products = defineCollection({
   }),
 });
 
-export const collections = { blog, pages, data, fees, locations, products };
+export const collections = { blog, pages, fees, locations, products };

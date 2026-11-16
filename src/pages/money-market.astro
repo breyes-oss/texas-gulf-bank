@@ -4,15 +4,20 @@ import Layout from "../layouts/Layout.astro";
 import RateTable from "../components/RateTable.astro";
 import OpenAccountAction from "../components/OpenAccountAction.astro";
 import { omitAccountApplicationUrl } from "../lib/concept";
+import { applyRateTokensToCopy, getRate, loadRateCatalog } from "../lib/rates";
 
 const entry = await getEntry("products", "personal-savings");
-const mm = entry?.data.products.find((p) => p.id === "money-market");
-if (!mm) throw new Error("Money Market product missing from products/personal-savings.yaml");
+const product = entry?.data.products.find((p) => p.id === "money-market");
+if (!product) throw new Error("Money Market product missing from products/personal-savings.yaml");
+const catalog = await loadRateCatalog();
+const mm = applyRateTokensToCopy(catalog, product);
+const lowApy = getRate(catalog, "money-market-0").apy;
+const topApy = getRate(catalog, "money-market-top").apy;
 ---
 
 <Layout
   title="Personal Money Market Account — Tiered Rates"
-  description="Placeholder money market tiers on this concept site, including a displayed figure of up to 1.66% APY. Not current offers. Online account opening is not available."
+  description={`Placeholder money market tiers on this concept site, including a displayed figure of up to ${topApy} APY. Not current offers. Online account opening is not available.`}
 >
   <!-- Hero -->
   <section class="bg-gradient-to-r from-brand-navy via-brand-navy-mid to-brand-aqua text-white">
@@ -28,7 +33,7 @@ if (!mm) throw new Error("Money Market product missing from products/personal-sa
       <div class="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-6">
         <div>
           <p class="text-xs font-semibold uppercase tracking-wide text-white/70">Rates up to</p>
-          <p class="font-display text-4xl font-black text-brand-gold">1.66% <span class="text-base font-semibold">APY</span></p>
+          <p class="font-display text-4xl font-black text-brand-gold">{topApy} <span class="text-base font-semibold">APY</span></p>
           <p class="mt-1 text-sm font-semibold text-white">Placeholder rates, not current offers.</p>
         </div>
         <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
@@ -55,7 +60,7 @@ if (!mm) throw new Error("Money Market product missing from products/personal-sa
       <div class="mt-10 grid md:grid-cols-3 gap-6">
         {[
           { n: "1", t: "Open with $500", d: "A low door compared to most money market accounts — and no monthly fee if you keep a $5,000 average daily balance." },
-          { n: "2", t: "Grow across five tiers", d: "From 0.55% APY on day one to 1.66% APY at $1M+. Each tier applies to your entire daily balance." },
+          { n: "2", t: "Grow across five tiers", d: `From ${lowApy} APY on day one to ${topApy} APY at $1M+. Each tier applies to your entire daily balance.` },
           { n: "3", t: "Stay flexible", d: "No term, no maturity date. Withdraw when you need to (transaction limits apply) — your rate keeps working." },
         ].map((step) => (
           <div class="bg-white border border-brand-navy/10 rounded-lg p-6">
@@ -96,7 +101,7 @@ if (!mm) throw new Error("Money Market product missing from products/personal-sa
         Money market tiers.
       </h2>
       <div class="mt-8 max-w-2xl">
-        <RateTable section="money-market" />
+        <RateTable section="money-market" catalog={catalog} />
       </div>
       <p class="mt-8 text-sm text-brand-muted max-w-2xl leading-relaxed">
         Comparing savings options? See how the Money Market tiers stack up against our other accounts on the

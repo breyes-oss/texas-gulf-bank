@@ -73,12 +73,12 @@ products:
     min_opening: "$500"
     interest: true
     highlights:
-      - "Five rate tiers — climb from 0.55% all the way to 1.66% APY"
+      - "Five rate tiers — climb from {{rate:money-market-0.apy}} all the way to {{rate:money-market-top.apy}} APY"
       - "When you cross into a higher tier, your whole balance earns the better rate"
       - "No lock-up — your money stays available"
       - "Free online banking & mobile deposit"
     details:
-      - "Tiered rates apply to your entire daily balance: 0.55% APY from $0.01, stepping up through $40K / $100K / $500K tiers to 1.66% APY at $1,000,000 and above. See the placeholder rate tiers on this page."
+      - "Tiered rates apply to your entire daily balance: {{rate:money-market-0.apy}} APY from $0.01, stepping up through $40K / $100K / $500K tiers to {{rate:money-market-top.apy}} APY at $1,000,000 and above. See the placeholder rate tiers on this page."
       - "Transfers to third parties by point-of-sale (including mobile wallet debit payments) are prohibited. A $10.00 fee applies to each debit beyond 10 per monthly statement cycle (electronic payments, transfers between your TGB accounts, and ATM withdrawals excluded)."
       - "Rates are variable and may change after the account is opened. Fees may reduce earnings."
     details_url: "https://www.texasgulfbank.com/personal-comparison-chart/#Gulf-Stream-Money-Market-Addtl-Info"

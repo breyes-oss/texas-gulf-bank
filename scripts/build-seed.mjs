@@ -1,10 +1,12 @@
 #!/usr/bin/env node
-// Build seed/seed.json for the five editable concept pages.
-// Locations and rates reuse src/content. No users, credentials, or new bank facts.
+// Build seed/seed.json for the editable concept pages.
+// Locations reuse src/content. Rates are one EmDash entry per product group.
+// No users, credentials, or new bank facts.
 import { mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { parse } from "yaml";
+import { placeholderGroups, RATE_COLLECTION_FIELDS } from "../src/lib/rate-groups.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const contentDir = path.join(root, "src/content");
@@ -14,12 +16,6 @@ const PLACE = "[Placeholder]";
 function mark(value) {
   if (typeof value !== "string" || !value.trim() || value.startsWith(PLACE)) return value ?? "";
   return `${PLACE} ${value}`;
-}
-
-function markRate(value) {
-  const text = value == null ? "" : String(value);
-  if (!text.includes("%") || text.includes(PLACE)) return text;
-  return `${PLACE} ${text}`;
 }
 
 function labels(items) {
@@ -143,46 +139,15 @@ const collections = [
   {
     slug: "rates",
     label: "Rates",
-    labelSingular: "Rate sheet",
-    description: "Placeholder deposit rates. Not current offers.",
+    labelSingular: "Rate group",
+    description: "Deposit rates. Not current offers.",
     icon: "chart-line",
     supports: ["drafts", "revisions", "search"],
     routable: false,
     titleField: "title",
     sortOrder: 3,
-    fields: [
-      stringField("title", "Title", { required: true }),
-      stringField("published", "Published note"),
-      textField("disclaimer", "Disclaimer"),
-      { slug: "full_rates_url", label: "Full rates URL", type: "url" },
-      textField("sections_footnote", "Footnote"),
-      {
-        slug: "items",
-        label: "Featured rates",
-        type: "repeater",
-        validation: {
-          subFields: [
-            { slug: "name", label: "Name", type: "string", required: true },
-            { slug: "detail", label: "Detail", type: "string" },
-            { slug: "value", label: "Rate", type: "string", required: true },
-          ],
-        },
-      },
-      {
-        slug: "sections",
-        label: "Rate tables",
-        type: "repeater",
-        validation: {
-          subFields: [
-            { slug: "id", label: "Section id", type: "string", required: true },
-            { slug: "title", label: "Title", type: "string", required: true },
-            { slug: "note", label: "Note", type: "text" },
-            { slug: "columns", label: "Columns (comma-separated)", type: "string", required: true },
-            { slug: "rows", label: "Rows (one per line, cells separated by |)", type: "text", required: true },
-          ],
-        },
-      },
-    ],
+    admin: { listColumns: ["sort_order"] },
+    fields: RATE_COLLECTION_FIELDS,
   },
 ];
 
@@ -294,31 +259,24 @@ const locations = readdirSync(path.join(contentDir, "locations"))
     };
   });
 
-const ratesYaml = parse(readFileSync(path.join(contentDir, "data/rates.yaml"), "utf8"));
-const rates = [
-  {
-    id: "rates",
-    status: "published",
-    data: {
-      title: mark(ratesYaml.title || "Featured Rates"),
-      disclaimer: "[Placeholder] Rates shown are examples only, not current offers.",
-      full_rates_url: ratesYaml.full_rates_url ?? "",
-      sections_footnote: "[Placeholder] Rates shown are examples only, not current offers.",
-      items: (ratesYaml.items ?? []).map((item) => ({
-        name: item.name ?? "",
-        detail: item.detail ?? "",
-        value: markRate(item.value),
-      })),
-      sections: (ratesYaml.sections ?? []).map((section) => ({
-        id: section.id ?? "",
-        title: section.title ?? "",
-        note: section.note ?? "",
-        columns: (section.columns ?? []).join(", "),
-        rows: (section.rows ?? []).map((row) => row.map((cell) => markRate(cell)).join(" | ")).join("\n"),
-      })),
-    },
+const rates = placeholderGroups().map((group) => ({
+  id: group.id,
+  slug: group.id,
+  status: "published",
+  data: {
+    title: group.title,
+    sort_order: group.sortOrder,
+    tier_label: group.tierLabel,
+    note: group.note,
+    rows: group.rows.map((row) => ({
+      key: row.key,
+      label: row.label,
+      interest_rate: row.interestRate,
+      apy: row.apy,
+      notes: row.notes || "",
+    })),
   },
-];
+}));
 
 const seed = {
   $schema: "https://emdashcms.com/seed.schema.json",

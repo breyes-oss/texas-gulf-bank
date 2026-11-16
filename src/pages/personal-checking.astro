@@ -1,17 +1,16 @@
 ---
 import { getEntry } from "astro:content";
 import Layout from "../layouts/Layout.astro";
-import RateTable from "../components/RateTable.astro";
 import OpenAccountAction from "../components/OpenAccountAction.astro";
 import { omitAccountApplicationUrl } from "../lib/concept";
+import { clientRateGroups, loadRateCatalog } from "../lib/rates";
 
 const entry = await getEntry("products", "personal-checking");
 const d = entry?.data;
 if (!d) throw new Error("Missing products/personal-checking.yaml");
 
-// Full rate sheet (sections) for the rates modal — same source as RateTable
-const ratesEntry = await getEntry("data", "rates");
-const ratesData = ratesEntry?.data;
+const catalog = await loadRateCatalog();
+const rateSections = clientRateGroups(catalog);
 
 const featured = d.products.filter((p) => p.id !== "vip-high-yield");
 const all = d.products;
@@ -307,7 +306,7 @@ const all = d.products;
 </script>
 
 <script is:inline type="application/json" id="__PRODUCTS_JSON__" set:html={JSON.stringify(d.products.map(omitAccountApplicationUrl))}></script>
-<script is:inline type="application/json" id="__RATES_SECTIONS__" set:html={JSON.stringify(ratesData.sections)}></script>
+<script is:inline type="application/json" id="__RATES_SECTIONS__" set:html={JSON.stringify(rateSections)}></script>
 
 <!-- Rates modal -->
 <div id="rates-modal" class="fixed inset-0 z-[100] hidden" role="dialog" aria-modal="true" aria-labelledby="rates-title">
@@ -324,7 +323,7 @@ const all = d.products;
     </div>
     <div class="px-6 py-5 overflow-y-auto" data-rates-body></div>
     <div class="px-6 py-4 border-t border-brand-navy/10 flex flex-wrap gap-3 justify-between items-center">
-      <p class="text-xs text-brand-muted">APYs published {ratesData.published}.</p>
+      <p class="text-xs text-brand-muted">Placeholder rates, not current offers.</p>
       <a href="/rates-and-fees" class="text-sm font-semibold text-brand-navy-light underline underline-offset-2 hover:text-brand-gold-dark transition-colors">View all rates →</a>
     </div>
   </div>
@@ -360,6 +359,7 @@ const all = d.products;
         html += `</tr>`;
       }
       html += `</tbody></table></div>`;
+      if (s.asOf) html += `<p class="mt-3 text-sm font-semibold text-brand-navy">${escHtml(s.asOf)}</p>`;
       if (s.note) html += `<p class="mt-3 text-xs text-brand-muted leading-relaxed">${escHtml(s.note)}</p>`;
       rBody.innerHTML = html;
     }

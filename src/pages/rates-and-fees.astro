@@ -6,11 +6,10 @@ import RateTable from "../components/RateTable.astro";
 import FeeSchedule from "../components/FeeSchedule.astro";
 import CtaSection from "../components/CtaSection.astro";
 import { getEntry } from "astro:content";
-import { loadPage, loadRateSheet } from "../lib/cms";
+import { loadPage } from "../lib/cms";
 
 const page = await loadPage("rates");
 const home = (await loadPage("home")) ?? {};
-const sheet = await loadRateSheet();
 
 const feesEntry = await getEntry("fees", "personal-fees");
 const fees = feesEntry?.data;
@@ -46,7 +45,7 @@ const fees = feesEntry?.data;
       </div>
 
       <div class="mt-8 max-w-3xl">
-        {sheet ? <RateTable data={sheet} /> : <RateTable />}
+        <RateTable />
       </div>
     </div>
   </section>

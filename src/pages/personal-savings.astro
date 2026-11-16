@@ -1,35 +1,19 @@
 ---
 import { getEntry } from "astro:content";
 import Layout from "../layouts/Layout.astro";
-import RateTable from "../components/RateTable.astro";
 import OpenAccountAction from "../components/OpenAccountAction.astro";
 import { omitAccountApplicationUrl } from "../lib/concept";
+import { applyRateTokensToCopy, clientRateGroups, loadRateCatalog, savingsCompareLines } from "../lib/rates";
 
 const entry = await getEntry("products", "personal-savings");
 const d = entry?.data;
 if (!d) throw new Error("Missing products/personal-savings.yaml");
 
-// Full rate sheet (sections) for the rates modal — same source as RateTable
-const ratesEntry = await getEntry("data", "rates");
-const ratesData = ratesEntry?.data;
-
-const featured = d.products; // Personal Savings, CD, IRA, Money Market
-
-// Rate-sheet section shown inside each product's panel (from rates.yaml)
-const RATE_SECTIONS = {
-  "personal-savings": "savings",
-  "certificate-of-deposit": "cd-fixed",
-  "ira": "ira-fixed",
-  "money-market": "money-market",
-};
-
-// Top advertised APY per product (drives the "up to" line)
-const RATE_UP_TO = {
-  "personal-savings": "0.40%",
-  "certificate-of-deposit": "3.45%",
-  "ira": "3.45%",
-  "money-market": "1.66%",
-};
+const catalog = await loadRateCatalog();
+const featured = d.products.map((product) => applyRateTokensToCopy(catalog, product));
+const secondary = d.secondary.map((product) => applyRateTokensToCopy(catalog, product));
+const rateSections = clientRateGroups(catalog);
+const compareLines = savingsCompareLines(catalog);
 ---
 
 <Layout
@@ -209,7 +193,7 @@ const RATE_UP_TO = {
         Two more accounts worth knowing about.
       </h2>
       <div class="mt-10 grid md:grid-cols-2 gap-6">
-        {d.secondary.map((s) => (
+        {secondary.map((s) => (
           <article class="bg-white border border-brand-navy/10 rounded-lg p-6 sm:p-7 flex flex-col">
             <h3 class="font-display text-xl font-bold text-brand-navy">{s.name}</h3>
             <p class="mt-1.5 text-sm text-brand-muted italic">{s.tagline}</p>
@@ -286,6 +270,7 @@ const RATE_UP_TO = {
 <script>
   const ALL_ACCOUNTS = JSON.parse(document.getElementById("__ACCOUNTS_JSON__")?.textContent || "[]");
   const RATES_SECTIONS = JSON.parse(document.getElementById("__RATES_SECTIONS__")?.textContent || "[]");
+  const COMPARE_LINES = JSON.parse(document.getElementById("__COMPARE_LINES__")?.textContent || "{}");
   const modal = document.getElementById("disclosure-modal");
   const nameEl = modal?.querySelector("[data-disclosure-name]");
   const bodyEl = modal?.querySelector("[data-disclosure-body]");
@@ -311,18 +296,13 @@ const RATE_UP_TO = {
       html += `</tr>`;
     }
     html += `</tbody></table></div>`;
+    if (s.asOf) html += `<p class="mt-3 text-sm font-semibold text-brand-navy">${esc(s.asOf)}</p>`;
     if (s.note) html += `<p class="mt-3 text-xs text-brand-muted leading-relaxed">${esc(s.note)}</p>`;
     return html;
   }
 
   function contextLineHtml(rateSectionId) {
-    const lines = {
-      "savings": "Personal Savings 0.40% · Gulf Rewards Savings 0.40%",
-      "cd-fixed": "1-Year CD 3.45% · 18-Month CD 3.30% · 5-Year CD 2.75%",
-      "ira-fixed": "1-Year IRA 3.45% · Variable 18-Month IRA 3.30%",
-      "money-market": "Money Market tiers run 0.55% → 1.66% APY · Personal Savings pays 0.40%",
-    };
-    const line = lines[rateSectionId];
+    const line = COMPARE_LINES[rateSectionId];
     if (!line) return "";
     return `<p class="mt-4 text-xs text-brand-muted bg-brand-cream border border-brand-navy/10 rounded-lg px-4 py-3"><span class="font-semibold text-brand-text">How this compares:</span> ${esc(line)}. <a href="/rates-and-fees" class="font-semibold text-brand-navy-light underline underline-offset-2">All rates →</a></p>`;
   }
@@ -446,5 +426,6 @@ const RATE_UP_TO = {
   });
 </script>
 
-<script is:inline type="application/json" id="__ACCOUNTS_JSON__" set:html={JSON.stringify([...d.products, ...d.secondary].map(omitAccountApplicationUrl))}></script>
-<script is:inline type="application/json" id="__RATES_SECTIONS__" set:html={JSON.stringify(ratesData.sections)}></script>
+<script is:inline type="application/json" id="__ACCOUNTS_JSON__" set:html={JSON.stringify([...featured, ...secondary].map(omitAccountApplicationUrl))}></script>
+<script is:inline type="application/json" id="__RATES_SECTIONS__" set:html={JSON.stringify(rateSections)}></script>
+<script is:inline type="application/json" id="__COMPARE_LINES__" set:html={JSON.stringify(compareLines)}></script>
